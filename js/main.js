@@ -92,7 +92,7 @@ function initTerminal() {
     setTimeout(() => {
       // Remove any existing cursor line
       const cursor = body.querySelector('.t-cursor');
-      if (cursor) cursor.closest('div')?.remove();
+      if (cursor && cursor.parentElement) cursor.parentElement.remove();
       const line = el('div', '', html || '&nbsp;');
       body.appendChild(line);
       body.scrollTop = body.scrollHeight;
@@ -135,6 +135,7 @@ async function loadSkills() {
 
   try {
     const res = await fetch('data/skills.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     allSkills = await res.json();
     renderSkills(allSkills);
     initSkillFilters();
@@ -249,7 +250,7 @@ function initDocs() {
   // On load, check hash
   const hash = location.hash.slice(1);
   const firstId = links[0]?.dataset.target;
-  showArticle((hash && $$('#' + hash + '.docs-article').length) ? hash : firstId);
+  showArticle((hash && $$('#' + hash + '.docs-article').length > 0) ? hash : firstId);
 }
 
 /* ── Releases ───────────────────────────────────────────────────── */
@@ -260,6 +261,7 @@ async function loadReleases() {
 
   try {
     const res = await fetch('data/releases.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const releases = await res.json();
     renderReleases(releases, container, sidebar);
   } catch (e) {
@@ -312,6 +314,7 @@ async function checkVersion() {
   if (!badge) return;
   try {
     const res = await fetch('api/latest.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     badge.textContent = `v${data.version}`;
   } catch { /* ignore */ }
