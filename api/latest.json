@@ -1,0 +1,8 @@
+{
+  "version": "1.0.0",
+  "release_date": "2025-01-15",
+  "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/latest",
+  "changelog": "Initial public release with core assistant engine and plugin system.",
+  "min_supported_version": "0.5.0"
+}

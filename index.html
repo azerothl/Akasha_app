@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akasha — Your Privacy-First Personal Assistant</title>
+  <meta name="description" content="Akasha is a modern, privacy-first personal assistant with a powerful skill system. All data stays on your machine." />
+  <meta name="theme-color" content="#8b5cf6" />
+  <meta property="og:title" content="Akasha — Privacy-First Personal Assistant" />
+  <meta property="og:description" content="Modern, extensible personal assistant. Your data stays yours." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon" aria-hidden="true">✦</div>
+      Akasha
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="skills.html">Skills</a>
+      <a href="docs.html">Docs</a>
+      <a href="releases.html">Releases</a>
+    </div>
+    <div class="nav-actions">
+      <span class="version-pill" aria-label="Current version">v1.0.0</span>
+      <a href="https://github.com/azerothl/Akasha_app/releases/latest" class="btn btn-primary btn-sm" target="_blank" rel="noopener">
+        ⬇ Download
+      </a>
+    </div>
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">🏠 Home</a>
+  <a href="skills.html">🧩 Skills</a>
+  <a href="docs.html">📖 Docs</a>
+  <a href="releases.html">📋 Releases</a>
+  <a href="https://github.com/azerothl/Akasha_app/releases/latest" class="btn btn-primary" target="_blank" rel="noopener">⬇ Download</a>
+</div>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <!-- Left column -->
+      <div>
+        <div class="hero-eyebrow animate-fade-up">
+          <span>✦</span> Open Source &amp; Privacy-First
+        </div>
+        <h1 class="hero-title animate-fade-up delay-1">
+          Meet <span class="gradient-text">Akasha</span><br />
+          Your Smart<br />Personal Assistant
+        </h1>
+        <p class="hero-desc animate-fade-up delay-2">
+          A powerful, extensible personal assistant that runs entirely on your machine.
+          No cloud. No tracking. Just intelligence at your fingertips.
+        </p>
+        <div class="hero-actions animate-fade-up delay-3">
+          <a href="https://github.com/azerothl/Akasha_app/releases/latest" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+            ⬇ Download Free
+          </a>
+          <a href="docs.html" class="btn btn-outline btn-lg">
+            📖 Read Docs
+          </a>
+        </div>
+        <div class="hero-stats animate-fade-up delay-4">
+          <div class="stat-item">
+            <div class="stat-value"><span data-count="12">12</span>+</div>
+            <div class="stat-label">Built-in Skills</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value"><span data-count="100">100</span>%</div>
+            <div class="stat-label">Local & Private</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value"><span data-count="0">0</span></div>
+            <div class="stat-label">Cloud Dependency</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column — terminal -->
+      <div class="hero-visual animate-fade delay-2">
+        <div class="terminal" role="img" aria-label="Akasha terminal demo">
+          <div class="terminal-bar">
+            <span class="terminal-dot red" aria-hidden="true"></span>
+            <span class="terminal-dot yellow" aria-hidden="true"></span>
+            <span class="terminal-dot green" aria-hidden="true"></span>
+            <span class="terminal-title">Akasha Assistant</span>
+          </div>
+          <div class="terminal-body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ── -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">✦ Core Features</span>
+      <h2 class="section-title">Everything you need, <span class="gradient-text">nothing you don't</span></h2>
+      <p class="section-desc">Akasha is designed to be fast, private and extensible out of the box.</p>
+    </div>
+    <div class="features-grid">
+
+      <div class="card reveal delay-1">
+        <div class="feature-icon" aria-hidden="true">🔒</div>
+        <h4 class="feature-title">100% Private</h4>
+        <p class="feature-desc">All processing happens locally. Your conversations, notes and data never leave your device. No cloud required.</p>
+      </div>
+
+      <div class="card reveal delay-2">
+        <div class="feature-icon" aria-hidden="true">🧩</div>
+        <h4 class="feature-title">Skill System</h4>
+        <p class="feature-desc">Extend Akasha with community or custom skills. Install them in one command and unlock new capabilities instantly.</p>
+      </div>
+
+      <div class="card reveal delay-3">
+        <div class="feature-icon" aria-hidden="true">🗣️</div>
+        <h4 class="feature-title">Natural Language</h4>
+        <p class="feature-desc">Talk to Akasha just like you would to a person. No commands to memorize — just plain English (and more languages soon).</p>
+      </div>
+
+      <div class="card reveal delay-1">
+        <div class="feature-icon" aria-hidden="true">⚡</div>
+        <h4 class="feature-title">Lightning Fast</h4>
+        <p class="feature-desc">Responses in milliseconds. No network round trips, no API latency. Akasha is always ready when you are.</p>
+      </div>
+
+      <div class="card reveal delay-2">
+        <div class="feature-icon" aria-hidden="true">🔄</div>
+        <h4 class="feature-title">Auto-Updates</h4>
+        <p class="feature-desc">Akasha checks for updates automatically and notifies you. One-click upgrade keeps you on the latest version.</p>
+      </div>
+
+      <div class="card reveal delay-3">
+        <div class="feature-icon" aria-hidden="true">🌗</div>
+        <h4 class="feature-title">Themeable UI</h4>
+        <p class="feature-desc">Choose between dark and light themes, or build your own. Akasha adapts to your workflow and aesthetics.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── How it works ── -->
+<section class="section" id="how-it-works" style="background: var(--bg-secondary);">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">⚙ How it works</span>
+      <h2 class="section-title">Get started in <span class="gradient-text">3 steps</span></h2>
+      <p class="section-desc">From download to fully configured in under 2 minutes.</p>
+    </div>
+    <div class="features-grid">
+
+      <div class="card reveal">
+        <div class="feature-icon" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:var(--cyan-light)">①</div>
+        <h4 class="feature-title">Download &amp; Install</h4>
+        <p class="feature-desc">Grab the latest release for your OS. Run the installer and Akasha will be ready in seconds.</p>
+        <div style="margin-top:16px">
+          <code>./akasha-installer.sh</code>
+        </div>
+      </div>
+
+      <div class="card reveal delay-1">
+        <div class="feature-icon" style="background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.3);color:var(--purple-light)">②</div>
+        <h4 class="feature-title">Install Skills</h4>
+        <p class="feature-desc">Browse the skill library and install what you need. Each skill adds a new capability to your assistant.</p>
+        <div style="margin-top:16px">
+          <code>akasha install weather</code>
+        </div>
+      </div>
+
+      <div class="card reveal delay-2">
+        <div class="feature-icon" style="background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#34d399">③</div>
+        <h4 class="feature-title">Start Chatting</h4>
+        <p class="feature-desc">Type or speak naturally to Akasha. It understands context and gets smarter with every interaction.</p>
+        <div style="margin-top:16px">
+          <code>akasha "What's the weather?"</code>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Skills preview ── -->
+<section class="section" id="skills-preview">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">🧩 Skills Library</span>
+      <h2 class="section-title">Extend with <span class="gradient-text">powerful skills</span></h2>
+      <p class="section-desc">Choose from a growing library of community and official skills.</p>
+    </div>
+    <div class="features-grid">
+      <div class="card card-sm reveal">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <span style="font-size:1.5rem">🌤</span>
+          <div>
+            <div style="font-weight:700">Weather</div>
+            <div style="font-size:.75rem;color:var(--text-muted)">Forecasts for any city</div>
+          </div>
+        </div>
+        <div class="install-code" style="font-size:.75rem"><code>akasha install weather</code></div>
+      </div>
+      <div class="card card-sm reveal delay-1">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <span style="font-size:1.5rem">🔢</span>
+          <div>
+            <div style="font-weight:700">Calculator</div>
+            <div style="font-size:.75rem;color:var(--text-muted)">Math &amp; unit conversions</div>
+          </div>
+        </div>
+        <div class="install-code" style="font-size:.75rem"><code>akasha install calculator</code></div>
+      </div>
+      <div class="card card-sm reveal delay-2">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <span style="font-size:1.5rem">⏰</span>
+          <div>
+            <div style="font-weight:700">Timer</div>
+            <div style="font-size:.75rem;color:var(--text-muted)">Timers &amp; reminders</div>
+          </div>
+        </div>
+        <div class="install-code" style="font-size:.75rem"><code>akasha install timer</code></div>
+      </div>
+    </div>
+    <div class="text-center mt-lg reveal">
+      <a href="skills.html" class="btn btn-outline">View all skills →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="section-sm">
+  <div class="container">
+    <div class="cta-strip reveal">
+      <h2>Ready to try <span class="gradient-text">Akasha</span>?</h2>
+      <p>Download for free, no account required. Your data stays yours.</p>
+      <div class="btn-group">
+        <a href="https://github.com/azerothl/Akasha_app/releases/latest" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+          ⬇ Download Latest Release
+        </a>
+        <a href="https://github.com/azerothl/Akasha_app" class="btn btn-outline btn-lg" target="_blank" rel="noopener">
+          ★ Star on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-icon" aria-hidden="true">✦</div>
+          Akasha
+        </div>
+        <p>A privacy-first personal assistant with a powerful skill system. Open source and free forever.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="skills.html">Skills Library</a></li>
+          <li><a href="releases.html">Releases</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/releases/latest" target="_blank" rel="noopener">Download</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Docs</h4>
+        <ul>
+          <li><a href="docs.html#getting-started">Getting Started</a></li>
+          <li><a href="docs.html#skills-api">Skills API</a></li>
+          <li><a href="docs.html#configuration">Configuration</a></li>
+          <li><a href="docs.html#contributing">Contributing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">Report Issue</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/discussions" target="_blank" rel="noopener">Discussions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Akasha. Open source under the MIT License.</span>
+      <div class="footer-bottom-links">
+        <a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a>
+        <a href="docs.html">Documentation</a>
+        <a href="releases.html">Changelog</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+[
+  {
+    "version": "1.0.0",
+    "date": "2025-01-15",
+    "type": "major",
+    "title": "Initial Release",
+    "description": "First public release of Akasha — your privacy-first personal assistant.",
+    "changes": [
+      { "type": "new", "text": "Core assistant engine with natural language processing" },
+      { "type": "new", "text": "Plugin/skill system for extending functionality" },
+      { "type": "new", "text": "Local-first architecture — all data stays on your machine" },
+      { "type": "new", "text": "Built-in skill library with 10 starter skills" },
+      { "type": "new", "text": "Auto-update check system" },
+      { "type": "new", "text": "Dark and light UI themes" }
+    ],
+    "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v1.0.0",
+    "assets": []
+  }
+]

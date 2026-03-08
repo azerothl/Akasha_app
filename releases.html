@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Release Notes — Akasha</title>
+  <meta name="description" content="Full release history and changelogs for Akasha — your privacy-first personal assistant." />
+  <meta name="theme-color" content="#8b5cf6" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon" aria-hidden="true">✦</div>
+      Akasha
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="skills.html">Skills</a>
+      <a href="docs.html">Docs</a>
+      <a href="releases.html" class="active">Releases</a>
+    </div>
+    <div class="nav-actions">
+      <span class="version-pill" aria-label="Current version">v1.0.0</span>
+      <a href="https://github.com/azerothl/Akasha_app/releases/latest" class="btn btn-primary btn-sm" target="_blank" rel="noopener">
+        ⬇ Download
+      </a>
+    </div>
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">🏠 Home</a>
+  <a href="skills.html">🧩 Skills</a>
+  <a href="docs.html">📖 Docs</a>
+  <a href="releases.html" class="active">📋 Releases</a>
+  <a href="https://github.com/azerothl/Akasha_app/releases/latest" class="btn btn-primary" target="_blank" rel="noopener">⬇ Download</a>
+</div>
+
+<!-- ── Page header ── -->
+<div style="padding-top: var(--nav-height); background: var(--bg-secondary); border-bottom: 1px solid var(--border);">
+  <div class="container" style="padding-top: 48px; padding-bottom: 48px;">
+    <span class="section-eyebrow animate-fade-up">📋 Release Notes</span>
+    <h1 class="animate-fade-up delay-1" style="margin-top: 14px; margin-bottom: 10px;">
+      What's <span class="gradient-text">New</span>
+    </h1>
+    <p class="animate-fade-up delay-2">Full changelog and release history for every version of Akasha.</p>
+  </div>
+</div>
+
+<!-- ── Releases layout ── -->
+<section class="section">
+  <div class="container">
+    <div class="releases-layout">
+
+      <!-- Sidebar version nav -->
+      <aside aria-label="Version navigation">
+        <div class="docs-nav-section">
+          <div class="docs-nav-title">Versions</div>
+          <div id="releases-sidebar">
+            <!-- Populated by JS -->
+            <div class="skeleton" style="height:32px;margin-bottom:8px;border-radius:var(--radius-sm)"></div>
+            <div class="skeleton" style="height:32px;margin-bottom:8px;border-radius:var(--radius-sm)"></div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <a href="https://github.com/azerothl/Akasha_app/releases" class="btn btn-ghost btn-sm" target="_blank" rel="noopener" style="width:100%;justify-content:center">
+          View on GitHub →
+        </a>
+      </aside>
+
+      <!-- Timeline -->
+      <main>
+        <div class="releases-timeline" id="releases-timeline">
+          <!-- Populated by JS -->
+          <div style="text-align:center;padding:60px 0;color:var(--text-muted)">
+            <div class="skeleton" style="height:28px;width:200px;margin:0 auto 16px"></div>
+            <div class="skeleton" style="height:16px;width:360px;margin:0 auto 10px"></div>
+            <div class="skeleton" style="height:16px;width:300px;margin:0 auto"></div>
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Subscribe strip ── -->
+<section class="section-sm" style="background: var(--bg-secondary); border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="cta-strip reveal">
+      <h2 style="font-size:1.75rem">Stay up to date</h2>
+      <p>Enable auto-updates in Akasha and you'll be notified whenever a new version is released.</p>
+      <div class="btn-group">
+        <a href="https://github.com/azerothl/Akasha_app/releases" class="btn btn-outline" target="_blank" rel="noopener">
+          ★ Watch releases on GitHub
+        </a>
+        <a href="https://github.com/azerothl/Akasha_app/releases/latest" class="btn btn-primary" target="_blank" rel="noopener">
+          ⬇ Download Latest
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-icon" aria-hidden="true">✦</div>
+          Akasha
+        </div>
+        <p>A privacy-first personal assistant with a powerful skill system. Open source and free forever.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="skills.html">Skills Library</a></li>
+          <li><a href="releases.html">Releases</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/releases/latest" target="_blank" rel="noopener">Download</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Docs</h4>
+        <ul>
+          <li><a href="docs.html#getting-started">Getting Started</a></li>
+          <li><a href="docs.html#skills-api">Skills API</a></li>
+          <li><a href="docs.html#configuration">Configuration</a></li>
+          <li><a href="docs.html#contributing">Contributing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">Report Issue</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/discussions" target="_blank" rel="noopener">Discussions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Akasha. Open source under the MIT License.</span>
+      <div class="footer-bottom-links">
+        <a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a>
+        <a href="docs.html">Documentation</a>
+        <a href="releases.html">Changelog</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

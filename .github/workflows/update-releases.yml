@@ -1,0 +1,166 @@
+name: Update Release Notes
+
+# Triggered manually or via repository_dispatch from the main Akasha repo.
+# When a new release is published on the main repo, it sends a dispatch event
+# with the release payload which this workflow processes.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. 1.2.0)'
+        required: true
+      release_date:
+        description: 'Release date (YYYY-MM-DD)'
+        required: true
+        default: ''
+      release_type:
+        description: 'Release type (major, minor, patch)'
+        required: true
+        default: 'patch'
+      title:
+        description: 'Release title'
+        required: true
+      description:
+        description: 'Short release description'
+        required: true
+      download_url:
+        description: 'Download URL for this release'
+        required: false
+      changelog_json:
+        description: 'JSON array of change objects, e.g. [{"type":"new","text":"Added feature X"}]'
+        required: false
+        default: '[]'
+
+  repository_dispatch:
+    types: [new_release]
+
+permissions:
+  contents: write
+
+jobs:
+  update-release-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout website repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Resolve inputs (dispatch or workflow_dispatch)
+        id: inputs
+        run: |
+          # Support both repository_dispatch (client_payload) and workflow_dispatch (inputs)
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "version=${{ github.event.client_payload.version }}"        >> "$GITHUB_OUTPUT"
+            echo "release_date=${{ github.event.client_payload.release_date }}" >> "$GITHUB_OUTPUT"
+            echo "release_type=${{ github.event.client_payload.release_type }}" >> "$GITHUB_OUTPUT"
+            echo "title=${{ github.event.client_payload.title }}"            >> "$GITHUB_OUTPUT"
+            echo "description=${{ github.event.client_payload.description }}" >> "$GITHUB_OUTPUT"
+            echo "download_url=${{ github.event.client_payload.download_url }}" >> "$GITHUB_OUTPUT"
+            CHANGELOG='${{ toJson(github.event.client_payload.changelog) }}'
+          else
+            echo "version=${{ github.event.inputs.version }}"         >> "$GITHUB_OUTPUT"
+            DATE="${{ github.event.inputs.release_date }}"
+            [ -z "$DATE" ] && DATE="$(date -u +%Y-%m-%d)"
+            echo "release_date=$DATE"                                  >> "$GITHUB_OUTPUT"
+            echo "release_type=${{ github.event.inputs.release_type }}" >> "$GITHUB_OUTPUT"
+            echo "title=${{ github.event.inputs.title }}"             >> "$GITHUB_OUTPUT"
+            echo "description=${{ github.event.inputs.description }}" >> "$GITHUB_OUTPUT"
+            echo "download_url=${{ github.event.inputs.download_url }}" >> "$GITHUB_OUTPUT"
+            CHANGELOG='${{ github.event.inputs.changelog_json }}'
+          fi
+
+          # Default changelog if empty
+          [ -z "$CHANGELOG" ] || [ "$CHANGELOG" = "null" ] && CHANGELOG='[]'
+          # Write to file to avoid shell escaping issues
+          echo "$CHANGELOG" > /tmp/changelog.json
+
+      - name: Prepend new release to data/releases.json
+        run: |
+          python3 - <<'PYEOF'
+          import json, sys, os
+
+          version      = os.environ.get("VERSION", "")
+          release_date = os.environ.get("RELEASE_DATE", "")
+          release_type = os.environ.get("RELEASE_TYPE", "patch")
+          title        = os.environ.get("TITLE", "")
+          description  = os.environ.get("DESCRIPTION", "")
+          download_url = os.environ.get("DOWNLOAD_URL", "")
+
+          with open("/tmp/changelog.json") as f:
+              try:
+                  changes = json.load(f)
+              except json.JSONDecodeError:
+                  changes = []
+
+          new_entry = {
+              "version": version,
+              "date": release_date,
+              "type": release_type,
+              "title": title,
+              "description": description,
+              "changes": changes,
+              "download_url": download_url,
+              "assets": []
+          }
+
+          with open("data/releases.json") as f:
+              releases = json.load(f)
+
+          # Avoid duplicates
+          releases = [r for r in releases if r.get("version") != version]
+          releases.insert(0, new_entry)
+
+          with open("data/releases.json", "w") as f:
+              json.dump(releases, f, indent=2, ensure_ascii=False)
+              f.write("\n")
+
+          print(f"✓ Prepended v{version} to data/releases.json")
+          PYEOF
+        env:
+          VERSION:      ${{ steps.inputs.outputs.version }}
+          RELEASE_DATE: ${{ steps.inputs.outputs.release_date }}
+          RELEASE_TYPE: ${{ steps.inputs.outputs.release_type }}
+          TITLE:        ${{ steps.inputs.outputs.title }}
+          DESCRIPTION:  ${{ steps.inputs.outputs.description }}
+          DOWNLOAD_URL: ${{ steps.inputs.outputs.download_url }}
+
+      - name: Update api/latest.json
+        run: |
+          python3 - <<'PYEOF'
+          import json, os
+
+          version      = os.environ.get("VERSION", "")
+          release_date = os.environ.get("RELEASE_DATE", "")
+          description  = os.environ.get("DESCRIPTION", "")
+          download_url = os.environ.get("DOWNLOAD_URL", "") or \
+              f"https://github.com/azerothl/Akasha_app/releases/tag/v{version}"
+
+          latest = {
+              "version": version,
+              "release_date": release_date,
+              "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
+              "download_url": download_url,
+              "changelog": description,
+              "min_supported_version": "0.5.0"
+          }
+
+          with open("api/latest.json", "w") as f:
+              json.dump(latest, f, indent=2, ensure_ascii=False)
+              f.write("\n")
+
+          print(f"✓ Updated api/latest.json to v{version}")
+          PYEOF
+        env:
+          VERSION:      ${{ steps.inputs.outputs.version }}
+          RELEASE_DATE: ${{ steps.inputs.outputs.release_date }}
+          DESCRIPTION:  ${{ steps.inputs.outputs.description }}
+          DOWNLOAD_URL: ${{ steps.inputs.outputs.download_url }}
+
+      - name: Commit and push changes
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/releases.json api/latest.json
+          git diff --staged --quiet || git commit -m "chore: update release notes for v${{ steps.inputs.outputs.version }}"
+          git push

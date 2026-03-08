@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills Library — Akasha</title>
+  <meta name="description" content="Browse and install skills for Akasha — your privacy-first personal assistant." />
+  <meta name="theme-color" content="#8b5cf6" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon" aria-hidden="true">✦</div>
+      Akasha
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="skills.html" class="active">Skills</a>
+      <a href="docs.html">Docs</a>
+      <a href="releases.html">Releases</a>
+    </div>
+    <div class="nav-actions">
+      <span class="version-pill" aria-label="Current version">v1.0.0</span>
+      <a href="https://github.com/azerothl/Akasha_app/releases/latest" class="btn btn-primary btn-sm" target="_blank" rel="noopener">
+        ⬇ Download
+      </a>
+    </div>
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">🏠 Home</a>
+  <a href="skills.html" class="active">🧩 Skills</a>
+  <a href="docs.html">📖 Docs</a>
+  <a href="releases.html">📋 Releases</a>
+  <a href="https://github.com/azerothl/Akasha_app/releases/latest" class="btn btn-primary" target="_blank" rel="noopener">⬇ Download</a>
+</div>
+
+<!-- ── Page header ── -->
+<div style="padding-top: var(--nav-height); background: var(--bg-secondary); border-bottom: 1px solid var(--border);">
+  <div class="container" style="padding-top: 64px; padding-bottom: 64px; text-align: center;">
+    <span class="section-eyebrow animate-fade-up">🧩 Skills Library</span>
+    <h1 class="animate-fade-up delay-1" style="margin-top: 14px; margin-bottom: 14px;">
+      Extend Akasha with <span class="gradient-text">Skills</span>
+    </h1>
+    <p style="max-width: 520px; margin: 0 auto; font-size: 1rem;" class="animate-fade-up delay-2">
+      Browse community and official skills. Install any skill with a single command and supercharge your assistant.
+    </p>
+    <div style="margin-top: 28px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;" class="animate-fade-up delay-3">
+      <div class="stat-item" style="text-align:center">
+        <div class="stat-value" style="font-size:1.5rem"><span data-count="12">12</span></div>
+        <div class="stat-label">Available Skills</div>
+      </div>
+      <div class="stat-item" style="text-align:center">
+        <div class="stat-value" style="font-size:1.5rem"><span data-count="8">8</span></div>
+        <div class="stat-label">Categories</div>
+      </div>
+      <div class="stat-item" style="text-align:center">
+        <div class="stat-value" style="font-size:1.5rem"><span data-count="11000">11K</span></div>
+        <div class="stat-label">Total Installs</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Skills list ── -->
+<section class="section">
+  <div class="container">
+    <!-- Toolbar -->
+    <div class="skills-toolbar">
+      <div class="search-box">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input type="search" id="skill-search" placeholder="Search skills…" autocomplete="off" />
+      </div>
+      <div class="filter-btns" role="group" aria-label="Filter by category">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="productivity">Productivity</button>
+        <button class="filter-btn" data-filter="information">Information</button>
+        <button class="filter-btn" data-filter="utility">Utility</button>
+        <button class="filter-btn" data-filter="system">System</button>
+        <button class="filter-btn" data-filter="development">Dev</button>
+        <button class="filter-btn" data-filter="media">Media</button>
+        <button class="filter-btn" data-filter="finance">Finance</button>
+        <button class="filter-btn" data-filter="language">Language</button>
+      </div>
+    </div>
+
+    <!-- Grid loaded by JS -->
+    <div class="skills-grid" id="skills-grid">
+      <!-- Skeleton placeholders while loading -->
+      <div class="skill-card" aria-hidden="true">
+        <div class="skeleton" style="height:48px;width:48px;border-radius:var(--radius);margin-bottom:12px"></div>
+        <div class="skeleton" style="height:20px;width:60%;margin-bottom:8px"></div>
+        <div class="skeleton" style="height:14px;width:100%;margin-bottom:6px"></div>
+        <div class="skeleton" style="height:14px;width:80%"></div>
+      </div>
+      <div class="skill-card" aria-hidden="true">
+        <div class="skeleton" style="height:48px;width:48px;border-radius:var(--radius);margin-bottom:12px"></div>
+        <div class="skeleton" style="height:20px;width:55%;margin-bottom:8px"></div>
+        <div class="skeleton" style="height:14px;width:100%;margin-bottom:6px"></div>
+        <div class="skeleton" style="height:14px;width:75%"></div>
+      </div>
+      <div class="skill-card" aria-hidden="true">
+        <div class="skeleton" style="height:48px;width:48px;border-radius:var(--radius);margin-bottom:12px"></div>
+        <div class="skeleton" style="height:20px;width:65%;margin-bottom:8px"></div>
+        <div class="skeleton" style="height:14px;width:100%;margin-bottom:6px"></div>
+        <div class="skeleton" style="height:14px;width:70%"></div>
+      </div>
+    </div>
+
+    <!-- How to install callout -->
+    <div class="callout callout-info mt-lg reveal">
+      <span class="callout-icon">ℹ</span>
+      <div class="callout-body">
+        <strong>How to install a skill:</strong> Run <code>akasha install &lt;skill-name&gt;</code> in your terminal.
+        Skills are installed locally and never upload your data. You can uninstall any skill with <code>akasha uninstall &lt;skill-name&gt;</code>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Develop your own ── -->
+<section class="section-sm" style="background: var(--bg-secondary); border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="cta-strip reveal" style="text-align:left;padding:40px 48px;">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;flex-wrap:wrap">
+        <div>
+          <h3 style="margin-bottom:10px">🛠 Build your own skill</h3>
+          <p style="margin-bottom:0;max-width:480px">
+            The Akasha Skill API makes it easy to create custom skills. Check the documentation to get started.
+          </p>
+        </div>
+        <a href="docs.html#skills-api" class="btn btn-outline">Read the API docs →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-icon" aria-hidden="true">✦</div>
+          Akasha
+        </div>
+        <p>A privacy-first personal assistant with a powerful skill system. Open source and free forever.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="skills.html">Skills Library</a></li>
+          <li><a href="releases.html">Releases</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/releases/latest" target="_blank" rel="noopener">Download</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Docs</h4>
+        <ul>
+          <li><a href="docs.html#getting-started">Getting Started</a></li>
+          <li><a href="docs.html#skills-api">Skills API</a></li>
+          <li><a href="docs.html#configuration">Configuration</a></li>
+          <li><a href="docs.html#contributing">Contributing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">Report Issue</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/discussions" target="_blank" rel="noopener">Discussions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Akasha. Open source under the MIT License.</span>
+      <div class="footer-bottom-links">
+        <a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a>
+        <a href="docs.html">Documentation</a>
+        <a href="releases.html">Changelog</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
