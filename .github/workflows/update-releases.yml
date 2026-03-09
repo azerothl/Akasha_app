@@ -130,7 +130,9 @@ jobs:
           release_type = os.environ.get("RELEASE_TYPE", "patch")
           title        = os.environ.get("TITLE", "")
           description  = os.environ.get("DESCRIPTION", "")
-          download_url = os.environ.get("DOWNLOAD_URL", "")
+          # Users download from Akasha_app (public), not from private Akasha repo.
+          tag = version if version.startswith("v") else "v" + version
+          download_url = f"https://github.com/azerothl/Akasha_app/releases/tag/{tag}"
 
           with open("/tmp/changelog.json") as f:
               try:
@@ -167,7 +169,22 @@ jobs:
           RELEASE_TYPE: ${{ steps.inputs.outputs.release_type }}
           TITLE:        ${{ steps.inputs.outputs.title }}
           DESCRIPTION:  ${{ steps.inputs.outputs.description }}
-          DOWNLOAD_URL: ${{ steps.inputs.outputs.download_url }}
+
+      - name: Create release on Akasha_app with downloaded assets
+        if: github.event_name == 'repository_dispatch'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.inputs.outputs.version }}
+        run: |
+          ZIPS=$(find . -name 'akasha-*.zip' -type f 2>/dev/null | tr '\n' ' ')
+          if [ -n "$ZIPS" ]; then
+            TAG="$VERSION"
+            case "$TAG" in v*) ;; *) TAG="v$TAG" ;; esac
+            gh release create "$TAG" $ZIPS --title "$TAG" --notes "Mirror of Akasha release. Download the archive for your OS, extract, then run \`akasha init\` and \`akasha start\`."
+            echo "✓ Created release $TAG on Akasha_app"
+          else
+            echo "No akasha-*.zip assets found, skipping release creation."
+          fi
 
       - name: Update api/latest.json
         run: |
@@ -177,8 +194,9 @@ jobs:
           version      = os.environ.get("VERSION", "")
           release_date = os.environ.get("RELEASE_DATE", "")
           description  = os.environ.get("DESCRIPTION", "")
-          download_url = os.environ.get("DOWNLOAD_URL", "") or \
-              f"https://github.com/azerothl/Akasha/releases/tag/v{version}"
+          # Users download from Akasha_app (public), not from private Akasha repo.
+          tag = version if version.startswith("v") else f"v{version}"
+          download_url = f"https://github.com/azerothl/Akasha_app/releases/tag/{tag}"
 
           latest = {
               "version": version,
@@ -199,16 +217,6 @@ jobs:
           VERSION:      ${{ steps.inputs.outputs.version }}
           RELEASE_DATE: ${{ steps.inputs.outputs.release_date }}
           DESCRIPTION:  ${{ steps.inputs.outputs.description }}
-          DOWNLOAD_URL: ${{ steps.inputs.outputs.download_url }}
-
-      # Optional: publish downloaded zip assets as a GitHub Release on Akasha_app, or copy to a static folder.
-      # - name: Create release on Akasha_app with downloaded assets
-      #   if: github.event_name == 'repository_dispatch' && hashFiles('akasha-*.zip') != ''
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     VERSION="${{ steps.inputs.outputs.version }}"
-      #     gh release create "v$VERSION" akasha-*.zip --title "$VERSION" --notes "Mirror of Akasha release. See https://github.com/azerothl/Akasha/releases."
 
       - name: Commit and push changes
         run: |

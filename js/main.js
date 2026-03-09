@@ -154,36 +154,36 @@ function renderSkills(skills) {
     return;
   }
 
-  grid.innerHTML = skills.map(s => `
+  grid.innerHTML = skills.map(s => {
+    const tags = (s.tags || []).slice(0, 4).map(t => `<span class="skill-tag">#${t}</span>`).join('');
+    const versionBadge = s.version ? `<span class="badge badge-purple">v${s.version}</span>` : '';
+    const installCode = s.coming_soon
+      ? '<span style="color:var(--text-muted)">Coming soon</span>'
+      : (s.install_url
+        ? `<a href="${s.install_url}" target="_blank" rel="noopener" class="install-link">${s.install_url}</a><button class="copy-btn" title="Copy URL" data-cmd="${(s.install_url || '').replace(/"/g, '&quot;')}" aria-label="Copy install URL">📋</button>`
+        : `<code>${(s.install_command || '').replace(/</g, '&lt;')}</code><button class="copy-btn" title="Copy" data-cmd="${(s.install_command || '').replace(/"/g, '&quot;')}" aria-label="Copy">📋</button>`);
+    const footer = s.author ? `<div class="skill-footer"><span style="font-size:.78rem;color:var(--text-muted)">by ${s.author}</span></div>` : '';
+    return `
     <div class="skill-card reveal" data-category="${s.category}">
       <div class="skill-header">
         <div class="skill-icon">${iconFor(s.icon)}</div>
         <div>
           <div class="skill-name">${s.name}</div>
           <div class="skill-meta">
-            <span class="badge badge-purple">v${s.version}</span>
+            ${versionBadge}
             ${s.featured ? '<span class="badge badge-cyan">Featured</span>' : ''}
+            ${s.coming_soon ? '<span class="badge badge-gray">Coming soon</span>' : ''}
             <span class="badge badge-gray">${categoryLabel(s.category)}</span>
           </div>
         </div>
       </div>
       <p class="skill-desc">${s.description}</p>
-      <div class="skill-tags">${s.tags.slice(0,4).map(t => `<span class="skill-tag">#${t}</span>`).join('')}</div>
-      <div class="install-code">
-        <code>${s.install_command}</code>
-        <button class="copy-btn" title="Copy command" data-cmd="${s.install_command}" aria-label="Copy install command">
-          📋
-        </button>
-      </div>
-      <div class="skill-footer">
-        <div class="skill-stats">
-          <span class="skill-stat">⬇ ${s.downloads.toLocaleString()}</span>
-          <span class="skill-stat">${starRating(s.rating)} ${s.rating}</span>
-        </div>
-        <span style="font-size:.78rem;color:var(--text-muted)">by ${s.author}</span>
-      </div>
+      <div class="skill-tags">${tags}</div>
+      <div class="install-code">${installCode}</div>
+      ${footer}
     </div>
-  `).join('');
+  `;
+  }).join('');
 
   // Copy buttons
   $$('.copy-btn').forEach(btn => {

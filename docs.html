@@ -73,12 +73,12 @@
           <div class="docs-nav-title">Using Akasha</div>
           <a href="#commands" class="docs-nav-link" data-target="commands">Commands</a>
           <a href="#configuration" class="docs-nav-link" data-target="configuration">Configuration</a>
-          <a href="#themes" class="docs-nav-link" data-target="themes">Themes</a>
+          <a href="#themes" class="docs-nav-link" data-target="themes">Interfaces</a>
         </div>
         <div class="docs-nav-section">
           <div class="docs-nav-title">Skills</div>
           <a href="#skills-usage" class="docs-nav-link" data-target="skills-usage">Using Skills</a>
-          <a href="#skills-api" class="docs-nav-link" data-target="skills-api">Skills API</a>
+          <a href="#skills-api" class="docs-nav-link" data-target="skills-api">Slash commands</a>
         </div>
         <div class="docs-nav-section">
           <div class="docs-nav-title">Developers</div>
@@ -122,192 +122,108 @@
           <h3>Requirements</h3>
           <ul>
             <li>OS: Windows 10+, macOS 11+, or Ubuntu 20.04+</li>
-            <li>RAM: 512 MB minimum (2 GB recommended)</li>
-            <li>Disk: 100 MB for the base install</li>
+            <li>Ollama (optional) for local LLM models; otherwise configure a cloud provider (OpenRouter, OpenAI) during init.</li>
           </ul>
-          <h3>Linux / macOS</h3>
-          <pre><code># Download the latest installer
-curl -L https://azerothl.github.io/Akasha_app/api/latest.json | python3 -c "import sys,json; print(json.load(sys.stdin)['download_url'])"
-
-# Make executable and run
-chmod +x akasha-installer.sh
-./akasha-installer.sh</code></pre>
-          <h3>Windows</h3>
-          <p>Download <code>akasha-setup.exe</code> from the <a href="releases.html">Releases page</a> and run the installer.</p>
-          <h3>Verify installation</h3>
-          <pre><code>akasha --version
-# Akasha v1.0.0</code></pre>
-          <div class="callout callout-info">
-            <span class="callout-icon">ℹ</span>
-            <div class="callout-body">After installation, Akasha adds itself to your <code>PATH</code>. Open a new terminal to use the <code>akasha</code> command.</div>
-          </div>
+          <h3>Download</h3>
+          <p>Go to the <a href="releases.html">Releases</a> page (or <a href="https://github.com/azerothl/Akasha_app/releases" target="_blank" rel="noopener">GitHub Releases</a>). Download the archive for your OS (Windows / Linux / macOS), then extract it to a folder (e.g. <code>C:\Akasha</code> or <code>~/Akasha</code>).</p>
+          <p>You get the <code>akasha</code> (or <code>akasha.exe</code>), <code>akasha-daemon</code>, <code>akasha-tui</code> executables and a <code>docs</code> folder with the user guide.</p>
+          <h3>First run (Linux / macOS)</h3>
+          <pre><code>chmod +x akasha akasha-daemon akasha-tui
+./akasha init
+./akasha start
+./akasha tui   # terminal interface</code></pre>
+          <h3>First run (Windows)</h3>
+          <pre><code>.\akasha.exe init
+.\akasha.exe start
+.\akasha.exe tui   # terminal interface</code></pre>
+          <p>Run <code>akasha start</code> from the folder where you extracted the archive so the in-app Doc tab can show the user guide.</p>
         </article>
 
         <!-- First run -->
         <article class="docs-article" id="first-run">
           <h2>First Run</h2>
-          <p>Launch Akasha for the first time:</p>
-          <pre><code>akasha</code></pre>
-          <p>A configuration wizard will walk you through:</p>
-          <ol style="margin-left:20px;color:var(--text-secondary)">
-            <li style="margin-bottom:8px">Choosing your default language</li>
-            <li style="margin-bottom:8px">Selecting a UI theme (dark / light)</li>
-            <li style="margin-bottom:8px">Optionally installing starter skill packs</li>
-            <li style="margin-bottom:8px">Enabling or disabling auto-update checks</li>
-          </ol>
-          <h3>Interactive mode</h3>
-          <p>Start the interactive assistant shell:</p>
-          <pre><code>akasha shell
-# ❯ </code></pre>
-          <h3>One-shot mode</h3>
-          <p>Run a single query and exit:</p>
-          <pre><code>akasha "What time is it in Tokyo?"
-# 🕑  Tokyo, Japan — 09:42 JST (UTC+9)</code></pre>
+          <p><code>akasha init</code> runs an interactive setup: LLM provider (Ollama, OpenRouter, OpenAI), vault, and optional channels (Telegram, Slack, Discord). Use <code>akasha init --defaults</code> for minimal setup without prompts.</p>
+          <p>Then start the daemon and open the interface:</p>
+          <pre><code>akasha start      # background daemon (auto-restart on crash)
+akasha tui        # terminal UI: Chat, Router, Doc, Tasks, Calendar, Memory</code></pre>
+          <p>If you have the desktop app (Akasha UI), launch it; it connects to the daemon on port 3876.</p>
         </article>
 
         <!-- Commands -->
         <article class="docs-article" id="commands">
           <h2>Commands Reference</h2>
-          <h3>Core commands</h3>
-          <pre><code>akasha                  # Start interactive shell
-akasha shell            # Alias for interactive mode
-akasha "query"          # One-shot query
-akasha --version        # Print version
-akasha --help           # Print help</code></pre>
-          <h3>Skill management</h3>
-          <pre><code>akasha install &lt;skill&gt;   # Install a skill from the library
-akasha uninstall &lt;skill&gt; # Remove an installed skill
-akasha skills            # List installed skills
-akasha skills --all      # List all available skills
-akasha update            # Update all installed skills</code></pre>
-          <h3>Configuration</h3>
-          <pre><code>akasha config            # Open interactive config
-akasha config --list     # Print current configuration
-akasha config set key value  # Set a config value</code></pre>
-          <h3>Update management</h3>
-          <pre><code>akasha check-update      # Check for a new version
-akasha upgrade           # Download and install the latest version</code></pre>
+          <h3>Daemon</h3>
+          <pre><code>akasha start              # Start daemon (auto-restart)
+akasha start --foreground # Run in foreground (logs in terminal)
+akasha stop               # Stop daemon</code></pre>
+          <h3>Setup &amp; diagnostic</h3>
+          <pre><code>akasha init              # Interactive setup
+akasha init --defaults   # Minimal setup, no prompts
+akasha doctor            # Check system and daemon
+akasha doctor --fix      # Create data_dir and minimal config if missing
+akasha doctor --advice   # Diagnostic advice (daemon must be running)
+akasha paths             # Show data_dir and config file paths</code></pre>
+          <h3>Vault (secrets)</h3>
+          <pre><code>akasha vault list        # List stored keys
+akasha vault set KEY [value]  # Store a secret
+akasha vault get KEY     # Show value (use with care)
+akasha vault delete KEY  # Remove a key</code></pre>
+          <h3>Config &amp; router</h3>
+          <pre><code>akasha config models routes   # Models per category
+akasha config models set CATEGORY PROVIDER MODEL
+akasha config env list   # List env vars in akasha.env
+akasha router metrics    # LLM router metrics</code></pre>
+          <h3>Interfaces</h3>
+          <pre><code>akasha tui   # Terminal UI (Chat, Router, Doc, Tasks, Calendar, Memory)</code></pre>
+          <h3>Update check</h3>
+          <pre><code>akasha update check   # Check for a new version (download from Releases)</code></pre>
         </article>
 
         <!-- Configuration -->
         <article class="docs-article" id="configuration">
           <h2>Configuration</h2>
-          <p>Configuration is stored in <code>~/.akasha/config.json</code>. You can edit it directly or use the CLI.</p>
-          <h3>Default config</h3>
-          <pre><code>{
-  "language": "en",
-  "theme": "dark",
-  "auto_update": true,
-  "update_channel": "stable",
-  "startup_message": true,
-  "log_level": "info",
-  "skills_dir": "~/.akasha/skills"
-}</code></pre>
-          <h3>Key settings</h3>
+          <p>All config files live in the <strong>data directory</strong>. Run <code>akasha paths</code> to see its path (e.g. <code>C:\Users\…\AppData\Local\akasha</code> on Windows, <code>~/.local/share/akasha</code> on Linux/macOS).</p>
+          <h3>Main files</h3>
           <ul>
-            <li><code>language</code> — Interface language code (e.g. <code>"en"</code>, <code>"fr"</code>, <code>"es"</code>)</li>
-            <li><code>theme</code> — UI theme: <code>"dark"</code> or <code>"light"</code></li>
-            <li><code>auto_update</code> — Whether Akasha checks for updates on startup</li>
-            <li><code>update_channel</code> — <code>"stable"</code> or <code>"beta"</code></li>
-            <li><code>log_level</code> — Logging verbosity: <code>"error"</code>, <code>"warn"</code>, <code>"info"</code>, <code>"debug"</code></li>
+            <li><code>llm_router.yaml</code> — LLM providers (Ollama, OpenAI, OpenRouter) and models per task type.</li>
+            <li><code>tools_policy.yaml</code> — Tool permissions: file paths, allowed commands, web domains, skill-install hosts.</li>
+            <li><code>akasha.env</code> — Persistent env vars (also editable via <code>akasha config env set</code>).</li>
+            <li><code>connectors.env</code> — Telegram, Slack, Discord activation.</li>
           </ul>
-          <div class="callout callout-warn">
-            <span class="callout-icon">⚠</span>
-            <div class="callout-body">
-              <strong>Manual edits:</strong> Restart Akasha after manually editing <code>config.json</code> for changes to take effect.
-            </div>
-          </div>
+          <p><code>akasha init</code> or <code>akasha doctor --fix</code> creates the data_dir and minimal config files if missing.</p>
         </article>
 
         <!-- Themes -->
         <article class="docs-article" id="themes">
-          <h2>Themes</h2>
-          <p>Akasha ships with two built-in themes and supports custom CSS theming.</p>
-          <h3>Switching themes</h3>
-          <pre><code>akasha config set theme dark   # Dark theme (default)
-akasha config set theme light  # Light theme</code></pre>
-          <h3>Custom themes</h3>
-          <p>Place a CSS file in <code>~/.akasha/themes/my-theme.css</code>, then:</p>
-          <pre><code>akasha config set theme my-theme</code></pre>
-          <p>Theme CSS variables you can override:</p>
-          <pre><code>:root {
-  --bg-primary:   #0d0d14;
-  --bg-secondary: #12121e;
-  --purple:       #8b5cf6;
-  --cyan:         #06b6d4;
-  --text-primary: #f1f5f9;
-  /* ... */
-}</code></pre>
+          <h2>Interfaces</h2>
+          <p>The <strong>TUI</strong> (<code>akasha tui</code>) has tabs: Chat, Router, Doc, Tasks, Calendar, Memory. The <strong>desktop app</strong> (if installed) connects to the same daemon and supports attachments (images, documents) and user RAG in Settings.</p>
         </article>
 
         <!-- Skills usage -->
         <article class="docs-article" id="skills-usage">
           <h2>Using Skills</h2>
-          <p>Skills are the building blocks that give Akasha its capabilities. The base install includes a minimal core; you install skills for the features you need.</p>
-          <h3>Installing skills</h3>
-          <pre><code>akasha install weather
-# ↓  Downloading weather skill v1.2.0…
-# ✓  Installed successfully</code></pre>
-          <h3>Listing skills</h3>
-          <pre><code>akasha skills
-# Installed skills:
-#   weather     v1.2.0  ✓ up to date
-#   calculator  v2.0.0  ✓ up to date
-#   timer       v1.0.3  ✓ up to date</code></pre>
-          <h3>Updating skills</h3>
-          <pre><code>akasha update           # Update all skills
-akasha update weather   # Update a specific skill</code></pre>
-          <h3>Uninstalling</h3>
-          <pre><code>akasha uninstall weather</code></pre>
+          <p>Ask the agent in chat to install a skill from a URL, e.g. « Install the bankr skill from https://github.com/BankrBot/skills/tree/main/bankr ». The agent will download it and reload skills.</p>
+          <p>To allow other hosts (GitLab, custom HTTPS), edit <code>tools_policy.yaml</code> in the data_dir and set <code>allowed_skill_install_hosts</code> (e.g. <code>["*"]</code> for any HTTPS).</p>
+          <p>If you add or change skill files manually in the data_dir, type <code>/skills reload</code> in the chat to reload without restarting the daemon.</p>
           <div class="callout callout-tip">
             <span class="callout-icon">💡</span>
-            <div class="callout-body">Browse the full <a href="skills.html">Skills Library</a> to discover what's available.</div>
+            <div class="callout-body">Browse the <a href="skills.html">Skills Library</a> for install URLs and descriptions.</div>
           </div>
         </article>
 
         <!-- Skills API -->
         <article class="docs-article" id="skills-api">
-          <h2>Skills API</h2>
-          <p>Build your own skill by creating a directory with this structure:</p>
-          <pre><code>my-skill/
-├── skill.json      # Metadata
-├── index.js        # Entry point
-└── README.md       # Documentation</code></pre>
-          <h3>skill.json</h3>
-          <pre><code>{
-  "id": "my-skill",
-  "name": "My Skill",
-  "version": "1.0.0",
-  "description": "What this skill does",
-  "author": "Your Name",
-  "category": "utility",
-  "tags": ["example"],
-  "entry": "index.js",
-  "permissions": []
-}</code></pre>
-          <h3>index.js — minimal example</h3>
-          <pre><code>module.exports = {
-  // Patterns that trigger this skill
-  patterns: [/hello/i, /hi akasha/i],
-
-  // Called when a pattern matches
-  async handle(query, context) {
-    return `Hello! You said: "${query}"`;
-  }
-};</code></pre>
-          <h3>Available permissions</h3>
-          <ul>
-            <li><code>network</code> — Allow HTTP requests</li>
-            <li><code>filesystem</code> — Read/write local files</li>
-            <li><code>clipboard</code> — Read/write clipboard</li>
-            <li><code>notifications</code> — Show system notifications</li>
-          </ul>
-          <div class="callout callout-info">
-            <span class="callout-icon">ℹ</span>
-            <div class="callout-body">
-              All declared permissions are shown to the user before installation. Skills without <code>network</code> permission cannot make HTTP calls.
-            </div>
-          </div>
+          <h2>Slash commands (in chat)</h2>
+          <p>In the chat (TUI or web), messages starting with <code>/</code> are commands:</p>
+          <pre><code>/help, /?        # Help
+/status          # Daemon status
+/doctor          # Diagnostic
+/skills reload   # Reload skills after adding or editing files
+/restart         # Restart daemon (when run with supervisor)
+/models list     # Models by category
+/config list     # Env vars (akasha.env)
+/vault list      # Vault key names</code></pre>
+          <p>Use the CLI for vault write/delete: <code>akasha vault set KEY value</code>, <code>akasha vault delete KEY</code>.</p>
         </article>
 
         <!-- Update API -->
@@ -326,40 +242,17 @@ akasha update weather   # Update a specific skill</code></pre>
 }</code></pre>
           <h3>Version comparison</h3>
           <p>Akasha uses semantic versioning (<a href="https://semver.org" target="_blank" rel="noopener">semver</a>). An update is triggered when <code>version</code> in the response is greater than the installed version.</p>
-          <h3>Disabling update checks</h3>
-          <pre><code>akasha config set auto_update false</code></pre>
+          <p>Run <code>akasha update check</code> to see if a newer version is available; the command prints the download link.</p>
         </article>
 
         <!-- Contributing -->
         <article class="docs-article" id="contributing">
-          <h2>Contributing</h2>
-          <p>Contributions are welcome! Here's how to get started:</p>
-          <h3>Development setup</h3>
-          <pre><code>git clone https://github.com/azerothl/Akasha_app.git
-cd Akasha_app
-npm install
-npm run dev</code></pre>
-          <h3>Contribution types</h3>
+          <h2>Community</h2>
+          <p>This showcase site and its releases are hosted in the <strong>Akasha_app</strong> repository. You can report issues, suggest improvements, or contribute to the site there.</p>
           <ul>
-            <li>🐛 Bug reports — open an <a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">issue</a></li>
-            <li>✨ Feature requests — discuss in <a href="https://github.com/azerothl/Akasha_app/discussions" target="_blank" rel="noopener">Discussions</a></li>
-            <li>🔧 Pull requests — fork, branch, code, PR</li>
-            <li>🧩 Skills — build and share skills</li>
-            <li>📖 Docs — improve documentation</li>
+            <li><a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">Report an issue</a></li>
+            <li><a href="https://github.com/azerothl/Akasha_app/discussions" target="_blank" rel="noopener">Discussions</a></li>
           </ul>
-          <h3>Code style</h3>
-          <ul>
-            <li>Use 2-space indentation</li>
-            <li>Prefer <code>const</code> and <code>let</code> over <code>var</code></li>
-            <li>Write descriptive commit messages</li>
-            <li>Add tests for new features</li>
-          </ul>
-          <div class="callout callout-tip">
-            <span class="callout-icon">💡</span>
-            <div class="callout-body">
-              Please read <code>CONTRIBUTING.md</code> in the repository before submitting a PR.
-            </div>
-          </div>
         </article>
 
       </main>

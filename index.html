@@ -76,8 +76,8 @@
         </div>
         <div class="hero-stats animate-fade-up delay-4">
           <div class="stat-item">
-            <div class="stat-value"><span data-count="12">12</span>+</div>
-            <div class="stat-label">Built-in Skills</div>
+            <div class="stat-value">Tools +</div>
+            <div class="stat-label">Skills installable</div>
           </div>
           <div class="stat-item">
             <div class="stat-value"><span data-count="100">100</span>%</div>
@@ -124,8 +124,8 @@
 
       <div class="card reveal delay-2">
         <div class="feature-icon" aria-hidden="true">🧩</div>
-        <h4 class="feature-title">Skill System</h4>
-        <p class="feature-desc">Extend Akasha with community or custom skills. Install them in one command and unlock new capabilities instantly.</p>
+        <h4 class="feature-title">Skill system</h4>
+        <p class="feature-desc">Built-in tools (files, commands, web search) plus user-installable skills. Ask the agent to install from a URL or add files manually and reload.</p>
       </div>
 
       <div class="card reveal delay-3">
@@ -142,8 +142,8 @@
 
       <div class="card reveal delay-2">
         <div class="feature-icon" aria-hidden="true">🔄</div>
-        <h4 class="feature-title">Auto-Updates</h4>
-        <p class="feature-desc">Akasha checks for updates automatically and notifies you. One-click upgrade keeps you on the latest version.</p>
+        <h4 class="feature-title">Update check</h4>
+        <p class="feature-desc">Use <code>akasha update check</code> to see if a new version is available. Download from the Releases page when you're ready to upgrade.</p>
       </div>
 
       <div class="card reveal delay-3">
@@ -168,28 +168,28 @@
 
       <div class="card reveal">
         <div class="feature-icon" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:var(--cyan-light)">①</div>
-        <h4 class="feature-title">Download &amp; Install</h4>
-        <p class="feature-desc">Grab the latest release for your OS. Run the installer and Akasha will be ready in seconds.</p>
+        <h4 class="feature-title">Download &amp; extract</h4>
+        <p class="feature-desc">Download the archive for your OS from the Releases page, extract it, then run <code>akasha init</code> and <code>akasha start</code>.</p>
         <div style="margin-top:16px">
-          <code>./akasha-installer.sh</code>
+          <code>akasha init</code> then <code>akasha start</code>
         </div>
       </div>
 
       <div class="card reveal delay-1">
         <div class="feature-icon" style="background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.3);color:var(--purple-light)">②</div>
-        <h4 class="feature-title">Install Skills</h4>
-        <p class="feature-desc">Browse the skill library and install what you need. Each skill adds a new capability to your assistant.</p>
+        <h4 class="feature-title">Add skills (optional)</h4>
+        <p class="feature-desc">Ask the agent in chat to install a skill from a URL, or copy skill files into the data folder and type <code>/skills reload</code> in the chat.</p>
         <div style="margin-top:16px">
-          <code>akasha install weather</code>
+          <code>In chat: &quot;Install the bankr skill from …&quot;</code>
         </div>
       </div>
 
       <div class="card reveal delay-2">
         <div class="feature-icon" style="background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#34d399">③</div>
-        <h4 class="feature-title">Start Chatting</h4>
-        <p class="feature-desc">Type or speak naturally to Akasha. It understands context and gets smarter with every interaction.</p>
+        <h4 class="feature-title">Start chatting</h4>
+        <p class="feature-desc">Run <code>akasha tui</code> for the terminal interface, or launch the desktop app. Chat naturally; the agent uses tools and skills as needed.</p>
         <div style="margin-top:16px">
-          <code>akasha "What's the weather?"</code>
+          <code>akasha tui</code>
         </div>
       </div>
 
@@ -203,38 +203,37 @@
     <div class="section-header reveal">
       <span class="section-eyebrow">🧩 Skills Library</span>
       <h2 class="section-title">Extend with <span class="gradient-text">powerful skills</span></h2>
-      <p class="section-desc">Choose from a growing library of community and official skills.</p>
-    </div>
+      <p class="section-desc">Choose from a growing library. Install via the chat (ask the agent to install from a URL) or copy files into your data folder and run <code>/skills reload</code>.</p>
     <div class="features-grid">
       <div class="card card-sm reveal">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <span style="font-size:1.5rem">🏦</span>
+          <div>
+            <div style="font-weight:700">Bankr</div>
+            <div style="font-size:.75rem;color:var(--text-muted)">Wallet &amp; balance on Base and more</div>
+          </div>
+        </div>
+        <div class="install-code" style="font-size:.75rem"><code>In chat: &quot;Install the bankr skill from …&quot;</code></div>
+      </div>
+      <div class="card card-sm reveal delay-1">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
           <span style="font-size:1.5rem">🌤</span>
           <div>
             <div style="font-weight:700">Weather</div>
-            <div style="font-size:.75rem;color:var(--text-muted)">Forecasts for any city</div>
+            <div style="font-size:.75rem;color:var(--text-muted)">Coming soon</div>
           </div>
         </div>
-        <div class="install-code" style="font-size:.75rem"><code>akasha install weather</code></div>
-      </div>
-      <div class="card card-sm reveal delay-1">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-          <span style="font-size:1.5rem">🔢</span>
-          <div>
-            <div style="font-weight:700">Calculator</div>
-            <div style="font-size:.75rem;color:var(--text-muted)">Math &amp; unit conversions</div>
-          </div>
-        </div>
-        <div class="install-code" style="font-size:.75rem"><code>akasha install calculator</code></div>
+        <div class="install-code" style="font-size:.75rem;color:var(--text-muted)">—</div>
       </div>
       <div class="card card-sm reveal delay-2">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
-          <span style="font-size:1.5rem">⏰</span>
+          <span style="font-size:1.5rem">🔢</span>
           <div>
-            <div style="font-weight:700">Timer</div>
-            <div style="font-size:.75rem;color:var(--text-muted)">Timers &amp; reminders</div>
+            <div style="font-weight:700">More skills</div>
+            <div style="font-size:.75rem;color:var(--text-muted)">Browse the library below</div>
           </div>
         </div>
-        <div class="install-code" style="font-size:.75rem"><code>akasha install timer</code></div>
+        <div class="install-code" style="font-size:.75rem"><a href="skills.html">View all skills →</a></div>
       </div>
     </div>
     <div class="text-center mt-lg reveal">

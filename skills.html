@@ -53,22 +53,11 @@
       Extend Akasha with <span class="gradient-text">Skills</span>
     </h1>
     <p style="max-width: 520px; margin: 0 auto; font-size: 1rem;" class="animate-fade-up delay-2">
-      Browse community and official skills. Install any skill with a single command and supercharge your assistant.
+      Browse available and upcoming skills. Ask the agent in chat to install from a URL or add files manually and reload.
     </p>
-    <div style="margin-top: 28px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;" class="animate-fade-up delay-3">
-      <div class="stat-item" style="text-align:center">
-        <div class="stat-value" style="font-size:1.5rem"><span data-count="12">12</span></div>
-        <div class="stat-label">Available Skills</div>
-      </div>
-      <div class="stat-item" style="text-align:center">
-        <div class="stat-value" style="font-size:1.5rem"><span data-count="8">8</span></div>
-        <div class="stat-label">Categories</div>
-      </div>
-      <div class="stat-item" style="text-align:center">
-        <div class="stat-value" style="font-size:1.5rem"><span data-count="11000">11K</span></div>
-        <div class="stat-label">Total Installs</div>
-      </div>
-    </div>
+    <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-muted);" class="animate-fade-up delay-3">
+      Install skills via the chat (ask the agent to install from a URL) or copy files into your data folder and run <code>/skills reload</code>.
+    </p>
   </div>
 </div>
 
@@ -121,8 +110,7 @@
     <div class="callout callout-info mt-lg reveal">
       <span class="callout-icon">ℹ</span>
       <div class="callout-body">
-        <strong>How to install a skill:</strong> Run <code>akasha install &lt;skill-name&gt;</code> in your terminal.
-        Skills are installed locally and never upload your data. You can uninstall any skill with <code>akasha uninstall &lt;skill-name&gt;</code>.
+        <strong>How to install a skill:</strong> In the Akasha chat, ask the agent to install from the skill URL (e.g. &quot;Install the bankr skill from https://github.com/BankrBot/skills/tree/main/bankr&quot;). You can also copy skill files into your data directory (see <code>akasha paths</code>) and type <code>/skills reload</code> in the chat.
       </div>
     </div>
   </div>
@@ -139,7 +127,7 @@
             The Akasha Skill API makes it easy to create custom skills. Check the documentation to get started.
           </p>
         </div>
-        <a href="docs.html#skills-api" class="btn btn-outline">Read the API docs →</a>
+        <a href="docs.html#skills-usage" class="btn btn-outline">Read the docs →</a>
       </div>
     </div>
   </div>
