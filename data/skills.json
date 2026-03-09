@@ -1,51 +1,146 @@
 [
   {
-    "id": "bankr",
-    "name": "Bankr",
-    "version": "1.0.0",
-    "description": "Check wallet balance and interact with Bankr on Base and other chains. Requires the Bankr CLI (@bankr/cli) and an API key in the vault.",
-    "author": "BankrBot",
-    "category": "finance",
-    "tags": ["wallet", "crypto", "base", "bankr"],
-    "icon": "trending-up",
-    "featured": true,
-    "install_url": "https://github.com/BankrBot/skills/tree/main/bankr",
-    "install_command": "In chat: \"Install the bankr skill from https://github.com/BankrBot/skills/tree/main/bankr\""
-  },
-  {
-    "id": "weather",
-    "name": "Weather",
-    "description": "Get weather forecasts for any city. The agent can use web search to fetch current conditions and forecasts.",
-    "author": "Akasha",
-    "category": "information",
-    "tags": ["weather", "forecast", "temperature"],
-    "icon": "cloud-sun",
-    "featured": false,
-    "coming_soon": true,
-    "install_command": "Coming soon"
-  },
-  {
-    "id": "timer",
-    "name": "Timer & Reminders",
-    "description": "Set timers and reminders. Scheduled tasks are supported via the built-in calendar and recurring tasks.",
-    "author": "Akasha",
-    "category": "productivity",
-    "tags": ["timer", "reminder", "schedule"],
-    "icon": "clock",
-    "featured": false,
-    "coming_soon": true,
-    "install_command": "Coming soon"
-  },
-  {
     "id": "calculator",
     "name": "Calculator",
+    "version": "1.0.0",
     "description": "Math and unit conversions. The agent can perform calculations and look up conversions via tools.",
     "author": "Akasha",
     "category": "utility",
-    "tags": ["math", "calculator", "conversion"],
+    "tags": [
+      "math",
+      "calculator",
+      "conversion"
+    ],
     "icon": "calculator",
+    "featured": true,
+    "install_url": "https://raw.githubusercontent.com/azerothl/Akasha_skills/main/skills/calculator/SKILL.md",
+    "install_command": "Install the calculator skill from https://github.com/azerothl/Akasha_skills/tree/main/skills/calculator"
+  },
+  {
+    "id": "code-review",
+    "name": "Code Review",
+    "version": "1.0.0",
+    "description": "Lightweight code review for style, risks, and best practices using read and grep.",
+    "author": "Akasha",
+    "category": "development",
+    "tags": [
+      "code",
+      "review",
+      "quality",
+      "lint"
+    ],
+    "icon": "code",
     "featured": false,
-    "coming_soon": true,
-    "install_command": "Coming soon"
+    "install_url": "https://raw.githubusercontent.com/azerothl/Akasha_skills/main/skills/code-review/SKILL.md",
+    "install_command": "Install the code-review skill from https://github.com/azerothl/Akasha_skills/tree/main/skills/code-review"
+  },
+  {
+    "id": "date-time",
+    "name": "Date & Time",
+    "version": "1.0.0",
+    "description": "Date and time calculations, timezones, and formatting using date, PowerShell, or Python.",
+    "author": "Akasha",
+    "category": "utility",
+    "tags": [
+      "date",
+      "time",
+      "timezone",
+      "calendar"
+    ],
+    "icon": "calendar",
+    "featured": false,
+    "install_url": "https://raw.githubusercontent.com/azerothl/Akasha_skills/main/skills/date-time/SKILL.md",
+    "install_command": "Install the date-time skill from https://github.com/azerothl/Akasha_skills/tree/main/skills/date-time"
+  },
+  {
+    "id": "file-manager",
+    "name": "File Manager",
+    "version": "1.0.0",
+    "description": "List, search, copy, move, rename files and manage directories within allowed paths.",
+    "author": "Akasha",
+    "category": "productivity",
+    "tags": [
+      "files",
+      "directory",
+      "search",
+      "organize"
+    ],
+    "icon": "folder",
+    "featured": false,
+    "install_url": "https://raw.githubusercontent.com/azerothl/Akasha_skills/main/skills/file-manager/SKILL.md",
+    "install_command": "Install the file-manager skill from https://github.com/azerothl/Akasha_skills/tree/main/skills/file-manager"
+  },
+  {
+    "id": "git-helper",
+    "name": "Git Helper",
+    "version": "1.0.0",
+    "description": "Git status, log, diff, branches, and conflict resolution guidance via run_command and read_file.",
+    "author": "Akasha",
+    "category": "development",
+    "tags": [
+      "git",
+      "version-control",
+      "diff",
+      "conflicts"
+    ],
+    "icon": "git-branch",
+    "featured": false,
+    "install_url": "https://raw.githubusercontent.com/azerothl/Akasha_skills/main/skills/git-helper/SKILL.md",
+    "install_command": "Install the git-helper skill from https://github.com/azerothl/Akasha_skills/tree/main/skills/git-helper"
+  },
+  {
+    "id": "json-yaml-utils",
+    "name": "JSON/YAML Utils",
+    "version": "1.0.0",
+    "description": "Validate, format, extract fields, and convert between JSON and YAML using jq, yq, or Python.",
+    "author": "Akasha",
+    "category": "utility",
+    "tags": [
+      "json",
+      "yaml",
+      "config",
+      "jq",
+      "yq"
+    ],
+    "icon": "file-code",
+    "featured": false,
+    "install_url": "https://raw.githubusercontent.com/azerothl/Akasha_skills/main/skills/json-yaml-utils/SKILL.md",
+    "install_command": "Install the json-yaml-utils skill from https://github.com/azerothl/Akasha_skills/tree/main/skills/json-yaml-utils"
+  },
+  {
+    "id": "summarizer",
+    "name": "Summarizer",
+    "version": "1.0.0",
+    "description": "Summarize long documents, logs, or command output into concise bullets and key facts.",
+    "author": "Akasha",
+    "category": "productivity",
+    "tags": [
+      "summary",
+      "document",
+      "logs",
+      "tldr"
+    ],
+    "icon": "file-text",
+    "featured": false,
+    "install_url": "https://raw.githubusercontent.com/azerothl/Akasha_skills/main/skills/summarizer/SKILL.md",
+    "install_command": "Install the summarizer skill from https://github.com/azerothl/Akasha_skills/tree/main/skills/summarizer"
+  },
+  {
+    "id": "web-researcher",
+    "name": "Web Researcher",
+    "version": "1.0.0",
+    "description": "Targeted web search, synthesis of results, and fact-checking using web_search and web_fetch.",
+    "author": "Akasha",
+    "category": "research",
+    "tags": [
+      "web",
+      "search",
+      "research",
+      "fact-check"
+    ],
+    "icon": "search",
+    "featured": false,
+    "install_url": "https://raw.githubusercontent.com/azerothl/Akasha_skills/main/skills/web-researcher/SKILL.md",
+    "install_command": "Install the web-researcher skill from https://github.com/azerothl/Akasha_skills/tree/main/skills/web-researcher"
   }
 ]
