@@ -535,6 +535,38 @@ p  { color: var(--text-secondary); }
   justify-content: space-between;
   gap: 10px;
 }
+
+.skill-install-block {
+  background: rgba(0,0,0,.4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.skill-install-prompt {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0 0 10px 0;
+  line-height: 1.4;
+}
+.skill-install-prompt strong { color: var(--text-primary); }
+.skill-install-muted {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.skill-install-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.skill-copy-prompt {
+  font-size: 0.78rem;
+}
+.skill-download-btn {
+  text-decoration: none;
+  font-size: 0.78rem;
+}
+
 .copy-btn {
   background: transparent;
   border: none;

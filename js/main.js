@@ -154,14 +154,21 @@ function renderSkills(skills) {
     return;
   }
 
+  const agentPrompt = (url) => `Download the skill at this url ${url} and follow the SKILL.md instructions.`;
   grid.innerHTML = skills.map(s => {
     const tags = (s.tags || []).slice(0, 4).map(t => `<span class="skill-tag">#${t}</span>`).join('');
     const versionBadge = s.version ? `<span class="badge badge-purple">v${s.version}</span>` : '';
-    const installCode = s.coming_soon
-      ? '<span style="color:var(--text-muted)">Coming soon</span>'
+    const installBlock = s.coming_soon
+      ? '<div class="skill-install-block"><span class="skill-install-muted">Coming soon</span></div>'
       : (s.install_url
-        ? `<a href="${s.install_url}" target="_blank" rel="noopener" class="install-link">${s.install_url}</a><button class="copy-btn" title="Copy URL" data-cmd="${(s.install_url || '').replace(/"/g, '&quot;')}" aria-label="Copy install URL">📋</button>`
-        : `<code>${(s.install_command || '').replace(/</g, '&lt;')}</code><button class="copy-btn" title="Copy" data-cmd="${(s.install_command || '').replace(/"/g, '&quot;')}" aria-label="Copy">📋</button>`);
+        ? `<div class="skill-install-block">
+            <p class="skill-install-prompt">${agentPrompt('[url]')}</p>
+            <div class="skill-install-actions">
+              <button type="button" class="btn btn-outline btn-sm skill-copy-prompt" data-prompt="${(agentPrompt(s.install_url)).replace(/"/g, '&quot;')}" title="Copy prompt for agent">📋 Copy prompt</button>
+              <a href="${s.install_url}" target="_blank" rel="noopener" class="btn btn-primary btn-sm skill-download-btn">⬇ Download skill</a>
+            </div>
+          </div>`
+        : `<div class="install-code"><code>${(s.install_command || '').replace(/</g, '&lt;')}</code><button class="copy-btn" title="Copy" data-cmd="${(s.install_command || '').replace(/"/g, '&quot;')}" aria-label="Copy">📋</button></div>`);
     const footer = s.author ? `<div class="skill-footer"><span style="font-size:.78rem;color:var(--text-muted)">by ${s.author}</span></div>` : '';
     return `
     <div class="skill-card reveal" data-category="${s.category}">
@@ -179,19 +186,32 @@ function renderSkills(skills) {
       </div>
       <p class="skill-desc">${s.description}</p>
       <div class="skill-tags">${tags}</div>
-      <div class="install-code">${installCode}</div>
+      ${installBlock}
       ${footer}
     </div>
   `;
   }).join('');
 
-  // Copy buttons
+  // Copy buttons (install_command)
   $$('.copy-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       navigator.clipboard?.writeText(btn.dataset.cmd).then(() => {
         btn.textContent = '✅';
         toast('Command copied!', 'success');
         setTimeout(() => btn.textContent = '📋', 2000);
+      });
+    });
+  });
+
+  // Copy prompt for agent (install_url skills)
+  $$('.skill-copy-prompt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const prompt = btn.dataset.prompt || '';
+      navigator.clipboard?.writeText(prompt).then(() => {
+        const label = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        toast('Prompt copied! Paste in chat for the agent.', 'success');
+        setTimeout(() => { btn.textContent = label; }, 2000);
       });
     });
   });
