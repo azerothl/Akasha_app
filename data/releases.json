@@ -4,8 +4,14 @@
     "date": "2026-03-10",
     "type": "minor",
     "title": "v0.2.0",
-    "description": "fix calendar, fix perf, update doc",
-    "changes": [],
+    "description": "Calendar improvements, release and deploy workflow fixes, Tauri icons, and binary-only download links on the site. Prebuilt CLI, daemon, TUI and desktop app for Windows, Linux and macOS.",
+    "changes": [
+      { "type": "fix", "text": "Web calendar: fixed cell height, deduplication by parent, status colors, recurring task prompt edit, date alignment (month view)" },
+      { "type": "imp", "text": "Release workflow: one zip per artifact (no duplicate asset names), workflow_dispatch for manual run, deploy_site checkout" },
+      { "type": "imp", "text": "Update Release Notes workflow: multiline GITHUB_OUTPUT for description/title, workflow_dispatch with optional inputs" },
+      { "type": "new", "text": "Tauri app icons: ICO and ICNS generated from icon.png for Windows and macOS" },
+      { "type": "imp", "text": "Site download page: direct links to binary archives only; note to not use Source code zip/tar.gz on GitHub" }
+    ],
     "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.2.0",
     "assets": []
   },

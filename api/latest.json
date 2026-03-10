@@ -3,6 +3,6 @@
   "release_date": "2026-03-10",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
   "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.2.0",
-  "changelog": "fix calendar, fix perf, update doc",
+  "changelog": "Calendar improvements, release and deploy workflow fixes, Tauri icons, binary-only download links. Prebuilt CLI, daemon, TUI and desktop app for Windows, Linux and macOS.",
   "min_supported_version": "0.5.0"
 }

@@ -71,7 +71,7 @@ function initTerminal() {
 
   const lines = [
     { delay: 300,  html: '<span class="t-prompt">❯</span> <span class="t-cmd">akasha</span>' },
-    { delay: 800,  html: '<span class="t-success">✓</span> <span class="t-out">Akasha v1.0.0 — your privacy-first assistant</span>' },
+    { delay: 800,  html: '<span class="t-success">✓</span> <span class="t-out">Akasha v0.2.0 — your privacy-first assistant</span>' },
     { delay: 1200, html: '' },
     { delay: 1400, html: '<span class="t-prompt">❯</span> <span class="t-cmd">What is the weather in Paris?</span>' },
     { delay: 2000, html: '<span class="t-info">🌤  Paris, France — 18°C, Partly cloudy</span>' },
