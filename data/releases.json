@@ -1,5 +1,15 @@
 [
   {
+    "version": "v0.2.0",
+    "date": "2026-03-10",
+    "type": "minor",
+    "title": "v0.2.0",
+    "description": "fix calendar, fix perf, update doc",
+    "changes": [],
+    "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.2.0",
+    "assets": []
+  },
+  {
     "version": "v0.1.0",
     "date": "2026-03-09",
     "type": "minor",
