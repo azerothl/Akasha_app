@@ -274,6 +274,25 @@ function initDocs() {
 }
 
 /* ── Releases ───────────────────────────────────────────────────── */
+const RELEASE_ASSETS = [
+  { name: 'akasha-windows-x86_64.zip', label: 'Windows (CLI)', os: 'windows' },
+  { name: 'akasha-linux-x86_64.zip', label: 'Linux (CLI)', os: 'linux' },
+  { name: 'akasha-macos-x86_64.zip', label: 'macOS Intel (CLI)', os: 'macos' },
+  { name: 'akasha-macos-aarch64.zip', label: 'macOS Apple Silicon (CLI)', os: 'macos' },
+  { name: 'akasha-ui-windows.zip', label: 'Windows (Desktop)', os: 'windows' },
+  { name: 'akasha-ui-linux.zip', label: 'Linux (Desktop)', os: 'linux' },
+  { name: 'akasha-ui-macos.zip', label: 'macOS (Desktop)', os: 'macos' },
+];
+const GITHUB_RELEASE_BASE = 'https://github.com/azerothl/Akasha_app/releases/download';
+
+function releaseTag(version) {
+  return String(version).startsWith('v') ? version : 'v' + version;
+}
+
+function assetDownloadUrl(tag, assetName) {
+  return `${GITHUB_RELEASE_BASE}/${tag}/${assetName}`;
+}
+
 async function loadReleases() {
   const container = $('#releases-timeline');
   const sidebar = $('#releases-sidebar');
@@ -294,15 +313,25 @@ function renderReleases(releases, container, sidebar) {
   const changeClass = { new: 'change-new', fix: 'change-fix', break: 'change-break', imp: 'change-imp' };
   const changeLabel = { new: 'New', fix: 'Fix', break: 'Breaking', imp: 'Improved' };
 
-  container.innerHTML = releases.map((r, i) => `
+  container.innerHTML = releases.map((r, i) => {
+    const tag = releaseTag(r.version);
+    const isLatest = i === 0;
+    const assetLinks = RELEASE_ASSETS.map(a =>
+      `<a href="${assetDownloadUrl(tag, a.name)}" class="btn btn-outline btn-sm release-asset-btn" target="_blank" rel="noopener">${a.label}</a>`
+    ).join('');
+    const downloadBlock = isLatest
+      ? `<div class="release-downloads reveal" id="downloads"><p class="release-downloads-note">Download the application for your OS below. Do not use the &quot;Source code (zip)&quot; or &quot;Source code (tar.gz)&quot; links on GitHub.</p><div class="release-asset-list">${assetLinks}</div></div>`
+      : (r.download_url ? `<a href="${r.download_url}" class="btn btn-outline btn-sm mt-md" target="_blank" rel="noopener">View release on GitHub</a>` : '');
+    return `
     <div class="release-item reveal" id="release-${r.version.replace(/\./g, '-')}">
       <div class="release-header">
         <span class="release-version gradient-text">v${r.version}</span>
         <span class="badge ${typeBadge[r.type] || 'badge-gray'}">${r.type}</span>
-        ${i === 0 ? '<span class="badge badge-green">Latest</span>' : ''}
+        ${isLatest ? '<span class="badge badge-green">Latest</span>' : ''}
         <span class="release-date">📅 ${formatDate(r.date)}</span>
       </div>
       <p style="font-size:.9rem;margin-bottom:16px;">${r.description}</p>
+      ${downloadBlock}
       <div class="release-changes">
         ${r.changes.map(c => `
           <div class="change-item">
@@ -311,9 +340,9 @@ function renderReleases(releases, container, sidebar) {
           </div>
         `).join('')}
       </div>
-      ${r.download_url ? `<a href="${r.download_url}" class="btn btn-outline btn-sm mt-md" target="_blank" rel="noopener">⬇ Download v${r.version}</a>` : ''}
+      ${!isLatest && r.download_url ? `<a href="${r.download_url}" class="btn btn-outline btn-sm mt-md" target="_blank" rel="noopener">View release on GitHub</a>` : ''}
     </div>
-  `).join('');
+  `}).join('');
 
   // Sidebar version list
   if (sidebar) {

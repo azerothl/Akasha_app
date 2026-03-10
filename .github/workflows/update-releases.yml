@@ -1,10 +1,11 @@
-# Example workflow for azerothl/Akasha_app: Update Release Notes + fetch artifacts from private Akasha repo.
-# Copy this to Akasha_app as .github/workflows/update-release.yml (or merge with your existing one).
+# Update Release Notes: update data/releases.json, api/latest.json and optionally create a release with assets.
 #
 # Prerequisites in Akasha_app:
 # - Secret AKASHA_RELEASE_READ_TOKEN: PAT or fine-grained token with read access to azerothl/Akasha (to download release assets).
 #
-# Trigger: repository_dispatch event_type "new_release" from Akasha (payload: version, release_date, release_type, title, description, download_url, changelog, tag, release_url, repository).
+# Triggers:
+# - Automatic: repository_dispatch event_type "new_release" from Akasha (payload: version, release_date, title, description, etc.).
+# - Manual: Actions tab → "Update Release Notes" → "Run workflow". Fill version, release_date, title, description (release creation and asset download are skipped when run manually).
 
 name: Update Release Notes
 
@@ -12,28 +13,39 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Release version (e.g. 1.2.0)'
+        description: 'Release version (e.g. 1.2.0 or v0.2.0)'
         required: true
+        type: string
       release_date:
-        description: 'Release date (YYYY-MM-DD)'
-        required: true
+        description: 'Release date (YYYY-MM-DD). Leave empty for today.'
+        required: false
+        type: string
         default: ''
       release_type:
         description: 'Release type (major, minor, patch)'
         required: true
+        type: choice
         default: 'patch'
+        options:
+          - major
+          - minor
+          - patch
       title:
         description: 'Release title'
         required: true
+        type: string
       description:
         description: 'Short release description'
         required: true
+        type: string
       download_url:
-        description: 'Download URL for this release'
+        description: 'Download URL for this release (optional)'
         required: false
+        type: string
       changelog_json:
-        description: 'JSON array of change objects'
+        description: 'JSON array of change objects (optional, default [])'
         required: false
+        type: string
         default: '[]'
 
   repository_dispatch:
@@ -95,30 +107,49 @@ jobs:
         with:
           name: akasha-release-assets
 
+      - name: Write payload (repository_dispatch)
+        if: github.event_name == 'repository_dispatch'
+        env:
+          PAYLOAD_JSON: ${{ toJson(github.event.client_payload) }}
+        run: |
+          echo "$PAYLOAD_JSON" > payload.json
+
       - name: Resolve inputs (dispatch or workflow_dispatch)
         id: inputs
         run: |
+          set -e
+          DELIM="GHA_OUTPUT_$(openssl rand -hex 8)"
+
+          write_multiline() {
+            local name="$1"
+            local value="$2"
+            echo "${name}<<${DELIM}" >> "$GITHUB_OUTPUT"
+            printf '%s\n' "$value" >> "$GITHUB_OUTPUT"
+            echo "${DELIM}" >> "$GITHUB_OUTPUT"
+          }
+
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            echo "version=${{ github.event.client_payload.version }}"             >> "$GITHUB_OUTPUT"
-            echo "release_date=${{ github.event.client_payload.release_date }}"  >> "$GITHUB_OUTPUT"
-            echo "release_type=${{ github.event.client_payload.release_type }}"  >> "$GITHUB_OUTPUT"
-            echo "title=${{ github.event.client_payload.title }}"                >> "$GITHUB_OUTPUT"
-            echo "description=${{ github.event.client_payload.description }}"   >> "$GITHUB_OUTPUT"
-            echo "download_url=${{ github.event.client_payload.download_url }}" >> "$GITHUB_OUTPUT"
-            CHANGELOG='${{ toJson(github.event.client_payload.changelog) }}'
+            [ -f payload.json ] || { echo "payload.json missing"; exit 1; }
+            echo "version=$(jq -r '.version // ""' payload.json)" >> "$GITHUB_OUTPUT"
+            echo "release_date=$(jq -r '.release_date // ""' payload.json)" >> "$GITHUB_OUTPUT"
+            echo "release_type=$(jq -r '.release_type // "patch"' payload.json)" >> "$GITHUB_OUTPUT"
+            echo "download_url=$(jq -r '.download_url // ""' payload.json)" >> "$GITHUB_OUTPUT"
+            write_multiline "title" "$(jq -r '.title // ""' payload.json)"
+            write_multiline "description" "$(jq -r '.description // ""' payload.json)"
+            jq -c '.changelog // []' payload.json > /tmp/changelog.json
           else
-            echo "version=${{ github.event.inputs.version }}"         >> "$GITHUB_OUTPUT"
+            echo "version=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
             DATE="${{ github.event.inputs.release_date }}"
             [ -z "$DATE" ] && DATE="$(date -u +%Y-%m-%d)"
-            echo "release_date=$DATE"                                 >> "$GITHUB_OUTPUT"
+            echo "release_date=$DATE" >> "$GITHUB_OUTPUT"
             echo "release_type=${{ github.event.inputs.release_type }}" >> "$GITHUB_OUTPUT"
-            echo "title=${{ github.event.inputs.title }}"            >> "$GITHUB_OUTPUT"
-            echo "description=${{ github.event.inputs.description }}" >> "$GITHUB_OUTPUT"
             echo "download_url=${{ github.event.inputs.download_url }}" >> "$GITHUB_OUTPUT"
+            write_multiline "title" "${{ github.event.inputs.title }}"
+            write_multiline "description" "${{ github.event.inputs.description }}"
             CHANGELOG='${{ github.event.inputs.changelog_json }}'
+            [ -z "$CHANGELOG" ] || [ "$CHANGELOG" = "null" ] && CHANGELOG='[]'
+            echo "$CHANGELOG" > /tmp/changelog.json
           fi
-          [ -z "$CHANGELOG" ] || [ "$CHANGELOG" = "null" ] && CHANGELOG='[]'
-          echo "$CHANGELOG" > /tmp/changelog.json
 
       - name: Prepend new release to data/releases.json
         run: |
