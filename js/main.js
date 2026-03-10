@@ -358,6 +358,25 @@ function formatDate(dateStr) {
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
+/* ── Copy AKAS token address ────────────────────────────────────── */
+function initCopyToken() {
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-copy-token');
+    if (!btn) return;
+    const address = btn.getAttribute('data-address') || '';
+    if (!address) return;
+    navigator.clipboard.writeText(address).then(() => {
+      btn.classList.add('copied');
+      btn.textContent = 'Copied!';
+      toast('Token address copied to clipboard', 'success', 2000);
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.textContent = 'Copy';
+      }, 2000);
+    }).catch(() => toast('Copy failed', 'error', 3000));
+  });
+}
+
 /* ── Init ───────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
@@ -368,4 +387,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initDocs();
   loadReleases();
   checkVersion();
+  initCopyToken();
 });

@@ -725,7 +725,7 @@ footer {
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
   gap: 48px;
   margin-bottom: 48px;
 }
@@ -734,6 +734,33 @@ footer {
 .footer-col ul { display: flex; flex-direction: column; gap: 8px; }
 .footer-col ul a { font-size: .85rem; color: var(--text-muted); transition: color var(--transition); }
 .footer-col ul a:hover { color: var(--purple-light); }
+
+.footer-contribute { font-size: .85rem; color: var(--text-muted); margin-bottom: 8px; }
+.footer-token {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  color: var(--purple-light);
+  background: rgba(139,92,246,.12);
+  border: 1px solid rgba(139,92,246,.3);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  margin: 8px 0;
+  word-break: break-all;
+}
+.btn-copy-token {
+  font-size: .8rem;
+  padding: 6px 12px;
+  background: var(--purple);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition), transform .1s ease;
+}
+.btn-copy-token:hover { background: var(--purple-light); }
+.btn-copy-token:active { transform: scale(0.98); }
+.btn-copy-token.copied { background: var(--green); }
 .footer-bottom {
   display: flex;
   align-items: center;
