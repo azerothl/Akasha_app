@@ -27,7 +27,7 @@
       <a href="releases.html">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.2.0</span>
+      <span class="version-pill" aria-label="Current version">v0.3.0</span>
       <a href="releases.html#downloads" class="btn btn-primary btn-sm">
         ⬇ Download
       </a>
@@ -66,6 +66,7 @@
         <div class="docs-nav-section">
           <div class="docs-nav-title">Getting Started</div>
           <a href="#getting-started" class="docs-nav-link" data-target="getting-started">Introduction</a>
+          <a href="#getting-started" class="docs-nav-link" data-target="getting-started">What's new (v0.3.0)</a>
           <a href="#installation" class="docs-nav-link" data-target="installation">Installation</a>
           <a href="#first-run" class="docs-nav-link" data-target="first-run">First Run</a>
         </div>
@@ -78,6 +79,7 @@
         <div class="docs-nav-section">
           <div class="docs-nav-title">Skills</div>
           <a href="#skills-usage" class="docs-nav-link" data-target="skills-usage">Using Skills</a>
+          <a href="#skills-format" class="docs-nav-link" data-target="skills-format">Creating your own skill</a>
           <a href="#skills-api" class="docs-nav-link" data-target="skills-api">Slash commands</a>
         </div>
         <div class="docs-nav-section">
@@ -114,6 +116,14 @@
             <li><strong>Fast</strong> — local processing means zero network latency.</li>
             <li><strong>Open source</strong> — MIT licensed, community-driven.</li>
           </ul>
+          <h3>What's new in v0.3.0</h3>
+          <ul>
+            <li><strong>Device bridge</strong> — fixes for TTL/cancel, device_id propagation, i18n, and requestId param alignment.</li>
+            <li><strong>Tools policy</strong> — fixed bypass on device tools policy.</li>
+            <li><strong>Install script</strong> — <code>install.sh</code> (Linux/macOS) now supports a <code>--foreground</code> flag.</li>
+            <li><strong>Tests</strong> — added unit tests.</li>
+          </ul>
+          <p>For the full changelog, see the <a href="releases.html">Releases</a> page.</p>
         </article>
 
         <!-- Installation -->
@@ -202,13 +212,42 @@ akasha router metrics    # LLM router metrics</code></pre>
         <!-- Skills usage -->
         <article class="docs-article" id="skills-usage">
           <h2>Using Skills</h2>
-          <p>Ask the agent in chat to install a skill from a URL, e.g. « Install the bankr skill from https://github.com/BankrBot/skills/tree/main/bankr ». The agent will download it and reload skills.</p>
+          <p>Ask the agent in chat to install a skill from a URL, e.g. « Install the calculator skill from https://github.com/azerothl/Akasha_skills/tree/main/skills/calculator ». The agent will download it and reload skills.</p>
           <p>To allow other hosts (GitLab, custom HTTPS), edit <code>tools_policy.yaml</code> in the data_dir and set <code>allowed_skill_install_hosts</code> (e.g. <code>["*"]</code> for any HTTPS).</p>
           <p>If you add or change skill files manually in the data_dir, type <code>/skills reload</code> in the chat to reload without restarting the daemon.</p>
           <div class="callout callout-tip">
             <span class="callout-icon">💡</span>
             <div class="callout-body">Browse the <a href="skills.html">Skills Library</a> for install URLs and descriptions.</div>
           </div>
+        </article>
+
+        <!-- Skill format (creating your own) -->
+        <article class="docs-article" id="skills-format">
+          <h2>Creating your own skill</h2>
+          <p>If you want to create a skill for your own use (e.g. hosted elsewhere or only in your data_dir), the daemon only needs a valid <strong>SKILL.md</strong>. The format below is what Akasha expects so the agent can discover and use your skill.</p>
+          <h3>Required file: SKILL.md</h3>
+          <ul>
+            <li><strong>Filename:</strong> <code>SKILL.md</code> (uppercase).</li>
+            <li><strong>Frontmatter (YAML between <code>---</code>):</strong> Required: <code>name</code> (identifier, e.g. <code>my-skill</code>), <code>description</code> (short text: when the agent should use this skill; used for routing). Optional: <code>license</code>, <code>compatibility</code>, <code>metadata</code> (e.g. <code>version: "1.0"</code>).</li>
+            <li><strong>Body:</strong> Markdown with instructions for the agent (when to use the skill, which tools to call, guidelines, examples). See the <a href="https://agentskills.io/specification" target="_blank" rel="noopener">Agent Skills specification</a>.</li>
+          </ul>
+          <h3>skill.json (for the gallery / catalog)</h3>
+          <p>If you publish the skill in the <a href="skills.html">Skills Library</a> or another tool that reads the catalog, add a <code>skill.json</code> with: <code>id</code>, <code>name</code>, <code>version</code>, <code>description</code>, <code>author</code>, <code>category</code>, <code>tags</code>, <code>icon</code> (e.g. <a href="https://lucide.dev" target="_blank" rel="noopener">Lucide</a> name), <code>featured</code>, <code>install_url</code>, <code>install_command</code>.</p>
+          <p>For a <strong>user-only</strong> skill (files in <code>data_dir/skills/</code> or install via URL without listing in the gallery), <strong>only SKILL.md is required</strong>; the daemon does not need <code>skill.json</code>.</p>
+          <h3>Optional directory structure</h3>
+          <p><code>references/</code> (extra docs), <code>scripts/</code>, <code>assets/</code> — see <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noopener">What are skills?</a>. When installing from GitHub, the daemon can fetch the repo tree; for other hosts, only the file at the install URL (usually <code>SKILL.md</code>) is downloaded.</p>
+          <h3>Installing your skill</h3>
+          <p><strong>Via agent:</strong> Ask in chat, e.g. “Install the skill from https://…” The URL must point to a raw <code>SKILL.md</code> or a path where <code>SKILL.md</code> is available.</p>
+          <p><strong>Manual:</strong> Copy your skill folder into <code>data_dir/skills/&lt;name&gt;/</code>, then type <code>/skills reload</code> in chat. For non-GitHub hosts, set <code>allowed_skill_install_hosts</code> in <code>tools_policy.yaml</code> (see <a href="#configuration">Configuration</a>).</p>
+          <h3>Minimal SKILL.md example</h3>
+          <pre><code>---
+name: my-skill
+description: Use when the user wants to do X. Do Y and Z.
+---
+
+# My Skill
+
+When the user asks for X, use the tools A and B. Return the result in format …</code></pre>
         </article>
 
         <!-- Skills API -->
@@ -233,11 +272,11 @@ akasha router metrics    # LLM router metrics</code></pre>
           <pre><code>GET https://azerothl.github.io/Akasha_app/api/latest.json</code></pre>
           <h3>Response format</h3>
           <pre><code>{
-  "version": "0.2.0",
-  "release_date": "2026-03-10",
+  "version": "0.3.0",
+  "release_date": "2026-03-11",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
-  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.2.0",
-  "changelog": "Calendar improvements, release and deploy workflow fixes, Tauri icons.",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.3.0",
+  "changelog": "Device bridge fixes, tools policy, install.sh --foreground, unit tests.",
   "min_supported_version": "0.5.0"
 }</code></pre>
           <h3>Version comparison</h3>
