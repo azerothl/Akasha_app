@@ -1,8 +1,8 @@
 {
-  "version": "v0.2.0",
-  "release_date": "2026-03-10",
+  "version": "v0.3.0",
+  "release_date": "2026-03-11",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
-  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.2.0",
-  "changelog": "## What's Changed\n* Fix CSRF, stale human-input entries, span lifetime, args redaction, backpressure, URL allow-list, i18n, ICO format by @Copilot in https://github.com/azerothl/Akasha/pull/32\n* fix(main_agent): backpressure-aware OrchestratorSender::send by @Copilot in https://github.com/azerothl/Akasha/pull/34\n* fix: emit ToolApprovalExpired event on approval oneshot timeout/error by @Copilot in https://github.com/azerothl/Akasha/pull/33\n* Perf by @azerothl in https://github.com/azerothl/Akasha/pull/31\n* Calendar: fix put_schedule validation, accessibility, perf, and stray build artifact by @Copilot in https://github.com/azerothl/Akasha/pull/36\n* Calendar by @azerothl in https://github.com/azerothl/Akasha/pull/35\n\n\n**Full Changelog**: https://github.com/azerothl/Akasha/compare/v0.1.0...v0.2.0",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.3.0",
+  "changelog": "## What's Changed\n* Fix device bridge: TTL/cancel, device_id propagation, i18n, requestId param mismatch by @Copilot in https://github.com/azerothl/Akasha/pull/38\n* Fix device tools policy bypass, install.sh foreground flag, and add unit tests by @Copilot in https://github.com/azerothl/Akasha/pull/39\n* V0.3 by @azerothl in https://github.com/azerothl/Akasha/pull/37\n\n\n**Full Changelog**: https://github.com/azerothl/Akasha/compare/v0.2.0...v0.3.0",
   "min_supported_version": "0.5.0"
 }
