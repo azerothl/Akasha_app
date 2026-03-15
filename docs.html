@@ -134,8 +134,15 @@
             <li>OS: Windows 10+, macOS 11+, or Ubuntu 20.04+</li>
             <li>Ollama (optional) for local LLM models; otherwise configure a cloud provider (OpenRouter, OpenAI) during init.</li>
           </ul>
-          <h3>Download</h3>
+          <h3>One-line install</h3>
+          <p>Paste one of these commands in your terminal to download, install, and configure Akasha (daemon auto-start and optional config wizard).</p>
+          <p><strong>Windows</strong> (PowerShell):</p>
+          <pre><code>powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/azerothl/Akasha_app/main/scripts/get-akasha.ps1 | iex"</code></pre>
+          <p><strong>Linux / macOS</strong>:</p>
+          <pre><code>curl -sSL https://raw.githubusercontent.com/azerothl/Akasha_app/main/scripts/get-akasha.sh | bash</code></pre>
+          <h3>Download (manual)</h3>
           <p>Go to the <a href="releases.html">Releases</a> page (or <a href="https://github.com/azerothl/Akasha_app/releases" target="_blank" rel="noopener">GitHub Releases</a>). Download the archive for your OS (Windows / Linux / macOS), then extract it to a folder (e.g. <code>C:\Akasha</code> or <code>~/Akasha</code>).</p>
+          <p><strong>Windows:</strong> double-click <code>INSTALL.cmd</code> at the root of the extracted folder to run the installer (no PowerShell execution policy prompt). <strong>Linux / macOS:</strong> run <code>chmod +x scripts/setup.sh &amp;&amp; ./scripts/setup.sh</code>.</p>
           <p>You get the <code>akasha</code> (or <code>akasha.exe</code>), <code>akasha-daemon</code>, <code>akasha-tui</code> executables and a <code>docs</code> folder with the user guide.</p>
           <h3>First run (Linux / macOS)</h3>
           <pre><code>chmod +x akasha akasha-daemon akasha-tui
@@ -192,7 +199,7 @@ akasha router metrics    # LLM router metrics</code></pre>
         <!-- Configuration -->
         <article class="docs-article" id="configuration">
           <h2>Configuration</h2>
-          <p>All config files live in the <strong>data directory</strong>. Run <code>akasha paths</code> to see its path (e.g. <code>C:\Users\…\AppData\Local\akasha</code> on Windows, <code>~/.local/share/akasha</code> on Linux/macOS).</p>
+          <p>All config files live in the <strong>data directory</strong>. Run <code>akasha paths</code> to see its path (e.g. <code>C:\Users\…\akasha</code> on Windows, <code>~/akasha</code> on Linux/macOS).</p>
           <h3>Main files</h3>
           <ul>
             <li><code>llm_router.yaml</code> — LLM providers (Ollama, OpenAI, OpenRouter) and models per task type.</li>
