@@ -1,5 +1,25 @@
 [
   {
+    "version": "v0.5.0",
+    "date": "2026-03-16",
+    "type": "minor",
+    "title": "v0.5.0",
+    "description": "<!-- Release notes generated using configuration in .github/release.yml at v0.5.0 -->\n\n## What's Changed\n### Other\n* V0.4.0 by @azerothl in https://github.com/azerothl/Akasha/pull/42\n* Security: fix Safari 13 regex lookbehind, data URL injection, and XSS via rehype-sanitize by @Copilot in https://github.com/azerothl/Akasha/pull/45\n* Fix security, correctness, and accessibility issues from review by @Copilot in https://github.com/azerothl/Akasha/pull/46\n* Fix path traversal, episodic filter pollution, pipeline no-op, and several correctness issues by @Copilot in https://github.com/azerothl/Akasha/pull/47\n* fix: async fs IO, episodic min_importance, pipeline checkpoint recovery, env var substitution, personality test paths by @Copilot in https://github.com/azerothl/Akasha/pull/48\n* 0.5.0 by @azerothl in https://github.com/azerothl/Akasha/pull/44\n\n\n**Full Changelog**: https://github.com/azerothl/Akasha/compare/v0.4.0...v0.5.0",
+    "changes": [],
+    "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.5.0",
+    "assets": []
+  },
+  {
+    "version": "v0.4.0",
+    "date": "2026-03-13",
+    "type": "minor",
+    "title": "v0.4.0",
+    "description": "## What's Changed\n* fix: BitNetProvider is_available() borrow error and supports_streaming() misreport by @Copilot in https://github.com/azerothl/Akasha/pull/41\n* feat: add BitNet provider for local inference support by @azerothl in https://github.com/azerothl/Akasha/pull/40\n* Fix PR review feedback: security, correctness, and i18n issues from v0.4.0 by @Copilot in https://github.com/azerothl/Akasha/pull/43\n\n\n**Full Changelog**: https://github.com/azerothl/Akasha/compare/v0.3.0...v0.4.0",
+    "changes": [],
+    "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.4.0",
+    "assets": []
+  },
+  {
     "version": "v0.3.0",
     "date": "2026-03-11",
     "type": "minor",
