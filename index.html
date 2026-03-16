@@ -30,7 +30,7 @@
       <a href="releases.html">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.3.0</span>
+      <span class="version-pill" aria-label="Current version">v0.5.0</span>
       <a href="releases.html#downloads" class="btn btn-primary btn-sm">
         ⬇ Download
       </a>
@@ -64,7 +64,7 @@
         </h1>
         <p class="hero-desc animate-fade-up delay-2">
           A powerful, extensible personal assistant that runs entirely on your machine.
-          No cloud. No tracking. Just intelligence at your fingertips.
+          Uses an <strong>embedded model</strong> by default — no Ollama or cloud required. No tracking. Just intelligence at your fingertips.
         </p>
         <div class="hero-actions animate-fade-up delay-3">
           <a href="releases.html#downloads" class="btn btn-primary btn-lg">
@@ -143,13 +143,13 @@
       <div class="card reveal delay-2">
         <div class="feature-icon" aria-hidden="true">🔄</div>
         <h4 class="feature-title">Update check</h4>
-        <p class="feature-desc">Use <code>akasha update check</code> to see if a new version is available. Download from the Releases page when you're ready to upgrade.</p>
+        <p class="feature-desc">Use <code>akasha update check</code> to see if a new version is available. Use <code>akasha update install</code> to open the download page in your browser.</p>
       </div>
 
       <div class="card reveal delay-3">
         <div class="feature-icon" aria-hidden="true">🌗</div>
-        <h4 class="feature-title">Themeable UI</h4>
-        <p class="feature-desc">Choose between dark and light themes, or build your own. Akasha adapts to your workflow and aesthetics.</p>
+        <h4 class="feature-title">TUI &amp; desktop</h4>
+        <p class="feature-desc">Terminal UI (<code>akasha tui</code>) with Chat, Scheduled returns, Router, Doc, Tasks, Calendar, Memory. Desktop app adds Settings, user RAG, and attachments. F2 cycles themes.</p>
       </div>
 
     </div>
@@ -169,10 +169,11 @@
       <div class="card reveal">
         <div class="feature-icon" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:var(--cyan-light)">①</div>
         <h4 class="feature-title">Download &amp; extract</h4>
-        <p class="feature-desc">Download the archive for your OS from the Releases page, extract it, then run <code>akasha init</code> and <code>akasha start</code>.</p>
+        <p class="feature-desc">Download the <strong>akasha-full-&lt;os&gt;</strong> archive from the Releases page and extract it. <strong>Windows:</strong> double-click <code>INSTALL.cmd</code> or run <code>.\scripts\setup.ps1</code>. <strong>Linux / macOS:</strong> run <code>chmod +x scripts/setup.sh &amp;&amp; ./scripts/setup.sh</code>. Then <code>akasha init</code> and <code>akasha start</code>.</p>
         <div style="margin-top:16px">
           <code>akasha init</code> then <code>akasha start</code>
         </div>
+        <p style="margin-top:12px;font-size:0.9rem;color:var(--text-muted)">Run <code>akasha start</code> from the extract folder so the Doc tab shows the user guide.</p>
       </div>
 
       <div class="card reveal delay-1">

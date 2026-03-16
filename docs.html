@@ -27,7 +27,7 @@
       <a href="releases.html">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.3.0</span>
+      <span class="version-pill" aria-label="Current version">v0.5.0</span>
       <a href="releases.html#downloads" class="btn btn-primary btn-sm">
         ⬇ Download
       </a>
@@ -66,7 +66,7 @@
         <div class="docs-nav-section">
           <div class="docs-nav-title">Getting Started</div>
           <a href="#getting-started" class="docs-nav-link" data-target="getting-started">Introduction</a>
-          <a href="#getting-started" class="docs-nav-link" data-target="getting-started">What's new (v0.3.0)</a>
+          <a href="#getting-started" class="docs-nav-link" data-target="getting-started">What's new (v0.5.0)</a>
           <a href="#installation" class="docs-nav-link" data-target="installation">Installation</a>
           <a href="#first-run" class="docs-nav-link" data-target="first-run">First Run</a>
         </div>
@@ -75,6 +75,10 @@
           <a href="#commands" class="docs-nav-link" data-target="commands">Commands</a>
           <a href="#configuration" class="docs-nav-link" data-target="configuration">Configuration</a>
           <a href="#themes" class="docs-nav-link" data-target="themes">Interfaces</a>
+          <a href="#tools-policy" class="docs-nav-link" data-target="tools-policy">Tools policy</a>
+          <a href="#channels" class="docs-nav-link" data-target="channels">Channels</a>
+          <a href="#env-vars" class="docs-nav-link" data-target="env-vars">Environment variables</a>
+          <a href="#troubleshooting" class="docs-nav-link" data-target="troubleshooting">Troubleshooting</a>
         </div>
         <div class="docs-nav-section">
           <div class="docs-nav-title">Skills</div>
@@ -116,12 +120,11 @@
             <li><strong>Fast</strong> — local processing means zero network latency.</li>
             <li><strong>Open source</strong> — MIT licensed, community-driven.</li>
           </ul>
-          <h3>What's new in v0.3.0</h3>
+          <h3>What's new in v0.5.0</h3>
           <ul>
-            <li><strong>Device bridge</strong> — fixes for TTL/cancel, device_id propagation, i18n, and requestId param alignment.</li>
-            <li><strong>Tools policy</strong> — fixed bypass on device tools policy.</li>
-            <li><strong>Install script</strong> — <code>install.sh</code> (Linux/macOS) now supports a <code>--foreground</code> flag.</li>
-            <li><strong>Tests</strong> — added unit tests.</li>
+            <li><strong>Security</strong> — fixes for Safari 13 regex lookbehind, data URL injection, and XSS via rehype-sanitize.</li>
+            <li><strong>Correctness</strong> — path traversal, episodic filter pollution, pipeline no-op, and several correctness issues fixed.</li>
+            <li><strong>Functional</strong> — async fs I/O, episodic min_importance, pipeline checkpoint recovery, env var substitution, personality test paths.</li>
           </ul>
           <p>For the full changelog, see the <a href="releases.html">Releases</a> page.</p>
         </article>
@@ -132,7 +135,7 @@
           <h3>Requirements</h3>
           <ul>
             <li>OS: Windows 10+, macOS 11+, or Ubuntu 20.04+</li>
-            <li>Ollama (optional) for local LLM models; otherwise configure a cloud provider (OpenRouter, OpenAI) during init.</li>
+            <li><strong>Embedded model by default</strong> — no external installation required for core use. Ollama and cloud providers (OpenRouter, OpenAI) are optional; configure them during <code>akasha init</code> if you want to use them.</li>
           </ul>
           <h3>One-line install</h3>
           <p>Paste one of these commands in your terminal to download, install, and configure Akasha (daemon auto-start and optional config wizard).</p>
@@ -141,9 +144,9 @@
           <p><strong>Linux / macOS</strong>:</p>
           <pre><code>curl -sSL https://raw.githubusercontent.com/azerothl/Akasha_app/main/scripts/get-akasha.sh | bash</code></pre>
           <h3>Download (manual)</h3>
-          <p>Go to the <a href="releases.html">Releases</a> page (or <a href="https://github.com/azerothl/Akasha_app/releases" target="_blank" rel="noopener">GitHub Releases</a>). Download the archive for your OS (Windows / Linux / macOS), then extract it to a folder (e.g. <code>C:\Akasha</code> or <code>~/Akasha</code>).</p>
-          <p><strong>Windows:</strong> double-click <code>INSTALL.cmd</code> at the root of the extracted folder to run the installer (no PowerShell execution policy prompt). <strong>Linux / macOS:</strong> run <code>chmod +x scripts/setup.sh &amp;&amp; ./scripts/setup.sh</code>.</p>
-          <p>You get the <code>akasha</code> (or <code>akasha.exe</code>), <code>akasha-daemon</code>, <code>akasha-tui</code> executables and a <code>docs</code> folder with the user guide.</p>
+          <p>Go to the <a href="releases.html">Releases</a> page (or <a href="https://github.com/azerothl/Akasha_app/releases" target="_blank" rel="noopener">GitHub Releases</a>). For a complete install, download the <strong>akasha-full-&lt;os&gt;</strong> archive (CLI + daemon + TUI + desktop app + scripts). Extract it to a folder (e.g. <code>C:\Akasha</code> or <code>~/Akasha</code>).</p>
+          <p><strong>Windows:</strong> double-click <code>INSTALL.cmd</code> at the root of the extracted folder to run the installer (no PowerShell execution policy prompt), or run <code>.\scripts\setup.ps1</code>. <strong>Linux / macOS:</strong> run <code>chmod +x scripts/setup.sh &amp;&amp; ./scripts/setup.sh</code>.</p>
+          <p>You get the <code>akasha</code> (or <code>akasha.exe</code>), <code>akasha-daemon</code>, <code>akasha-tui</code> executables, a <code>docs</code> folder with the user guide, and in the full zip a <code>ui</code> subfolder with the desktop app installer.</p>
           <h3>First run (Linux / macOS)</h3>
           <pre><code>chmod +x akasha akasha-daemon akasha-tui
 ./akasha init
@@ -153,17 +156,17 @@
           <pre><code>.\akasha.exe init
 .\akasha.exe start
 .\akasha.exe tui   # terminal interface</code></pre>
-          <p>Run <code>akasha start</code> from the folder where you extracted the archive so the in-app Doc tab can show the user guide.</p>
+          <p>Run <code>akasha start</code> from the folder where you extracted the archive so the in-app <strong>Doc</strong> tab can show the user guide (the daemon serves it from the <code>docs</code> folder in that directory).</p>
         </article>
 
         <!-- First run -->
         <article class="docs-article" id="first-run">
           <h2>First Run</h2>
-          <p><code>akasha init</code> runs an interactive setup: LLM provider (Ollama, OpenRouter, OpenAI), vault, and optional channels (Telegram, Slack, Discord). Use <code>akasha init --defaults</code> for minimal setup without prompts.</p>
+          <p><code>akasha init</code> runs an interactive setup: LLM provider (embedded, Ollama, OpenRouter, OpenAI), vault, and optional channels (Telegram, Slack, Discord). Use <code>akasha init --defaults</code> for minimal setup without prompts.</p>
           <p>Then start the daemon and open the interface:</p>
           <pre><code>akasha start      # background daemon (auto-restart on crash)
-akasha tui        # terminal UI: Chat, Router, Doc, Tasks, Calendar, Memory</code></pre>
-          <p>If you have the desktop app (Akasha UI), launch it; it connects to the daemon on port 3876.</p>
+akasha tui        # terminal UI: Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory</code></pre>
+          <p>If you have the desktop app (Akasha UI), launch it; it connects to the daemon on port 3876 (configurable via <code>AKASHA_PORT</code>).</p>
         </article>
 
         <!-- Commands -->
@@ -188,12 +191,28 @@ akasha vault delete KEY  # Remove a key</code></pre>
           <h3>Config &amp; router</h3>
           <pre><code>akasha config models routes   # Models per category
 akasha config models set CATEGORY PROVIDER MODEL
+akasha config models fetch   # Fetch Ollama model info
+akasha config models get [CATEGORY]   # Show models
 akasha config env list   # List env vars in akasha.env
-akasha router metrics    # LLM router metrics</code></pre>
+akasha config env get KEY / set KEY [value]
+akasha config provider list   # List providers in llm_router.yaml
+akasha config provider set-ollama [--url URL] [--category CAT] [--model MODÈLE]
+akasha config provider add-openai [--api-key KEY] [--category CAT] [--model MODÈLE]
+akasha config provider add-openrouter [--api-key KEY] [--category CAT] [--model MODÈLE]
+akasha router metrics    # LLM router metrics
+akasha router discover   # Discover Ollama instances
+akasha router show MODEL # Ollama model info</code></pre>
+          <h3>Plugins</h3>
+          <pre><code>akasha plugin list      # List installed plugins
+akasha plugin reload    # Reload plugins (no daemon restart)
+akasha plugin install PATH   # Install from directory
+akasha plugin uninstall ID  # Uninstall by id
+akasha plugin catalog   # Local catalog of available plugins</code></pre>
           <h3>Interfaces</h3>
-          <pre><code>akasha tui   # Terminal UI (Chat, Router, Doc, Tasks, Calendar, Memory)</code></pre>
-          <h3>Update check</h3>
-          <pre><code>akasha update check   # Check for a new version (download from Releases)</code></pre>
+          <pre><code>akasha tui   # Terminal UI (Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory)</code></pre>
+          <h3>Update</h3>
+          <pre><code>akasha update check    # Check for a new version; prints download URL if available
+akasha update install   # Open the latest release download page in the browser</code></pre>
         </article>
 
         <!-- Configuration -->
@@ -202,10 +221,11 @@ akasha router metrics    # LLM router metrics</code></pre>
           <p>All config files live in the <strong>data directory</strong>. Run <code>akasha paths</code> to see its path (e.g. <code>C:\Users\…\akasha</code> on Windows, <code>~/akasha</code> on Linux/macOS).</p>
           <h3>Main files</h3>
           <ul>
-            <li><code>llm_router.yaml</code> — LLM providers (Ollama, OpenAI, OpenRouter) and models per task type.</li>
-            <li><code>tools_policy.yaml</code> — Tool permissions: file paths, allowed commands, web domains, skill-install hosts.</li>
+            <li><code>llm_router.yaml</code> — LLM providers (Ollama, OpenAI, OpenRouter, embedded) and models per task type.</li>
+            <li><code>tools_policy.yaml</code> — Tool permissions: file paths, allowed commands, web search, skill-install hosts (see <a href="#tools-policy">Tools policy</a>).</li>
             <li><code>akasha.env</code> — Persistent env vars (also editable via <code>akasha config env set</code>).</li>
-            <li><code>connectors.env</code> — Telegram, Slack, Discord activation.</li>
+            <li><code>connectors.env</code> — Telegram, Slack, Discord activation (see <a href="#channels">Channels</a>).</li>
+            <li><code>agent_profile.json</code> — Agent profile: name, role, personality, rules. Editable in Settings → Agent profile (web UI) or by editing the file and restarting the daemon.</li>
           </ul>
           <p><code>akasha init</code> or <code>akasha doctor --fix</code> creates the data_dir and minimal config files if missing.</p>
         </article>
@@ -213,7 +233,58 @@ akasha router metrics    # LLM router metrics</code></pre>
         <!-- Themes -->
         <article class="docs-article" id="themes">
           <h2>Interfaces</h2>
-          <p>The <strong>TUI</strong> (<code>akasha tui</code>) has tabs: Chat, Router, Doc, Tasks, Calendar, Memory. The <strong>desktop app</strong> (if installed) connects to the same daemon and supports attachments (images, documents) and user RAG in Settings.</p>
+          <p>The <strong>TUI</strong> (<code>akasha tui</code>) has <strong>7 tabs</strong>: <strong>Chat</strong>, <strong>Scheduled</strong> (planned returns — agent responses for recurring/scheduled tasks, separate from the main chat), <strong>Router</strong> (LLM metrics), <strong>Doc</strong> (user guide), <strong>Tasks</strong>, <strong>Calendar</strong>, <strong>Memory</strong>. Use Tab to switch; R to refresh Router, Scheduled, or task list; F2 to cycle themes.</p>
+          <p>The <strong>desktop app</strong> (Akasha UI, if installed) connects to the same daemon on port 3876 and adds: <strong>Settings</strong> (Paramètres) with <strong>Agent profile</strong> (name, role, personality, rules), <strong>User RAG</strong> (My documents — add/remove documents; excerpts are used by the agent in answers), and <strong>attachments</strong> in Chat (images, PDFs, text). Use keys <strong>1–8</strong> to switch tabs when focus is not in an input field.</p>
+        </article>
+
+        <!-- Tools policy -->
+        <article class="docs-article" id="tools-policy">
+          <h2>Tools policy (tools_policy.yaml)</h2>
+          <p>The <code>tools_policy.yaml</code> file in the data directory controls what the agent can do on your machine:</p>
+          <ul>
+            <li><strong>allowed_read_paths</strong> / <strong>allowed_write_paths</strong> — Directories or files allowed for read/write. By default (empty or absent), everything is denied. Example: <code>["."]</code> for current directory.</li>
+            <li><strong>allowed_commands</strong> — Executable names allowed for shell commands (e.g. <code>cargo</code>, <code>npm</code>, <code>git</code>). Commands required by installed skills are added automatically.</li>
+            <li><strong>web_search_enabled</strong> — Set to <code>true</code> to allow web search (Brave API) for weather, news, etc. Requires <code>akasha vault set brave_api_key YOUR_KEY</code> or <code>BRAVE_API_KEY</code> env var.</li>
+            <li><strong>allowed_skill_install_hosts</strong> — Hosts allowed for skill installation (default: GitHub only). Use <code>["*"]</code> to allow any HTTPS host.</li>
+          </ul>
+          <p>If the file is missing, <code>akasha doctor --fix</code> creates a minimal one; edit it as needed.</p>
+        </article>
+
+        <!-- Channels -->
+        <article class="docs-article" id="channels">
+          <h2>Channels (Telegram, Slack, Discord)</h2>
+          <p>Optional connectors let the agent respond on external platforms. Store tokens in the vault and set the matching env var to <code>1</code>. Activation vars are loaded from <code>connectors.env</code> in the data directory (created or updated by <code>akasha init</code>).</p>
+          <ul>
+            <li><strong>Telegram</strong> — <code>akasha vault set telegram_bot_token YOUR_TOKEN</code>, then <code>AKASHA_TELEGRAM_ENABLED=1</code>. Bot responds to <code>/akasha &lt;message&gt;</code> or <code>/start</code>.</li>
+            <li><strong>Slack</strong> — Store <code>slack_signing_secret</code> in vault, set <code>AKASHA_SLACK_ENABLED=1</code>. Configure the slash command to point to your deployment URL.</li>
+            <li><strong>Discord</strong> — <code>akasha vault set discord_bot_token YOUR_TOKEN</code>, then <code>AKASHA_DISCORD_ENABLED=1</code>. Bot responds to <code>!akasha &lt;message&gt;</code>.</li>
+          </ul>
+        </article>
+
+        <!-- Environment variables -->
+        <article class="docs-article" id="env-vars">
+          <h2>Environment variables</h2>
+          <p>Useful variables (set in <code>akasha.env</code> or via <code>akasha config env set</code>):</p>
+          <ul>
+            <li><code>AKASHA_PORT</code> — Daemon port (default 3876).</li>
+            <li><code>AKASHA_DATA_DIR</code> — Data directory (default <code>%USERPROFILE%\akasha</code> on Windows, <code>~/akasha</code> on Linux/macOS).</li>
+            <li><code>AKASHA_LANG</code> — TUI language (<code>en</code> for English, otherwise French from locale).</li>
+            <li><code>AKASHA_LOG</code> — Log level: trace, debug, info, warn, error (default info).</li>
+            <li><code>AKASHA_APP_BASE_URL</code> — Base URL for update check (default <code>https://azerothl.github.io/Akasha_app</code>).</li>
+            <li><code>AKASHA_SYSTEM_TASK_MAX_TOKENS</code> — Max tokens for system tasks (memory, decomposition). Increase (e.g. 8192) if a “thinking” model returns empty responses.</li>
+            <li><code>OLLAMA_HOST</code> — Ollama URL if not set in <code>llm_router.yaml</code> (default <code>http://localhost:11434</code>).</li>
+          </ul>
+        </article>
+
+        <!-- Troubleshooting -->
+        <article class="docs-article" id="troubleshooting">
+          <h2>Troubleshooting</h2>
+          <ul>
+            <li><strong>Doc tab is empty</strong> — Start the daemon from the folder where you extracted the archive (the one that contains the <code>docs</code> folder).</li>
+            <li><strong>Empty responses with a “thinking” model</strong> — Some cloud models return empty content for system tasks. Increase <code>AKASHA_SYSTEM_TASK_MAX_TOKENS</code> (e.g. <code>akasha config env set AKASHA_SYSTEM_TASK_MAX_TOKENS 8192</code>) and restart the daemon.</li>
+            <li><strong>Daemon won’t start</strong> — Run <code>akasha doctor</code> and <code>akasha doctor --fix</code> to create missing data_dir and config files.</li>
+            <li><strong>No responses or timeouts</strong> — By default the embedded model is used; check <code>akasha doctor</code> (embedded_llm section) or <code>/embedded</code> in chat. For Ollama, ensure it is running; for cloud, check vault or env keys. Use <code>akasha config models routes</code> and the Router tab to see active models.</li>
+          </ul>
         </article>
 
         <!-- Skills usage -->
@@ -260,16 +331,29 @@ When the user asks for X, use the tools A and B. Return the result in format …
         <!-- Skills API -->
         <article class="docs-article" id="skills-api">
           <h2>Slash commands (in chat)</h2>
-          <p>In the chat (TUI or web), messages starting with <code>/</code> are commands:</p>
-          <pre><code>/help, /?        # Help
-/status          # Daemon status
-/doctor          # Diagnostic
-/skills reload   # Reload skills after adding or editing files
-/restart         # Restart daemon (when run with supervisor)
-/models list     # Models by category
-/config list     # Env vars (akasha.env)
-/vault list      # Vault key names</code></pre>
-          <p>Use the CLI for vault write/delete: <code>akasha vault set KEY value</code>, <code>akasha vault delete KEY</code>.</p>
+          <p>In the chat (TUI or web), messages starting with <code>/</code> are commands. Type <code>/help</code> or <code>/?</code> for the full list. Summary:</p>
+          <pre><code>/help, /?                    # Help
+/task create "message"         # Create a task (sends message to agent)
+/schedule create NAME INTERVAL_SEC "description"   # Create recurring schedule
+/schedule delete SCHEDULE_ID   # Delete a schedule
+/stop TASK_ID, /cancel TASK_ID # Cancel task
+/newsession                    # New session (clear short-term context)
+/status                        # Daemon status
+/doctor                        # Diagnostic
+/advice                        # Diagnostic advice (RAG + model, daemon must be running)
+/embedded, /embedded reload     # Embedded model status / unload (reload on next call)
+/metrics                        # Router metrics
+/models, /models list          # Models by category
+/models set CATEGORY PROVIDER MODEL   # Set model for category
+/routes                        # Primary and fallback per category
+/config list, /config get KEY, /config set KEY value   # Env vars (akasha.env)
+/vault list                    # Vault key names (write/delete via CLI only)
+/plugins                       # List installed plugins
+/reload                        # Reload plugins
+/skills reload                 # Reload skills after adding or editing files
+/skills uninstall &lt;name&gt;       # Uninstall a skill
+/restart                       # Restart daemon (when run with supervisor)</code></pre>
+          <p>To add or remove secrets, use the CLI only: <code>akasha vault set KEY value</code>, <code>akasha vault delete KEY</code>.</p>
         </article>
 
         <!-- Update API -->
@@ -279,11 +363,11 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <pre><code>GET https://azerothl.github.io/Akasha_app/api/latest.json</code></pre>
           <h3>Response format</h3>
           <pre><code>{
-  "version": "0.3.0",
-  "release_date": "2026-03-11",
+  "version": "0.5.0",
+  "release_date": "2026-03-16",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
-  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.3.0",
-  "changelog": "Device bridge fixes, tools policy, install.sh --foreground, unit tests.",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.5.0",
+  "changelog": "Security fixes (Safari 13, data URL, XSS). Path traversal, episodic filter, pipeline. Async fs I/O, checkpoint recovery, env var substitution.",
   "min_supported_version": "0.5.0"
 }</code></pre>
           <h3>Version comparison</h3>
