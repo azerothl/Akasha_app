@@ -12,6 +12,13 @@ const el = (tag, cls = '', html = '') => {
   return e;
 };
 
+/** Single "v" prefix for UI (JSON often already has v0.6.0). Used by terminal + releases + skills. */
+function displayVersion(ver) {
+  if (ver == null || ver === '') return '';
+  const core = String(ver).trim().replace(/^v+/i, '');
+  return core ? 'v' + core : '';
+}
+
 /* ── Toast ──────────────────────────────────────────────────────── */
 function toast(msg, type = 'default', duration = 3000) {
   let container = $('.toast-container');
@@ -65,32 +72,38 @@ function initReveal() {
 }
 
 /* ── Terminal animation (index.html) ────────────────────────────── */
-function initTerminal() {
+async function initTerminal() {
   const body = $('.terminal-body');
   if (!body) return;
 
+  let ver = 'v0.6.0';
+  try {
+    const res = await fetch('api/latest.json');
+    if (res.ok) {
+      const d = await res.json();
+      ver = displayVersion(d.version) || ver;
+    }
+  } catch (_) { /* use fallback */ }
+
   const lines = [
-    { delay: 300,  html: '<span class="t-prompt">❯</span> <span class="t-cmd">akasha</span>' },
-    { delay: 800,  html: '<span class="t-success">✓</span> <span class="t-out">Akasha v0.5.0 — your privacy-first assistant</span>' },
-    { delay: 1200, html: '' },
-    { delay: 1400, html: '<span class="t-prompt">❯</span> <span class="t-cmd">What is the weather in Paris?</span>' },
-    { delay: 2000, html: '<span class="t-info">🌤  Paris, France — 18°C, Partly cloudy</span>' },
-    { delay: 2200, html: '<span class="t-out">    Wind: 12 km/h NW · Humidity: 62%</span>' },
-    { delay: 2500, html: '' },
-    { delay: 2700, html: '<span class="t-prompt">❯</span> <span class="t-cmd">set a timer for 5 minutes</span>' },
-    { delay: 3100, html: '<span class="t-success">✓</span> <span class="t-out">Timer set for 5 minutes</span>' },
-    { delay: 3400, html: '' },
-    { delay: 3600, html: '<span class="t-prompt">❯</span> <span class="t-cmd">akasha install weather</span>' },
-    { delay: 4000, html: '<span class="t-info">↓</span> <span class="t-out">Downloading weather skill v1.2.0…</span>' },
-    { delay: 4500, html: '<span class="t-success">✓</span> <span class="t-out">Skill installed successfully</span>' },
-    { delay: 4800, html: '' },
-    { delay: 5000, html: '<span class="t-prompt">❯</span> <span class="t-cursor"></span>' },
+    { delay: 300,  html: '<span class="t-prompt">❯</span> <span class="t-cmd">akasha --version</span>' },
+    { delay: 900,  html: `<span class="t-success">✓</span> <span class="t-out">Akasha ${ver}</span>` },
+    { delay: 1300, html: '' },
+    { delay: 1500, html: '<span class="t-prompt">❯</span> <span class="t-cmd">akasha init --defaults</span>' },
+    { delay: 2400, html: '<span class="t-out">Embedded model · vault · data directory ready</span>' },
+    { delay: 2800, html: '' },
+    { delay: 3000, html: '<span class="t-prompt">❯</span> <span class="t-cmd">akasha start</span>' },
+    { delay: 3800, html: '<span class="t-success">✓</span> <span class="t-out">Daemon listening on 127.0.0.1:3876</span>' },
+    { delay: 4200, html: '' },
+    { delay: 4400, html: '<span class="t-prompt">❯</span> <span class="t-cmd">akasha tui</span>' },
+    { delay: 5200, html: '<span class="t-info">→</span> <span class="t-out">Chat · Router · Tasks · Calendar · Memory</span>' },
+    { delay: 5600, html: '' },
+    { delay: 5800, html: '<span class="t-prompt">❯</span> <span class="t-cursor"></span>' },
   ];
 
   body.innerHTML = '';
   lines.forEach(({ delay, html }) => {
     setTimeout(() => {
-      // Remove any existing cursor line
       const cursor = body.querySelector('.t-cursor');
       if (cursor && cursor.parentElement) cursor.parentElement.remove();
       const line = el('div', '', html || '&nbsp;');
@@ -157,7 +170,7 @@ function renderSkills(skills) {
   const agentPrompt = (url) => `Download the skill at this url ${url} and follow the SKILL.md instructions.`;
   grid.innerHTML = skills.map(s => {
     const tags = (s.tags || []).slice(0, 4).map(t => `<span class="skill-tag">#${t}</span>`).join('');
-    const versionBadge = s.version ? `<span class="badge badge-purple">v${s.version}</span>` : '';
+    const versionBadge = s.version ? `<span class="badge badge-purple">${displayVersion(s.version)}</span>` : '';
     const installBlock = s.coming_soon
       ? '<div class="skill-install-block"><span class="skill-install-muted">Coming soon</span></div>'
       : (s.install_url
@@ -331,12 +344,12 @@ function renderReleases(releases, container, sidebar) {
     return `
     <div class="release-item reveal" id="release-${r.version.replace(/\./g, '-')}">
       <div class="release-header">
-        <span class="release-version gradient-text">v${r.version}</span>
+        <span class="release-version gradient-text">${displayVersion(r.version)}</span>
         <span class="badge ${typeBadge[r.type] || 'badge-gray'}">${r.type}</span>
         ${isLatest ? '<span class="badge badge-green">Latest</span>' : ''}
         <span class="release-date">📅 ${formatDate(r.date)}</span>
       </div>
-      <p style="font-size:.9rem;margin-bottom:16px;">${r.description}</p>
+      <div class="release-description">${markdownToSafeHtml(r.description)}</div>
       ${downloadBlock}
       <div class="release-changes">
         ${r.changes.map(c => `
@@ -354,7 +367,7 @@ function renderReleases(releases, container, sidebar) {
   if (sidebar) {
     sidebar.innerHTML = releases.map((r, i) => `
       <a href="#release-${r.version.replace(/\./g, '-')}" class="docs-nav-link ${i === 0 ? 'active' : ''}">
-        v${r.version}
+        ${displayVersion(r.version)}
         ${i === 0 ? '<span class="badge badge-green" style="margin-left:auto">Latest</span>' : ''}
       </a>
     `).join('');
@@ -371,7 +384,7 @@ async function checkVersion() {
     const res = await fetch('api/latest.json');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    badge.textContent = `v${data.version}`;
+    badge.textContent = displayVersion(data.version);
   } catch { /* ignore */ }
 }
 
@@ -411,6 +424,56 @@ function starRating(rating) {
 function formatDate(dateStr) {
   const d = new Date(dateStr);
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+/** Escape HTML for fallback when markdown libs are unavailable */
+function escapeHtmlText(s) {
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML;
+}
+
+let _markdownPurifyHooked = false;
+
+/**
+ * Release notes from GitHub are Markdown; render safely for innerHTML.
+ * Uses marked + DOMPurify when loaded (releases.html); otherwise plain text with line breaks.
+ */
+function markdownToSafeHtml(md) {
+  /* GitHub often prefixes release bodies with an HTML comment */
+  const raw = String(md || '')
+    .replace(/^\s*<!--[\s\S]*?-->\s*/g, '')
+    .trim();
+  if (!raw) return '';
+  if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+    try {
+      if (!_markdownPurifyHooked) {
+        _markdownPurifyHooked = true;
+        DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+          if (node.tagName === 'A' && node.hasAttribute('href')) {
+            const href = node.getAttribute('href') || '';
+            if (/^https?:\/\//i.test(href)) {
+              node.setAttribute('target', '_blank');
+              node.setAttribute('rel', 'noopener noreferrer');
+            }
+          }
+        });
+      }
+      const html = marked.parse(raw, { mangle: false, headerIds: false });
+      return DOMPurify.sanitize(html, {
+        ALLOWED_TAGS: [
+          'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'ul', 'ol', 'li',
+          'a', 'strong', 'em', 'code', 'pre', 'blockquote', 'hr',
+          'table', 'thead', 'tbody', 'tr', 'th', 'td',
+        ],
+        ALLOWED_ATTR: ['href', 'title', 'colspan', 'rowspan'],
+        ALLOW_DATA_ATTR: false,
+      });
+    } catch (e) {
+      console.warn('markdownToSafeHtml:', e);
+    }
+  }
+  return '<p>' + escapeHtmlText(raw).replace(/\n/g, '<br>') + '</p>';
 }
 
 /* ── Copy AKAS token address ────────────────────────────────────── */

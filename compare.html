@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compare — Akasha vs OpenClaw, Claude Code</title>
+  <meta name="description" content="How Akasha compares to OpenClaw and Claude Code — local-first assistant, IDE agents, and messaging bots." />
+  <meta name="theme-color" content="#8b5cf6" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon" aria-hidden="true">✦</div>
+      Akasha
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="skills.html">Skills</a>
+      <a href="docs.html">Docs</a>
+      <a href="compare.html" class="active">Compare</a>
+      <a href="releases.html">Releases</a>
+    </div>
+    <div class="nav-actions">
+      <span class="version-pill" aria-label="Current version">v0.6.0</span>
+      <a href="releases.html#downloads" class="btn btn-primary btn-sm">⬇ Download</a>
+    </div>
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">🏠 Home</a>
+  <a href="skills.html">🧩 Skills</a>
+  <a href="docs.html">📖 Docs</a>
+  <a href="compare.html" class="active">⚖ Compare</a>
+  <a href="releases.html">📋 Releases</a>
+  <a href="releases.html#downloads" class="btn btn-primary">⬇ Download</a>
+</div>
+
+<div style="padding-top: var(--nav-height); background: var(--bg-secondary); border-bottom: 1px solid var(--border);">
+  <div class="container" style="padding-top: 48px; padding-bottom: 48px;">
+    <span class="section-eyebrow animate-fade-up">⚖ Product comparison</span>
+    <h1 class="animate-fade-up delay-1" style="margin-top: 14px; margin-bottom: 10px;">
+      Akasha <span class="gradient-text">vs</span> similar tools
+    </h1>
+    <p class="animate-fade-up delay-2" style="max-width: 720px;">
+      Indicative comparison on a few axes. Products evolve quickly — check each vendor’s site before you decide.
+    </p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="callout callout-tip reveal" style="margin-bottom: 32px;">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body">
+        <strong>OpenClaw</strong> — general assistant via CLI, many chat apps (see <a href="https://openclaws.io" target="_blank" rel="noopener">openclaws.io</a>). <strong>Claude Code</strong> — Anthropic’s coding agent inside the IDE workflow. <strong>Akasha</strong> — Rust-based daemon + TUI + desktop, embedded model default, explicit tools policy; <strong>application source is private</strong> — end users receive prebuilt binaries only.
+      </div>
+    </div>
+
+    <div class="compare-table-wrap reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th scope="col">Capability / angle</th>
+            <th scope="col">Akasha</th>
+            <th scope="col">OpenClaw</th>
+            <th scope="col">Claude Code</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Primary focus</th>
+            <td>Personal assistant daemon (24/7), TUI + web + optional channels</td>
+            <td>Do-things assistant; CLI + many messengers (Slack, Telegram, WhatsApp, …)</td>
+            <td>Software development inside editor/terminal (Anthropic ecosystem)</td>
+          </tr>
+          <tr>
+            <th scope="row">Default LLM</th>
+            <td>Embedded small model (no account); Ollama / APIs optional</td>
+            <td>Bring your own API keys or local (e.g. Ollama)</td>
+            <td>Claude models (subscription / API)</td>
+          </tr>
+          <tr>
+            <th scope="row">Runtime stack</th>
+            <td>Rust binaries + optional Tauri UI</td>
+            <td>Node-based CLI (typical install)</td>
+            <td>IDE / terminal integration</td>
+          </tr>
+          <tr>
+            <th scope="row">Tool / file access</th>
+            <td><code>tools_policy.yaml</code> — deny-by-default paths &amp; commands</td>
+            <td>Configurable (full access or sandbox per docs)</td>
+            <td>Repo-scoped coding tasks</td>
+          </tr>
+          <tr>
+            <th scope="row">Skills / extensions</th>
+            <td>SKILL.md skills + plugins; install via chat or files</td>
+            <td>Skills &amp; plugins ecosystem</td>
+            <td>MCP, slash commands, project context</td>
+          </tr>
+          <tr>
+            <th scope="row">Observability</th>
+            <td>Timeline &amp; metrics HTTP API (v0.6+), Router tab in TUI</td>
+            <td>Dashboard / logs (varies by version)</td>
+            <td>IDE-integrated output</td>
+          </tr>
+          <tr>
+            <th scope="row">Source code</th>
+            <td><strong>Not published</strong> — engine is proprietary; only binaries are distributed</td>
+            <td>Public repositories (open source)</td>
+            <td>Closed source (vendor)</td>
+          </tr>
+          <tr>
+            <th scope="row">Account required</th>
+            <td>No (for embedded path)</td>
+            <td>No for OSS; APIs billed separately</td>
+            <td>Yes (Anthropic)</td>
+          </tr>
+          <tr>
+            <th scope="row">License (typical)</th>
+            <td><strong>Proprietary</strong> — use governed by terms shipped with the binary / release</td>
+            <td>Open source (e.g. MIT per project)</td>
+            <td>Commercial product + ToS</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="reveal delay-1" style="margin-top: 28px; font-size: 0.9rem; color: var(--text-muted);">
+      Akasha downloads and docs live on this site and <a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub (Akasha_app)</a>. This table is not exhaustive and does not imply endorsement.
+    </p>
+
+    <div class="text-center mt-lg reveal">
+      <a href="releases.html#downloads" class="btn btn-primary btn-lg">⬇ Try Akasha</a>
+      <a href="docs.html" class="btn btn-outline btn-lg">📖 Documentation</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-icon" aria-hidden="true">✦</div>
+          Akasha
+        </div>
+        <p>A privacy-first personal assistant with a powerful skill system.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="compare.html">Compare</a></li>
+          <li><a href="releases.html#downloads">Download</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Docs</h4>
+        <ul>
+          <li><a href="docs.html">Documentation</a></li>
+          <li><a href="releases.html">Changelog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">Issues</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Akasha. Engine: proprietary. Site repo may use open licences separately.</span>
+      <div class="footer-bottom-links">
+        <a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a>
+        <a href="docs.html">Docs</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 # Update Release Notes: update data/releases.json, api/latest.json and optionally create a release with assets.
+# Pipeline overview: see README.md § Release pipeline (sanity checklist).
 #
 # Prerequisites in Akasha_app:
 # - Secret AKASHA_RELEASE_READ_TOKEN: PAT or fine-grained token with read access to azerothl/Akasha (to download release assets).

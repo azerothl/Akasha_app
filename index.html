@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Akasha — Your Privacy-First Personal Assistant</title>
-  <meta name="description" content="Akasha is a modern, privacy-first personal assistant with a powerful skill system. All data stays on your machine." />
+  <meta name="description" content="Akasha — local-first AI assistant: daemon 24/7, embedded model by default, skills, policy-controlled tools, TUI & desktop." />
   <meta name="theme-color" content="#8b5cf6" />
   <meta property="og:title" content="Akasha — Privacy-First Personal Assistant" />
   <meta property="og:description" content="Modern, extensible personal assistant. Your data stays yours." />
@@ -27,10 +27,11 @@
       <a href="index.html" class="active">Home</a>
       <a href="skills.html">Skills</a>
       <a href="docs.html">Docs</a>
+      <a href="compare.html">Compare</a>
       <a href="releases.html">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.5.0</span>
+      <span class="version-pill" aria-label="Current version">v0.6.0</span>
       <a href="releases.html#downloads" class="btn btn-primary btn-sm">
         ⬇ Download
       </a>
@@ -44,6 +45,7 @@
   <a href="index.html">🏠 Home</a>
   <a href="skills.html">🧩 Skills</a>
   <a href="docs.html">📖 Docs</a>
+  <a href="compare.html">⚖ Compare</a>
   <a href="releases.html">📋 Releases</a>
   <a href="releases.html#downloads" class="btn btn-primary">⬇ Download</a>
 </div>
@@ -56,15 +58,15 @@
       <!-- Left column -->
       <div>
         <div class="hero-eyebrow animate-fade-up">
-          <span>✦</span> Open Source &amp; Privacy-First
+          <span>✦</span> Local-first · Daemon 24/7
         </div>
         <h1 class="hero-title animate-fade-up delay-1">
           Meet <span class="gradient-text">Akasha</span><br />
-          Your Smart<br />Personal Assistant
+          Your AI<br />Assistant Stack
         </h1>
         <p class="hero-desc animate-fade-up delay-2">
-          A powerful, extensible personal assistant that runs entirely on your machine.
-          Uses an <strong>embedded model</strong> by default — no Ollama or cloud required. No tracking. Just intelligence at your fingertips.
+          A <strong>daemon-backed</strong> assistant with TUI, desktop app, and optional chat channels.
+          <strong>Embedded model</strong> works out of the box — add <strong>Ollama</strong> or <strong>cloud APIs</strong> when you want heavier models. Data stays on your machine; <strong>tools are deny-by-default</strong> until you allow paths in policy.
         </p>
         <div class="hero-actions animate-fade-up delay-3">
           <a href="releases.html#downloads" class="btn btn-primary btn-lg">
@@ -81,11 +83,11 @@
           </div>
           <div class="stat-item">
             <div class="stat-value"><span data-count="100">100</span>%</div>
-            <div class="stat-label">Local & Private</div>
+            <div class="stat-label">Local by default</div>
           </div>
           <div class="stat-item">
-            <div class="stat-value"><span data-count="0">0</span></div>
-            <div class="stat-label">Cloud Dependency</div>
+            <div class="stat-value">24/7</div>
+            <div class="stat-label">Daemon &amp; auto-restart</div>
           </div>
         </div>
       </div>
@@ -112,44 +114,62 @@
     <div class="section-header reveal">
       <span class="section-eyebrow">✦ Core Features</span>
       <h2 class="section-title">Everything you need, <span class="gradient-text">nothing you don't</span></h2>
-      <p class="section-desc">Akasha is designed to be fast, private and extensible out of the box.</p>
+      <p class="section-desc">v0.6 brings stronger task lifecycle, policy engine, observability, and cockpit APIs — still local-first.</p>
     </div>
     <div class="features-grid">
 
       <div class="card reveal delay-1">
         <div class="feature-icon" aria-hidden="true">🔒</div>
-        <h4 class="feature-title">100% Private</h4>
-        <p class="feature-desc">All processing happens locally. Your conversations, notes and data never leave your device. No cloud required.</p>
+        <h4 class="feature-title">Privacy-first</h4>
+        <p class="feature-desc">No account required for the embedded path. Conversations and memory stay in <em>your</em> data directory. Cloud providers are optional — you control keys in the vault.</p>
+      </div>
+
+      <div class="card reveal delay-2">
+        <div class="feature-icon" aria-hidden="true">🛡️</div>
+        <h4 class="feature-title">Policy &amp; tools</h4>
+        <p class="feature-desc"><strong>Deny-by-default</strong> file and command access via <code>tools_policy.yaml</code>. Allow only the paths and binaries you trust. Web search and skill installs are gated the same way.</p>
+      </div>
+
+      <div class="card reveal delay-3">
+        <div class="feature-icon" aria-hidden="true">⚙️</div>
+        <h4 class="feature-title">Daemon &amp; tasks</h4>
+        <p class="feature-desc">Background daemon with auto-restart. Task lifecycle, schedules, and calendar integrations — built for always-on use, not only ad-hoc chat.</p>
+      </div>
+
+      <div class="card reveal delay-1">
+        <div class="feature-icon" aria-hidden="true">📊</div>
+        <h4 class="feature-title">Observability</h4>
+        <p class="feature-desc">Timeline and metrics over HTTP for operators and integrators. Router tab in the TUI for model routing at a glance.</p>
       </div>
 
       <div class="card reveal delay-2">
         <div class="feature-icon" aria-hidden="true">🧩</div>
-        <h4 class="feature-title">Skill system</h4>
-        <p class="feature-desc">Built-in tools (files, commands, web search) plus user-installable skills. Ask the agent to install from a URL or add files manually and reload.</p>
-      </div>
-
-      <div class="card reveal delay-3">
-        <div class="feature-icon" aria-hidden="true">🗣️</div>
-        <h4 class="feature-title">Natural Language</h4>
-        <p class="feature-desc">Talk to Akasha just like you would to a person. No commands to memorize — just plain English (and more languages soon).</p>
-      </div>
-
-      <div class="card reveal delay-1">
-        <div class="feature-icon" aria-hidden="true">⚡</div>
-        <h4 class="feature-title">Lightning Fast</h4>
-        <p class="feature-desc">Responses in milliseconds. No network round trips, no API latency. Akasha is always ready when you are.</p>
-      </div>
-
-      <div class="card reveal delay-2">
-        <div class="feature-icon" aria-hidden="true">🔄</div>
-        <h4 class="feature-title">Update check</h4>
-        <p class="feature-desc">Use <code>akasha update check</code> to see if a new version is available. Use <code>akasha update install</code> to open the download page in your browser.</p>
+        <h4 class="feature-title">Skills &amp; plugins</h4>
+        <p class="feature-desc">Install skills from URLs or drop folders in your data dir. <code>/skills reload</code> in chat. Plugins extend channels and tools.</p>
       </div>
 
       <div class="card reveal delay-3">
         <div class="feature-icon" aria-hidden="true">🌗</div>
         <h4 class="feature-title">TUI &amp; desktop</h4>
-        <p class="feature-desc">Terminal UI (<code>akasha tui</code>) with Chat, Scheduled returns, Router, Doc, Tasks, Calendar, Memory. Desktop app adds Settings, user RAG, and attachments. F2 cycles themes.</p>
+        <p class="feature-desc"><code>akasha tui</code> — Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory. Desktop app: Settings, user RAG, attachments. Optional Slack, Discord, Telegram.</p>
+      </div>
+
+      <div class="card reveal delay-1">
+        <div class="feature-icon" aria-hidden="true">🗣️</div>
+        <h4 class="feature-title">Natural language</h4>
+        <p class="feature-desc">Talk normally; the agent picks tools and skills. Slash commands for power users (<code>/help</code>, <code>/models</code>, …).</p>
+      </div>
+
+      <div class="card reveal delay-2">
+        <div class="feature-icon" aria-hidden="true">🔄</div>
+        <h4 class="feature-title">Stay updated</h4>
+        <p class="feature-desc"><code>akasha update check</code> / <code>akasha update install</code> point to this site’s releases.</p>
+      </div>
+
+      <div class="card reveal delay-3">
+        <div class="feature-icon" aria-hidden="true">⚖️</div>
+        <h4 class="feature-title">Compare</h4>
+        <p class="feature-desc">See how Akasha differs from OpenClaw, Claude Code, and similar tools — <a href="compare.html">comparison table →</a></p>
       </div>
 
     </div>
@@ -270,12 +290,13 @@
           <div class="nav-logo-icon" aria-hidden="true">✦</div>
           Akasha
         </div>
-        <p>A privacy-first personal assistant with a powerful skill system. Open source and free forever.</p>
+        <p>A privacy-first personal assistant with a powerful skill system. Prebuilt binaries; free to download.</p>
       </div>
       <div class="footer-col">
         <h4>Product</h4>
         <ul>
           <li><a href="index.html#features">Features</a></li>
+          <li><a href="compare.html">Compare</a></li>
           <li><a href="skills.html">Skills Library</a></li>
           <li><a href="releases.html">Releases</a></li>
           <li><a href="releases.html#downloads">Download</a></li>
@@ -285,6 +306,7 @@
         <h4>Docs</h4>
         <ul>
           <li><a href="docs.html#getting-started">Getting Started</a></li>
+          <li><a href="compare.html">Compare</a></li>
           <li><a href="docs.html#skills-api">Skills API</a></li>
           <li><a href="docs.html#configuration">Configuration</a></li>
           <li><a href="docs.html#contributing">Contributing</a></li>
@@ -306,7 +328,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Akasha. Open source under the MIT License.</span>
+      <span>© 2026 Akasha. Application distributed as binaries; source not public. Website content may be licensed separately.</span>
       <div class="footer-bottom-links">
         <a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a>
         <a href="docs.html">Documentation</a>
