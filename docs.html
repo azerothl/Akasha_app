@@ -187,7 +187,7 @@
         <!-- First run -->
         <article class="docs-article" id="first-run">
           <h2>First Run</h2>
-          <p><code>akasha init</code> runs an interactive setup: LLM provider (embedded, Ollama, OpenRouter, OpenAI), vault, and optional channels (Telegram, Slack, Discord). Use <code>akasha init --defaults</code> for minimal setup without prompts.</p>
+          <p><code>akasha init</code> runs an interactive setup: LLM provider (embedded, Ollama, OpenRouter, OpenAI), vault, optional channels, and optional <strong>Docker services</strong> (Ollama, TTS/STT, BitNet) if the <strong>akasha-models</strong> compose directory is found — set <code>AKASHA_MODELS_DIR</code> or use <code>akasha services install --compose-dir …</code> later. Use <code>akasha init --defaults</code> for minimal setup without prompts.</p>
           <p>Then start the daemon and open the interface:</p>
           <pre><code>akasha start      # background daemon (auto-restart on crash)
 akasha tui        # terminal UI: Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory</code></pre>
@@ -233,6 +233,12 @@ akasha plugin reload    # Reload plugins (no daemon restart)
 akasha plugin install PATH   # Install from directory
 akasha plugin uninstall ID  # Uninstall by id
 akasha plugin catalog   # Local catalog of available plugins</code></pre>
+          <h3>Docker services (optional)</h3>
+          <p>Requires Docker and the <strong>akasha-models</strong> compose folder. Set <code>AKASHA_MODELS_DIR</code> to that directory, or pass <code>--compose-dir</code>.</p>
+          <pre><code>akasha services install [--ollama] [--voice] [--bitnet] [--all] [--compose-dir PATH]
+akasha services status   # docker compose ps
+akasha services stop     # docker compose down</code></pre>
+          <p>Updates <code>llm_router.yaml</code> / <code>voice_router.yaml</code> in the data directory when services are enabled.</p>
           <h3>Interfaces</h3>
           <pre><code>akasha tui   # Terminal UI (Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory)</code></pre>
           <h3>Update</h3>
@@ -277,28 +283,93 @@ akasha update install   # Open the latest release download page in the browser</
 
         <!-- Channels -->
         <article class="docs-article" id="channels">
-          <h2>Channels (Telegram, Slack, Discord)</h2>
+          <h2>Channels (Telegram, Slack, Discord, Teams)</h2>
           <p>Optional connectors let the agent respond on external platforms. Store tokens in the vault and set the matching env var to <code>1</code>. Activation vars are loaded from <code>connectors.env</code> in the data directory (created or updated by <code>akasha init</code>).</p>
           <ul>
-            <li><strong>Telegram</strong> — <code>akasha vault set telegram_bot_token YOUR_TOKEN</code>, then <code>AKASHA_TELEGRAM_ENABLED=1</code>. Bot responds to <code>/akasha &lt;message&gt;</code> or <code>/start</code>.</li>
-            <li><strong>Slack</strong> — Store <code>slack_signing_secret</code> in vault, set <code>AKASHA_SLACK_ENABLED=1</code>. Configure the slash command to point to your deployment URL.</li>
-            <li><strong>Discord</strong> — <code>akasha vault set discord_bot_token YOUR_TOKEN</code>, then <code>AKASHA_DISCORD_ENABLED=1</code>. Bot responds to <code>!akasha &lt;message&gt;</code>.</li>
+            <li><strong>Telegram</strong> — <code>akasha vault set telegram_bot_token YOUR_TOKEN</code>, then <code>AKASHA_TELEGRAM_ENABLED=1</code>. Bot: <code>/akasha &lt;message&gt;</code> or <code>/start</code>. Optional: <code>AKASHA_TELEGRAM_NOTIFY_CHAT_ID</code> for a “bot connected” message at startup.</li>
+            <li><strong>Slack</strong> — Vault <code>slack_signing_secret</code>, <code>AKASHA_SLACK_ENABLED=1</code>. Point the Slack slash command to <code>POST /channels/slack/command</code> on your daemon URL.</li>
+            <li><strong>Discord</strong> — <code>akasha vault set discord_bot_token YOUR_TOKEN</code>, then <code>AKASHA_DISCORD_ENABLED=1</code>. Prefix: <code>!akasha &lt;message&gt;</code>.</li>
+            <li><strong>Microsoft Teams</strong> — <code>AKASHA_TEAMS_ENABLED=1</code> when your Teams integration is configured (see vault / deployment docs for your build).</li>
           </ul>
         </article>
 
         <!-- Environment variables -->
         <article class="docs-article" id="env-vars">
           <h2>Environment variables</h2>
-          <p>Useful variables (set in <code>akasha.env</code> or via <code>akasha config env set</code>):</p>
+          <p>Persist values in <code>data_dir/akasha.env</code> via <code>akasha config env set KEY value</code> (loaded when the daemon starts). Connector flags often live in <code>connectors.env</code> instead.</p>
+
+          <h3>Daemon &amp; UI</h3>
           <ul>
-            <li><code>AKASHA_PORT</code> — Daemon port (default 3876).</li>
-            <li><code>AKASHA_DATA_DIR</code> — Data directory (default <code>%USERPROFILE%\akasha</code> on Windows, <code>~/akasha</code> on Linux/macOS).</li>
-            <li><code>AKASHA_LANG</code> — TUI language (<code>en</code> for English, otherwise French from locale).</li>
-            <li><code>AKASHA_LOG</code> — Log level: trace, debug, info, warn, error (default info).</li>
-            <li><code>AKASHA_APP_BASE_URL</code> — Base URL for update check (default <code>https://azerothl.github.io/Akasha_app</code>).</li>
-            <li><code>AKASHA_SYSTEM_TASK_MAX_TOKENS</code> — Max tokens for system tasks (memory, decomposition). Increase (e.g. 8192) if a “thinking” model returns empty responses.</li>
-            <li><code>OLLAMA_HOST</code> — Ollama URL if not set in <code>llm_router.yaml</code> (default <code>http://localhost:11434</code>).</li>
+            <li><code>AKASHA_PORT</code> — HTTP port (default <strong>3876</strong>).</li>
+            <li><code>AKASHA_DATA_DIR</code> — Config, vault, skills, DB (default <code>%USERPROFILE%\akasha</code> / <code>~/akasha</code>).</li>
+            <li><code>AKASHA_LOG</code> — <code>trace</code> | <code>debug</code> | <code>info</code> | <code>warn</code> | <code>error</code> (default <code>info</code>).</li>
+            <li><code>AKASHA_LANG</code> — TUI language: value starting with <code>en</code> → English; else French. Overrides <code>LANG</code> / <code>LC_ALL</code>.</li>
+            <li><code>AKASHA_APP_BASE_URL</code> — Site root for <code>api/latest.json</code> (update check). Default: this site’s GitHub Pages URL.</li>
           </ul>
+
+          <h3>LLM &amp; chat behaviour</h3>
+          <ul>
+            <li><code>AKASHA_MAX_RESPONSE_TOKENS</code> — Max tokens per chat completion (default <strong>4096</strong>).</li>
+            <li><code>AKASHA_MAX_CONTEXT_TOKENS</code> — Token budget before short-term history compaction (default <strong>8192</strong>).</li>
+            <li><code>AKASHA_SYSTEM_TASK_MAX_TOKENS</code> — Max tokens for system tasks (summaries, extraction). Default <strong>4096</strong>; raise to <strong>8192</strong> if “thinking” models return empty outputs.</li>
+            <li><code>AKASHA_LLM_TIMEOUT_SECS</code> — Total LLM call timeout (default <strong>300</strong>). First load of the embedded model can be slow—increase if needed.</li>
+            <li><code>AKASHA_LLM_STREAM_IDLE_SECS</code> — Max gap between stream chunks (default <strong>60</strong>).</li>
+            <li><code>AKASHA_LLM_FIRST_CHUNK_SECS</code> — Max wait for the <em>first</em> chunk (embedded model load); defaults to <code>min(300, AKASHA_LLM_TIMEOUT_SECS)</code>.</li>
+            <li><code>AKASHA_MAX_TOOL_ROUNDS</code> — Agent tool loop iterations per reply (default <strong>10</strong>).</li>
+            <li><code>AKASHA_EMBEDDED_MODEL</code> — Embedded backend id (e.g. <code>qwen3_0_6b</code>; build-dependent).</li>
+            <li><code>OLLAMA_HOST</code> — Ollama base URL (default <code>http://localhost:11434</code>) if not in <code>llm_router.yaml</code>.</li>
+          </ul>
+
+          <h3>Orchestration &amp; session limits</h3>
+          <ul>
+            <li><code>AKASHA_MAX_CONCURRENT_DELEGATIONS</code> — Parallel sub-tasks (default <strong>15</strong>).</li>
+            <li><code>AKASHA_MAX_PARALLEL_SUBTASKS</code> — Parallel LLM subtask workers (default <strong>4</strong>).</li>
+            <li><code>AKASHA_MAX_COST_PER_SESSION_USD</code> — Stop chat session when estimated LLM cost exceeds this (optional).</li>
+            <li><code>AKASHA_MAX_TOKENS_PER_SESSION</code> — Stop session when token usage exceeds this (optional).</li>
+            <li><code>AKASHA_DEGRADED_MODE=1</code> — Router uses only local providers (e.g. Ollama + embedded).</li>
+          </ul>
+
+          <h3>Channels (also <code>connectors.env</code>)</h3>
+          <ul>
+            <li><code>AKASHA_TELEGRAM_ENABLED=1</code>, <code>AKASHA_SLACK_ENABLED=1</code>, <code>AKASHA_DISCORD_ENABLED=1</code>, <code>AKASHA_TEAMS_ENABLED=1</code></li>
+            <li><code>AKASHA_TELEGRAM_NOTIFY_CHAT_ID</code> — Chat id for startup notification.</li>
+          </ul>
+
+          <h3>Cluster (advanced)</h3>
+          <ul>
+            <li><code>AKASHA_CLUSTER_ENABLED=1</code> — Multi-node mode (NATS, leader election).</li>
+            <li><code>AKASHA_NODE_ID</code> — Node id (defaults to hostname).</li>
+            <li><code>AKASHA_NATS_TLS_CA</code>, <code>AKASHA_NATS_CLIENT_CERT</code>, <code>AKASHA_NATS_CLIENT_KEY</code> — mTLS paths for NATS.</li>
+          </ul>
+
+          <h3>Services &amp; models on disk</h3>
+          <ul>
+            <li><code>AKASHA_MODELS_DIR</code> — Directory containing <code>docker-compose.yml</code> for <code>akasha services install</code> (Ollama, voice, BitNet).</li>
+            <li><code>HF_HOME</code> — Hugging Face cache for embedded weights (default user cache). Point into data_dir to keep everything in one place.</li>
+          </ul>
+
+          <h3>API keys &amp; integrations (common)</h3>
+          <ul>
+            <li><code>BRAVE_API_KEY</code> or vault <code>brave_api_key</code> — Web search (with <code>web_search_enabled</code> in tools policy).</li>
+            <li><code>OPENAI_API_KEY</code>, <code>OPENROUTER_API_KEY</code> — Cloud LLM (also storable in vault).</li>
+            <li><code>OPENROUTER_SITE_URL</code>, <code>OPENROUTER_APP_TITLE</code> — OpenRouter dashboard metadata.</li>
+            <li><code>AKASHA_MESSAGE_WEBHOOK_URL</code> — Outbound webhook for the <code>message</code> tool.</li>
+          </ul>
+
+          <h3>Debug &amp; power users</h3>
+          <ul>
+            <li><code>AKASHA_AGENT_DEBUG=1</code> — Verbose agent logging.</li>
+            <li><code>AKASHA_LOG_LLM_RESPONSE=1</code> — Log full LLM text at info level.</li>
+            <li><code>AKASHA_TOOLS_JOURNAL_PATH</code> — Append-only log path for file write tool calls.</li>
+            <li><code>AKASHA_PLAYWRIGHT_RUNNER</code> — Path to Playwright runner for browser automation.</li>
+            <li><code>AKASHA_PLAYWRIGHT_AUTO_INSTALL=0</code> — Disable auto <code>npm install</code> / browser download.</li>
+            <li><code>AKASHA_GRAPH_EXPAND=1</code> — Memory graph expansion (when supported).</li>
+            <li><code>AKASHA_VAULT_MASTER_KEY</code> — Master key for file-based vault (if used).</li>
+          </ul>
+          <div class="callout callout-tip">
+            <span class="callout-icon">💡</span>
+            <div class="callout-body"><strong>Windows PowerShell:</strong> <code>$env:AKASHA_TELEGRAM_ENABLED="1"</code> · <strong>CMD:</strong> <code>set AKASHA_TELEGRAM_ENABLED=1</code></div>
+          </div>
         </article>
 
         <!-- Troubleshooting -->
@@ -308,7 +379,8 @@ akasha update install   # Open the latest release download page in the browser</
             <li><strong>Doc tab is empty</strong> — Start the daemon from the folder where you extracted the archive (the one that contains the <code>docs</code> folder).</li>
             <li><strong>Empty responses with a “thinking” model</strong> — Some cloud models return empty content for system tasks. Increase <code>AKASHA_SYSTEM_TASK_MAX_TOKENS</code> (e.g. <code>akasha config env set AKASHA_SYSTEM_TASK_MAX_TOKENS 8192</code>) and restart the daemon.</li>
             <li><strong>Daemon won’t start</strong> — Run <code>akasha doctor</code> and <code>akasha doctor --fix</code> to create missing data_dir and config files.</li>
-            <li><strong>No responses or timeouts</strong> — By default the embedded model is used; check <code>akasha doctor</code> (embedded_llm section) or <code>/embedded</code> in chat. For Ollama, ensure it is running; for cloud, check vault or env keys. Use <code>akasha config models routes</code> and the Router tab to see active models.</li>
+            <li><strong>No responses or timeouts</strong> — First load of the embedded model can take several minutes (download + CPU). Increase <code>AKASHA_LLM_TIMEOUT_SECS</code> / <code>AKASHA_LLM_FIRST_CHUNK_SECS</code> if needed. Check <code>akasha doctor</code> or <code>/embedded</code>. Point <code>HF_HOME</code> to a disk with enough space for model cache.</li>
+            <li><strong>Ollama / cloud</strong> — Ensure Ollama is running or API keys are in the vault; <code>akasha config models routes</code> and the Router tab show active models.</li>
             <li><strong>Download link 404 on GitHub</strong> — Binaries are mirrored to <strong>Akasha_app</strong> releases after each upstream release. If a version has notes but no zip files yet, wait for the <code>Update Release Notes</code> workflow to finish or open an <a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">issue</a>.</li>
           </ul>
         </article>
@@ -357,29 +429,41 @@ When the user asks for X, use the tools A and B. Return the result in format …
         <!-- Skills API -->
         <article class="docs-article" id="skills-api">
           <h2>Slash commands (in chat)</h2>
-          <p>In the chat (TUI or web), messages starting with <code>/</code> are commands. Type <code>/help</code> or <code>/?</code> for the full list. Summary:</p>
-          <pre><code>/help, /?                    # Help
-/task create "message"         # Create a task (sends message to agent)
-/schedule create NAME INTERVAL_SEC "description"   # Create recurring schedule
-/schedule delete SCHEDULE_ID   # Delete a schedule
-/stop TASK_ID, /cancel TASK_ID # Cancel task
-/newsession                    # New session (clear short-term context)
-/status                        # Daemon status
-/doctor                        # Diagnostic
-/advice                        # Diagnostic advice (RAG + model, daemon must be running)
-/embedded, /embedded reload     # Embedded model status / unload (reload on next call)
-/metrics                        # Router metrics
-/models, /models list          # Models by category
-/models set CATEGORY PROVIDER MODEL   # Set model for category
-/routes                        # Primary and fallback per category
-/config list, /config get KEY, /config set KEY value   # Env vars (akasha.env)
-/vault list                    # Vault key names (write/delete via CLI only)
-/plugins                       # List installed plugins
-/reload                        # Reload plugins
-/skills reload                 # Reload skills after adding or editing files
-/skills uninstall &lt;name&gt;       # Uninstall a skill
-/restart                       # Restart daemon (when run with supervisor)</code></pre>
-          <p>To add or remove secrets, use the CLI only: <code>akasha vault set KEY value</code>, <code>akasha vault delete KEY</code>.</p>
+          <p>In <strong>Chat</strong> (TUI or web), lines starting with <code>/</code> are commands (not sent to the LLM). <strong><code>/help</code></strong> or <strong><code>/?</code></strong> prints the authoritative list for your build. Reference below:</p>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col">Command</th><th scope="col">Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>/help</code>, <code>/?</code></td><td>List all slash commands.</td></tr>
+                <tr><td><code>/task create "message"</code></td><td>Create a task (same as sending that message to the agent).</td></tr>
+                <tr><td><code>/schedule create NAME INTERVAL_SEC "description"</code></td><td>Recurring schedule (interval in seconds).</td></tr>
+                <tr><td><code>/schedule delete SCHEDULE_ID</code></td><td>Remove a schedule.</td></tr>
+                <tr><td><code>/stop TASK_ID</code>, <code>/cancel TASK_ID</code></td><td>Cancel a running or queued task.</td></tr>
+                <tr><td><code>/newsession</code></td><td>New session: clear short-term chat context.</td></tr>
+                <tr><td><code>/status</code></td><td>Daemon status.</td></tr>
+                <tr><td><code>/doctor</code></td><td>Health checks (Ollama, vault, embedded model, etc.).</td></tr>
+                <tr><td><code>/advice</code></td><td>Diagnostic help using RAG + LLM (daemon must be up).</td></tr>
+                <tr><td><code>/embedded</code></td><td>Embedded local model status (loaded or not).</td></tr>
+                <tr><td><code>/embedded reload</code></td><td>Unload embedded weights; next request reloads.</td></tr>
+                <tr><td><code>/metrics</code></td><td>LLM router metrics.</td></tr>
+                <tr><td><code>/models</code></td><td>All models from configured providers.</td></tr>
+                <tr><td><code>/models list</code></td><td>Primary + fallback model per category.</td></tr>
+                <tr><td><code>/models set CATEGORY PROVIDER MODEL</code></td><td>Set category model (e.g. <code>/models set conversation ollama llama3.2</code>); previous primary becomes fallback; saved to <code>llm_router.yaml</code>.</td></tr>
+                <tr><td><code>/routes</code></td><td>Same routing view as <code>/models list</code>.</td></tr>
+                <tr><td><code>/config list</code></td><td>Keys in <code>akasha.env</code>.</td></tr>
+                <tr><td><code>/config get KEY</code></td><td>Show one env value.</td></tr>
+                <tr><td><code>/config set KEY value</code></td><td>Set persistent env (restart may be needed).</td></tr>
+                <tr><td><code>/vault list</code></td><td>Vault key names only (no values).</td></tr>
+                <tr><td><code>/plugins</code></td><td>Installed plugins.</td></tr>
+                <tr><td><code>/reload</code></td><td>Reload plugins without daemon restart.</td></tr>
+                <tr><td><code>/skills</code>, <code>/skills list</code></td><td>Installed skills (name + description).</td></tr>
+                <tr><td><code>/skills reload</code></td><td>Rescan skill folders after add/edit.</td></tr>
+                <tr><td><code>/skills uninstall &lt;name&gt;</code></td><td>Remove a skill by id.</td></tr>
+                <tr><td><code>/restart</code></td><td>Restart daemon (when using the supervisor).</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>Vault:</strong> add or delete secrets only via CLI — <code>akasha vault set KEY [value]</code>, <code>akasha vault delete KEY</code> — or API <code>DELETE /api/vault</code> with body <code>{"key":"…"}</code>. No slash command writes vault values.</p>
         </article>
 
         <!-- Update API -->
