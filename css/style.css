@@ -1074,3 +1074,43 @@ footer {
   color: var(--purple-light);
   font-family: var(--font-mono);
 }
+
+/* ── Plugins catalog page ─────────────────────────────────────── */
+#plugins-meta {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+#plugins-meta a { color: var(--cyan-light); }
+.plugins-status {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  min-height: 1.25em;
+  color: var(--text-secondary);
+}
+.plugins-status-error { color: #f87171; }
+.plugin-title { margin-bottom: 0.35rem; font-size: 1.05rem; }
+.plugin-desc { margin: 0.65em 0; line-height: 1.5; }
+.plugin-line {
+  font-size: 0.88rem;
+  margin: 0.4em 0;
+  color: var(--text-secondary);
+}
+.plugin-line.muted { color: var(--text-muted); }
+.plugin-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.plugin-tag {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--purple-light);
+}
+.plugin-footer {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}

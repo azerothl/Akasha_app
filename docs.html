@@ -23,12 +23,13 @@
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="skills.html">Skills</a>
+      <a href="plugins.html">Plugins</a>
       <a href="docs.html" class="active">Docs</a>
       <a href="compare.html">Compare</a>
       <a href="releases.html">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.6.0</span>
+      <span class="version-pill" aria-label="Current version">v0.7.0</span>
       <a href="releases.html#downloads" class="btn btn-primary btn-sm">
         ⬇ Download
       </a>
@@ -41,6 +42,7 @@
 <div class="mobile-menu">
   <a href="index.html">🏠 Home</a>
   <a href="skills.html">🧩 Skills</a>
+  <a href="plugins.html">🔌 Plugins</a>
   <a href="docs.html" class="active">📖 Docs</a>
   <a href="compare.html">⚖ Compare</a>
   <a href="releases.html">📋 Releases</a>
@@ -68,8 +70,8 @@
         <div class="docs-nav-section">
           <div class="docs-nav-title">Getting Started</div>
           <a href="#getting-started" class="docs-nav-link" data-target="getting-started">Introduction</a>
-          <a href="#whats-new" class="docs-nav-link" data-target="whats-new">What's new (v0.6.0)</a>
-          <a href="#api-integration" class="docs-nav-link" data-target="api-integration">API &amp; observability</a>
+          <a href="#whats-new" class="docs-nav-link" data-target="whats-new">What's new (v0.7.0)</a>
+          <a href="#api-integration" class="docs-nav-link" data-target="api-integration">API &amp; plugins</a>
           <a href="#installation" class="docs-nav-link" data-target="installation">Installation</a>
           <a href="#first-run" class="docs-nav-link" data-target="first-run">First Run</a>
         </div>
@@ -91,6 +93,7 @@
         </div>
         <div class="docs-nav-section">
           <div class="docs-nav-title">Developers</div>
+          <a href="plugins.html" class="docs-nav-link">Plugins catalog (site)</a>
           <a href="#update-api" class="docs-nav-link" data-target="update-api">Update API</a>
           <a href="#contributing" class="docs-nav-link" data-target="contributing">Contributing</a>
         </div>
@@ -126,28 +129,49 @@
         </article>
 
         <article class="docs-article" id="whats-new">
-          <h2>What's new in v0.6.0</h2>
+          <h2>What's new in v0.7.0</h2>
+          <h3>Multi-agent orchestration</h3>
           <ul>
-            <li><strong>Gateway &amp; task OS</strong> — unified message envelope and clearer task lifecycle (create, run, pause, resume).</li>
-            <li><strong>Policy engine</strong> — stricter defaults; safer transitions for running tasks.</li>
-            <li><strong>Resilience</strong> — improved recovery paths when components misbehave.</li>
-            <li><strong>Observability</strong> — timeline and metrics endpoints on the daemon for debugging and dashboards.</li>
-            <li><strong>Cockpit APIs</strong> — list agents and plugins over HTTP (for integrators).</li>
-            <li><strong>Calendar</strong> — schedule exceptions API for richer scheduling.</li>
-            <li><strong>Security</strong> — ongoing hardening (e.g. markdown rendering, audio/STT validation, session handling).</li>
+            <li><strong>Dedicated <code>orchestrator</code> route</strong> — add <code>task_types.orchestrator</code> in <code>llm_router.yaml</code> so decomposition uses its own model; without it, the <code>system</code> route is used (backward compatible).</li>
+            <li><strong>Verified deliverables</strong> — for multi-step plans, the orchestrator checks that expected workspace files exist before marking a step done.</li>
+            <li><strong>Deliverable safety</strong> — absolute paths and <code>..</code> escapes are rejected; deliverables stay inside the allowed workspace.</li>
+            <li><strong>Targeted retry</strong> — if a deliverable is missing, a focused retry can run to produce the file.</li>
+            <li><strong>Plan trace</strong> — <code>.akasha/plan_&lt;task_id&gt;.md</code> in the workspace updates as the plan evolves.</li>
+            <li><strong>Meta-response detection</strong> — sub-agents that reply with “ready for phase 2”-style meta text instead of real output trigger an automatic retry.</li>
           </ul>
-          <p>Full developer-style changelog: <a href="releases.html">Releases</a>. Product comparison: <a href="compare.html">Compare</a>.</p>
+          <h3>Security &amp; LLM robustness</h3>
+          <ul>
+            <li><strong>Path policy</strong> — <code>can_read</code> / <code>can_write</code> use proper path-prefix checks (no <code>/data</code> vs <code>/database</code> confusion).</li>
+            <li><strong>RAG / uploads</strong> — Tauri document upload aligned with the API (<code>content_base64</code>, <code>mime_type</code>); user RAG uses <code>POST /api/user-rag/documents</code>.</li>
+            <li><strong>Config clamping</strong> — very large <code>max_tokens</code>, <code>top_k</code>, <code>num_ctx</code>, <code>num_gpu</code> values in <code>llm_router.yaml</code> are clamped cleanly (no silent truncation oddities).</li>
+            <li><strong>Azure OpenAI</strong> — default <code>max_tokens</code> aligned to 4&nbsp;096 like other OpenAI-compatible providers.</li>
+            <li><strong>Logging</strong> — response truncation from <code>max_tokens</code> is logged at <strong>WARN</strong>, not ERROR.</li>
+          </ul>
+          <h3>Plugins &amp; UI</h3>
+          <ul>
+            <li><strong>Plugins</strong> — status, dynamic routing rules, and reputation reset (per plugin or all) in the UI; HTTP API below.</li>
+          </ul>
+          <p>Earlier major themes (gateway / task OS, policy engine, observability, calendar) remain; full changelog: <a href="releases.html">Releases</a>. Comparison: <a href="compare.html">Compare</a>. Public plugin catalog: <a href="plugins.html">Plugins</a>.</p>
         </article>
 
         <article class="docs-article" id="api-integration">
-          <h2>API &amp; observability (v0.6+)</h2>
-          <p>When the daemon is running (default port <strong>3876</strong>), v0.6 adds HTTP surfaces useful for monitoring and tooling:</p>
+          <h2>API, observability &amp; plugins</h2>
+          <p>When the daemon is running (default port <strong>3876</strong>), these HTTP surfaces are useful for monitoring, tooling, and automation:</p>
           <ul>
             <li><strong>Timeline</strong> — inspect recent events for debugging.</li>
             <li><strong>Metrics</strong> — operational counters and health-style signals.</li>
-            <li><strong>Agents / plugins</strong> — discover what the daemon has loaded (<code>GET /api/agents</code>, <code>GET /api/plugins</code> — exact paths as shipped in your build).</li>
+            <li><strong>Agents</strong> — <code>GET /api/agents</code> — loaded agents (exact paths as in your build).</li>
           </ul>
-          <p>These listen on <code>127.0.0.1</code> by default — not exposed to the internet unless you deliberately reverse-proxy. For day-to-day use, the TUI <strong>Router</strong> tab and <code>akasha router metrics</code> cover most needs.</p>
+          <h3>Plugin HTTP API (overview)</h3>
+          <p>Typical endpoints (v0.7+):</p>
+          <ul>
+            <li><code>GET /api/plugins</code> — installed plugins, scores, disabled-by-reputation state.</li>
+            <li><code>POST /api/plugins/reload</code> — reload plugin manifests without restarting the daemon.</li>
+            <li><code>POST /api/plugins/reputation/reset</code> — body <code>{"plugin_id":"&lt;id&gt;"}</code> to reset one plugin, or empty body / omit id to reset all.</li>
+            <li><code>GET /api/plugins/routing_rules</code> — optional <code>?message=…</code> — debug dynamic routing rules.</li>
+            <li><code>POST /api/plugins/routing_rules/match</code> — JSON body to test routing match.</li>
+          </ul>
+          <p>These listen on <code>127.0.0.1</code> by default — not exposed to the internet unless you deliberately reverse-proxy. For day-to-day use, the TUI <strong>Router</strong> tab and <code>akasha router metrics</code> cover most needs; use <a href="plugins.html">Plugins</a> to browse the public catalog.</p>
           <div class="callout callout-tip">
             <span class="callout-icon">💡</span>
             <div class="callout-body">Authentication and exact OpenAPI docs may vary by build; treat this section as a capability overview. If you need a formal API spec for integration, request it via <a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">GitHub Issues</a>.</div>
@@ -232,7 +256,8 @@ akasha router show MODEL # Ollama model info</code></pre>
 akasha plugin reload    # Reload plugins (no daemon restart)
 akasha plugin install PATH   # Install from directory
 akasha plugin uninstall ID  # Uninstall by id
-akasha plugin catalog   # Local catalog of available plugins</code></pre>
+akasha plugin catalog   # Bundled / local catalog of available plugins</code></pre>
+          <p>The <a href="plugins.html">Plugins</a> page on this site lists the community catalog from the <a href="https://github.com/azerothl/Akasha_plugins" target="_blank" rel="noopener">Akasha_plugins</a> repository (always up to date with <code>main</code>). Use <code>akasha plugin install</code> with a local path or follow each plugin’s README.</p>
           <h3>Docker services (optional)</h3>
           <p>Requires Docker and the <strong>akasha-models</strong> compose folder. Set <code>AKASHA_MODELS_DIR</code> to that directory, or pass <code>--compose-dir</code>.</p>
           <pre><code>akasha services install [--ollama] [--voice] [--bitnet] [--all] [--compose-dir PATH]
@@ -258,6 +283,8 @@ akasha update install   # Open the latest release download page in the browser</
             <li><code>connectors.env</code> — Telegram, Slack, Discord activation (see <a href="#channels">Channels</a>).</li>
             <li><code>agent_profile.json</code> — Agent profile: name, role, personality, rules. Editable in Settings → Agent profile (web UI) or by editing the file and restarting the daemon.</li>
           </ul>
+          <h3>LLM router &amp; orchestrator</h3>
+          <p>In <code>llm_router.yaml</code>, <strong>task types</strong> map categories (e.g. <code>conversation</code>, <code>system</code>) to provider/model. <strong>v0.7.0</strong> adds an optional <code>task_types.orchestrator</code> block: when present, the multi-agent orchestrator uses it for decomposition instead of <code>system</code>. If you omit it, behaviour matches older configs (fallback to <code>system</code>). See the engine’s <code>llm_router.example.yaml</code> in the shipped docs for a full example.</p>
           <p><code>akasha init</code> or <code>akasha doctor --fix</code> creates the data_dir and minimal config files if missing.</p>
         </article>
 
@@ -473,10 +500,10 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <pre><code>GET https://azerothl.github.io/Akasha_app/api/latest.json</code></pre>
           <h3>Response format</h3>
           <pre><code>{
-  "version": "v0.6.0",
-  "release_date": "2026-03-18",
+  "version": "v0.7.0",
+  "release_date": "2026-04-02",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
-  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.6.0",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.7.0",
   "changelog": "…",
   "min_supported_version": "0.5.0"
 }</code></pre>
@@ -517,6 +544,7 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <li><a href="index.html#features">Features</a></li>
           <li><a href="compare.html">Compare</a></li>
           <li><a href="skills.html">Skills Library</a></li>
+          <li><a href="plugins.html">Plugins</a></li>
           <li><a href="releases.html">Releases</a></li>
           <li><a href="releases.html#downloads">Download</a></li>
         </ul>
@@ -526,6 +554,7 @@ When the user asks for X, use the tools A and B. Return the result in format …
         <ul>
           <li><a href="docs.html#getting-started">Getting Started</a></li>
           <li><a href="compare.html">Compare</a></li>
+          <li><a href="plugins.html">Plugins catalog</a></li>
           <li><a href="docs.html#skills-api">Skills API</a></li>
           <li><a href="docs.html#configuration">Configuration</a></li>
           <li><a href="docs.html#contributing">Contributing</a></li>

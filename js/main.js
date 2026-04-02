@@ -12,7 +12,7 @@ const el = (tag, cls = '', html = '') => {
   return e;
 };
 
-/** Single "v" prefix for UI (JSON often already has v0.6.0). Used by terminal + releases + skills. */
+/** Single "v" prefix for UI (JSON often already has v0.7.0). Used by terminal + releases + skills. */
 function displayVersion(ver) {
   if (ver == null || ver === '') return '';
   const core = String(ver).trim().replace(/^v+/i, '');
@@ -76,7 +76,7 @@ async function initTerminal() {
   const body = $('.terminal-body');
   if (!body) return;
 
-  let ver = 'v0.6.0';
+  let ver = 'v0.7.0';
   try {
     const res = await fetch('api/latest.json');
     if (res.ok) {
@@ -96,7 +96,7 @@ async function initTerminal() {
     { delay: 3800, html: '<span class="t-success">✓</span> <span class="t-out">Daemon listening on 127.0.0.1:3876</span>' },
     { delay: 4200, html: '' },
     { delay: 4400, html: '<span class="t-prompt">❯</span> <span class="t-cmd">akasha tui</span>' },
-    { delay: 5200, html: '<span class="t-info">→</span> <span class="t-out">Chat · Router · Tasks · Calendar · Memory</span>' },
+    { delay: 5200, html: '<span class="t-info">→</span> <span class="t-out">Chat · Scheduled · Router · Doc · Tasks · Calendar · Memory</span>' },
     { delay: 5600, html: '' },
     { delay: 5800, html: '<span class="t-prompt">❯</span> <span class="t-cursor"></span>' },
   ];
@@ -276,8 +276,10 @@ function initDocs() {
   }
 
   links.forEach(l => l.addEventListener('click', (e) => {
+    const target = l.dataset.target;
+    if (!target) return; /* e.g. external /plugins.html link */
     e.preventDefault();
-    showArticle(l.dataset.target);
+    showArticle(target);
   }));
 
   // On load, check hash

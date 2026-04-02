@@ -19,6 +19,10 @@ Public website and **release mirror** for Akasha — downloads, docs, and change
 
 The public docs page is **hand-written HTML** in English. When shipping a new Akasha version, follow the checklist in [docs/DOCUMENTATION_SYNC.md](docs/DOCUMENTATION_SYNC.md) so commands, ports, and UI tabs stay consistent with `Akasha/docs/user_guide_final.md` and the actual CLI/TUI.
 
+## Plugins catalog (`plugins.html`)
+
+The [plugins.html](plugins.html) page loads **`plugins.json` from the public [Akasha_plugins](https://github.com/azerothl/Akasha_plugins) repository** (via [jsDelivr](https://cdn.jsdelivr.net/gh/azerothl/Akasha_plugins@main/plugins.json), with a raw GitHub fallback). When a plugin is added or changed under `plugins/` on `main`, that repo’s CI rebuilds the JSON — the site list updates on the next page load without a commit to Akasha_app.
+
 ## Local preview
 
 Open `index.html` in a browser from a local server (fetch for `api/latest.json` / `data/` may be blocked on `file://`).
@@ -26,6 +30,8 @@ Open `index.html` in a browser from a local server (fetch for `api/latest.json` 
 ```bash
 npx serve .
 ```
+
+Preview `plugins.html` the same way so the browser can fetch the catalog from jsDelivr (and `api/latest.json` locally).
 
 ## License
 
