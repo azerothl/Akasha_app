@@ -28,7 +28,7 @@ try {
     Write-Host "Extracting..."
     Expand-Archive -Path $zipPath -DestinationPath $tempDir -Force
     $extractedRoot = $tempDir
-    if -not (Test-Path (Join-Path $tempDir "akasha.exe")) {
+    if (-not (Test-Path (Join-Path $tempDir "akasha.exe"))) {
         $child = Get-ChildItem -Path $tempDir -Directory -ErrorAction SilentlyContinue | Select-Object -First 1
         if ($child) { $extractedRoot = $child.FullName }
     }
