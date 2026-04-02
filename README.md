@@ -15,6 +15,10 @@ Public website and **release mirror** for Akasha — downloads, docs, and change
 
 **If users see 404 on downloads:** confirm the Akasha_app release exists for that tag and contains `akasha-full-*.zip` (etc.). Re-run **Update Release Notes** manually if the dispatch failed or the token was missing.
 
+## Documentation site (`docs.html`)
+
+The public docs page is **hand-written HTML** in English. When shipping a new Akasha version, follow the checklist in [docs/DOCUMENTATION_SYNC.md](docs/DOCUMENTATION_SYNC.md) so commands, ports, and UI tabs stay consistent with `Akasha/docs/user_guide_final.md` and the actual CLI/TUI.
+
 ## Local preview
 
 Open `index.html` in a browser from a local server (fetch for `api/latest.json` / `data/` may be blocked on `file://`).
