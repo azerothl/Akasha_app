@@ -126,6 +126,18 @@
             <li><strong>Extensible</strong> — skills, plugins, optional channels.</li>
             <li><strong>Binary distribution</strong> — prebuilt releases on this site; the Akasha engine source is not publicly available.</li>
           </ul>
+          <h3>Interface screenshots</h3>
+          <p>Real captures from the web UI (same React bundle as the desktop app), produced by the Akasha project’s Playwright suite when the daemon is running. Regenerate with <code>npm run test:e2e</code> in <code>apps/akasha-ui</code> (see the engine repository).</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem;">
+            <figure style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <img src="assets/screenshots/ui-chat.png" alt="Akasha chat" style="width: 100%; height: auto; display: block;" loading="lazy" />
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);">Chat</figcaption>
+            </figure>
+            <figure style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <img src="assets/screenshots/ui-docs.png" alt="Akasha documentation tab" style="width: 100%; height: auto; display: block;" loading="lazy" />
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);">Documentation tab</figcaption>
+            </figure>
+          </div>
         </article>
 
         <article class="docs-article" id="whats-new">
