@@ -1,5 +1,15 @@
 [
   {
+    "version": "v0.8.0",
+    "date": "2026-04-10",
+    "type": "minor",
+    "title": "v0.8.0",
+    "description": "<!-- Release notes generated using configuration in .github/release.yml at v0.8.0 -->\n\n## What's Changed\n### Other\n* Fix `akasha doctor --fix` behavior for prebuilt zip installs by @azerothl in https://github.com/azerothl/Akasha/pull/93\n* Cursor/akasha doctor fix failures 04fe by @azerothl in https://github.com/azerothl/Akasha/pull/94\n* fix: contract fenced-JSON stripping and clippy PI literal by @azerothl in https://github.com/azerothl/Akasha/pull/95\n* Mode autonome mission by @azerothl in https://github.com/azerothl/Akasha/pull/97\n* Graph workspace by @azerothl in https://github.com/azerothl/Akasha/pull/98\n* 0.8.0 by @azerothl in https://github.com/azerothl/Akasha/pull/96\n* Revert \"Graph workspace\" by @azerothl in https://github.com/azerothl/Akasha/pull/99\n* Graph workspace by @azerothl in https://github.com/azerothl/Akasha/pull/100\n* Merge pull request #100 from azerothl/graph-workspace by @azerothl in https://github.com/azerothl/Akasha/pull/101\n* Axi by @azerothl in https://github.com/azerothl/Akasha/pull/102\n* ci: fix \"No space left on device\" failures on GitHub Actions runners by @Copilot in https://github.com/azerothl/Akasha/pull/103\n\n\n**Full Changelog**: https://github.com/azerothl/Akasha/compare/v0.7.0...v0.8.0",
+    "changes": [],
+    "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.8.0",
+    "assets": []
+  },
+  {
     "version": "v0.7.0",
     "date": "2026-04-02",
     "type": "minor",
