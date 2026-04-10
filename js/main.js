@@ -12,7 +12,7 @@ const el = (tag, cls = '', html = '') => {
   return e;
 };
 
-/** Single "v" prefix for UI (JSON often already has v0.7.0). Used by terminal + releases + skills. */
+/** Single "v" prefix for UI (JSON often already has v0.8.0). Used by terminal + releases + skills. */
 function displayVersion(ver) {
   if (ver == null || ver === '') return '';
   const core = String(ver).trim().replace(/^v+/i, '');
@@ -76,7 +76,7 @@ async function initTerminal() {
   const body = $('.terminal-body');
   if (!body) return;
 
-  let ver = 'v0.7.0';
+  let ver = 'v0.8.0';
   try {
     const res = await fetch('api/latest.json');
     if (res.ok) {

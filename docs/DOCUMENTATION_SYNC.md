@@ -11,7 +11,7 @@ Le fichier [docs.html](../docs.html) est une **page HTML statique** (anglais) su
 
 À cocher après comparaison avec [Akasha/docs/user_guide_final.md](https://github.com/azerothl/Akasha/blob/main/docs/user_guide_final.md) (ou la branche/tag correspondante) :
 
-1. **Version** : pastille de version dans `docs.html` (et `index.html` si affichée) = tag de release cible (ex. v0.7.0).
+1. **Version** : pastille de version dans `docs.html` (et `index.html` si affichée) = tag de release cible (ex. v0.8.0).
 2. **Port daemon** : `3876` et variable `AKASHA_PORT` — cohérents avec le guide.
 3. **Onglets TUI** : sept onglets — Chat, Scheduled / planned replies, Router, Doc, Tasks, Calendar, Memory (libellés EN sur le site ; vérifier l’équivalent fonctionnel).
 4. **Onglets UI web** : inclure **Scheduled** (Retours planifiés) + Paramètres comme dans le guide.
