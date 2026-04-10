@@ -32,7 +32,7 @@
       <a href="releases.html">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.7.0</span>
+      <span class="version-pill" aria-label="Current version">v0.8.0</span>
       <a href="releases.html#downloads" class="btn btn-primary btn-sm">
         ⬇ Download
       </a>
@@ -116,7 +116,7 @@
     <div class="section-header reveal">
       <span class="section-eyebrow">✦ Core Features</span>
       <h2 class="section-title">Everything you need, <span class="gradient-text">nothing you don't</span></h2>
-      <p class="section-desc">v0.7 adds multi-agent orchestration with verified deliverables, stricter path security, plugin APIs and UI (routing, reputation), and more robust LLM config — still local-first.</p>
+      <p class="section-desc">v0.8 adds <strong>autonomous mission</strong> (periodic goals + Mission tab), <strong>multi-root project graphs</strong> with search and HTML reports, <strong>agent formality</strong> (tone / address), stronger tools-first routing, and better diagnostics for packaged installs — still local-first.</p>
     </div>
     <div class="features-grid">
 
@@ -153,7 +153,7 @@
       <div class="card reveal delay-3">
         <div class="feature-icon" aria-hidden="true">🌗</div>
         <h4 class="feature-title">TUI &amp; desktop</h4>
-        <p class="feature-desc"><code>akasha tui</code> — Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory. Desktop app: Settings, user RAG, attachments. Optional Slack, Discord, Telegram.</p>
+        <p class="feature-desc"><code>akasha tui</code> — Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory. Desktop app: Settings, user RAG, <strong>project graph</strong> (multi-folder), <strong>Mission</strong> tab, attachments. Optional Slack, Discord, Telegram.</p>
       </div>
 
       <div class="card reveal delay-1">
@@ -174,6 +174,27 @@
         <p class="feature-desc">See how Akasha differs from OpenClaw, Claude Code, and similar tools — <a href="compare.html">comparison table →</a></p>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ── Product screenshots (from Playwright E2E in Akasha repo) ── -->
+<section class="section" id="product-screenshots">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">✦ Interface</span>
+      <h2 class="section-title">Desktop <span class="gradient-text">UI</span></h2>
+      <p class="section-desc">Web UI (same bundle as the Tauri app): chat and in-app documentation when <code>akasha start</code> is running.</p>
+    </div>
+    <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+      <figure class="card reveal" style="padding: 0; overflow: hidden; margin: 0;">
+        <img src="assets/screenshots/ui-chat.png" alt="Akasha chat interface" width="960" height="540" loading="lazy" style="width:100%; height:auto; display:block;" />
+        <figcaption style="padding: 12px 16px; font-size: 0.9rem; color: var(--text-muted);">Chat</figcaption>
+      </figure>
+      <figure class="card reveal" style="padding: 0; overflow: hidden; margin: 0;">
+        <img src="assets/screenshots/ui-docs.png" alt="Akasha documentation tab" width="960" height="540" loading="lazy" style="width:100%; height:auto; display:block;" />
+        <figcaption style="padding: 12px 16px; font-size: 0.9rem; color: var(--text-muted);">Documentation tab</figcaption>
+      </figure>
     </div>
   </div>
 </section>

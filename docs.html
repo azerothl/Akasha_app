@@ -29,7 +29,7 @@
       <a href="releases.html">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.7.0</span>
+      <span class="version-pill" aria-label="Current version">v0.8.0</span>
       <a href="releases.html#downloads" class="btn btn-primary btn-sm">
         ⬇ Download
       </a>
@@ -70,7 +70,7 @@
         <div class="docs-nav-section">
           <div class="docs-nav-title">Getting Started</div>
           <a href="#getting-started" class="docs-nav-link" data-target="getting-started">Introduction</a>
-          <a href="#whats-new" class="docs-nav-link" data-target="whats-new">What's new (v0.7.0)</a>
+          <a href="#whats-new" class="docs-nav-link" data-target="whats-new">What's new (v0.8.0)</a>
           <a href="#api-integration" class="docs-nav-link" data-target="api-integration">API &amp; plugins</a>
           <a href="#installation" class="docs-nav-link" data-target="installation">Installation</a>
           <a href="#first-run" class="docs-nav-link" data-target="first-run">First Run</a>
@@ -126,32 +126,50 @@
             <li><strong>Extensible</strong> — skills, plugins, optional channels.</li>
             <li><strong>Binary distribution</strong> — prebuilt releases on this site; the Akasha engine source is not publicly available.</li>
           </ul>
+          <h3>Interface screenshots</h3>
+          <p>Real captures from the web UI (same React bundle as the desktop app), produced by the Akasha project’s Playwright suite when the daemon is running. Regenerate with <code>npm run test:e2e</code> in <code>apps/akasha-ui</code> (see the engine repository).</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem;">
+            <figure style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <img src="assets/screenshots/ui-chat.png" alt="Akasha chat" style="width: 100%; height: auto; display: block;" loading="lazy" />
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);">Chat</figcaption>
+            </figure>
+            <figure style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <img src="assets/screenshots/ui-docs.png" alt="Akasha documentation tab" style="width: 100%; height: auto; display: block;" loading="lazy" />
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);">Documentation tab</figcaption>
+            </figure>
+          </div>
         </article>
 
         <article class="docs-article" id="whats-new">
-          <h2>What's new in v0.7.0</h2>
-          <h3>Multi-agent orchestration</h3>
+          <h2>What's new in v0.8.0</h2>
+          <h3>Autonomous mission</h3>
           <ul>
-            <li><strong>Dedicated <code>orchestrator</code> route</strong> — add <code>task_types.orchestrator</code> in <code>llm_router.yaml</code> so decomposition uses its own model; without it, the <code>system</code> route is used (backward compatible).</li>
-            <li><strong>Verified deliverables</strong> — for multi-step plans, the orchestrator checks that expected workspace files exist before marking a step done.</li>
-            <li><strong>Deliverable safety</strong> — absolute paths and <code>..</code> escapes are rejected; deliverables stay inside the allowed workspace.</li>
-            <li><strong>Targeted retry</strong> — if a deliverable is missing, a focused retry can run to produce the file.</li>
-            <li><strong>Plan trace</strong> — <code>.akasha/plan_&lt;task_id&gt;.md</code> in the workspace updates as the plan evolves.</li>
-            <li><strong>Meta-response detection</strong> — sub-agents that reply with “ready for phase 2”-style meta text instead of real output trigger an automatic retry.</li>
+            <li><strong>Long-running goals</strong> — define an objective, context, rules, and roles; the daemon runs <strong>heartbeat</strong> tasks on a schedule while the mission is active.</li>
+            <li><strong><code>autonomous_mission.yaml</code></strong> in the data directory; <strong>Mission</strong> tab in the desktop app for configuration and activity.</li>
+            <li><strong>HTTP API</strong> — <code>GET</code> / <code>PUT /api/autonomous-mission</code>, <code>POST /api/autonomous-mission/pause</code> and <code>/resume</code>, <code>GET /api/autonomous-mission/events</code> (optional <code>limit</code>, <code>since</code> for the event log).</li>
+            <li><strong>Chat alignment</strong> — use the same <code>session_id</code> as the mission so “no unnecessary questions” behaviour applies to chat as well as heartbeats.</li>
           </ul>
-          <h3>Security &amp; LLM robustness</h3>
+          <h3>Project knowledge graphs</h3>
           <ul>
-            <li><strong>Path policy</strong> — <code>can_read</code> / <code>can_write</code> use proper path-prefix checks (no <code>/data</code> vs <code>/database</code> confusion).</li>
-            <li><strong>RAG / uploads</strong> — Tauri document upload aligned with the API (<code>content_base64</code>, <code>mime_type</code>); user RAG uses <code>POST /api/user-rag/documents</code>.</li>
-            <li><strong>Config clamping</strong> — very large <code>max_tokens</code>, <code>top_k</code>, <code>num_ctx</code>, <code>num_gpu</code> values in <code>llm_router.yaml</code> are clamped cleanly (no silent truncation oddities).</li>
-            <li><strong>Azure OpenAI</strong> — default <code>max_tokens</code> aligned to 4&nbsp;096 like other OpenAI-compatible providers.</li>
-            <li><strong>Logging</strong> — response truncation from <code>max_tokens</code> is logged at <strong>WARN</strong>, not ERROR.</li>
+            <li><strong>Multiple workspaces</strong> — register several project roots (name + absolute path); each build writes <code>graph.json</code>, <code>GRAPH_REPORT.md</code>, and <code>graph.html</code> under <code>workspace_graph/out/&lt;id&gt;/</code> in the data directory.</li>
+            <li><strong>Agent context</strong> — relevant graph lines are injected automatically; the <code>workspace_graph_search</code> tool queries indexed symbols/paths (allow it in tools policy if you restrict tools).</li>
+            <li><strong>Settings → Data → Project graph</strong> — manage workspaces, rebuild, open HTML report; improved memory search presentation.</li>
           </ul>
-          <h3>Plugins &amp; UI</h3>
+          <h3>Agent profile &amp; reliability</h3>
           <ul>
-            <li><strong>Plugins</strong> — status, dynamic routing rules, and reputation reset (per plugin or all) in the UI; HTTP API below.</li>
+            <li><strong>Formality</strong> — optional <strong>formal / informal / default</strong> tone and address (e.g. <em>vous</em> vs <em>tu</em> in French); stored in <code>agent_profile.json</code> and editable in Settings → Agent profile.</li>
+            <li><strong>Tools-first mode</strong> — when routing requires it, the first tool call is more deterministic; fewer spurious LLM round-trips for light chit-chat.</li>
+            <li><strong>Cleaner summaries</strong> — trailing technical JSON “contract” blocks can be stripped from the user-facing summary when appropriate.</li>
+            <li><strong><code>akasha doctor</code> / <code>doctor --fix</code></strong> — improved behaviour for <strong>zip / packaged</strong> installs and <code>spec/</code> resolution next to binaries.</li>
           </ul>
-          <p>Earlier major themes (gateway / task OS, policy engine, observability, calendar) remain; full changelog: <a href="releases.html">Releases</a>. Comparison: <a href="compare.html">Compare</a>. Public plugin catalog: <a href="plugins.html">Plugins</a>.</p>
+          <h3>Optional power-user CLIs</h3>
+          <p>Built-in prompts may suggest <strong>AXI</strong>-style CLIs (e.g. <code>gh-axi</code>, <code>chrome-devtools-axi</code>) when installed — <strong>optional</strong>; Akasha still ships browser tools and <code>run_command</code> as before.</p>
+          <h3>Previously in v0.7.0</h3>
+          <ul>
+            <li><strong>Orchestrator route</strong> — <code>task_types.orchestrator</code> in <code>llm_router.yaml</code>; verified deliverables, path safety, targeted retry, <code>.akasha/plan_&lt;task_id&gt;.md</code>, meta-response retry.</li>
+            <li><strong>Security &amp; LLM</strong> — path prefix policy, RAG upload alignment, numeric config clamping, Azure <code>max_tokens</code> default, plugin UI + reputation API.</li>
+          </ul>
+          <p>Full history: <a href="releases.html">Releases</a>. Comparison: <a href="compare.html">Compare</a>. Plugin catalog: <a href="plugins.html">Plugins</a>.</p>
         </article>
 
         <article class="docs-article" id="api-integration">
@@ -163,7 +181,7 @@
             <li><strong>Agents</strong> — <code>GET /api/agents</code> — loaded agents (exact paths as in your build).</li>
           </ul>
           <h3>Plugin HTTP API (overview)</h3>
-          <p>Typical endpoints (v0.7+):</p>
+          <p>Typical endpoints (v0.7+); mission endpoints (v0.8+):</p>
           <ul>
             <li><code>GET /api/plugins</code> — installed plugins, scores, disabled-by-reputation state.</li>
             <li><code>POST /api/plugins/reload</code> — reload plugin manifests without restarting the daemon.</li>
@@ -171,6 +189,14 @@
             <li><code>GET /api/plugins/routing_rules</code> — optional <code>?message=…</code> — debug dynamic routing rules.</li>
             <li><code>POST /api/plugins/routing_rules/match</code> — JSON body to test routing match.</li>
           </ul>
+          <h3>Autonomous mission API (v0.8+)</h3>
+          <ul>
+            <li><code>GET</code> / <code>PUT /api/autonomous-mission</code> — read or merge mission state (YAML-backed).</li>
+            <li><code>POST /api/autonomous-mission/pause</code> / <code>POST /api/autonomous-mission/resume</code></li>
+            <li><code>GET /api/autonomous-mission/events</code> — optional query <code>limit</code>, <code>since</code> (RFC3339).</li>
+          </ul>
+          <h3>Project graph API (v0.8+)</h3>
+          <p>Prefix <code>/api/workspace-graph</code> — list/create/delete workspaces, rebuild, export JSON, Markdown report, HTML view. See the engine docs for paths.</p>
           <p>These listen on <code>127.0.0.1</code> by default — not exposed to the internet unless you deliberately reverse-proxy. For day-to-day use, the TUI <strong>Router</strong> tab and <code>akasha router metrics</code> cover most needs; use <a href="plugins.html">Plugins</a> to browse the public catalog.</p>
           <div class="callout callout-tip">
             <span class="callout-icon">💡</span>
@@ -281,7 +307,9 @@ akasha update install   # Open the latest release download page in the browser</
             <li><code>tools_policy.yaml</code> — Tool permissions: file paths, allowed commands, web search, skill-install hosts (see <a href="#tools-policy">Tools policy</a>).</li>
             <li><code>akasha.env</code> — Persistent env vars (also editable via <code>akasha config env set</code>).</li>
             <li><code>connectors.env</code> — Telegram, Slack, Discord activation (see <a href="#channels">Channels</a>).</li>
-            <li><code>agent_profile.json</code> — Agent profile: name, role, personality, rules. Editable in Settings → Agent profile (web UI) or by editing the file and restarting the daemon.</li>
+            <li><code>agent_profile.json</code> — Agent profile: name, role, personality, rules, optional <strong>formality</strong> (formal / informal). Editable in Settings → Agent profile (web UI) or by editing the file and restarting the daemon.</li>
+            <li><code>autonomous_mission.yaml</code> — Optional <strong>autonomous mission</strong> (objective, heartbeat, report directory). Editable in the Mission tab or via <code>/api/autonomous-mission</code>.</li>
+            <li><code>voice_router.yaml</code> — Optional TTS/STT URLs (voice button in the web UI when STT is configured).</li>
           </ul>
           <h3>LLM router &amp; orchestrator</h3>
           <p>In <code>llm_router.yaml</code>, <strong>task types</strong> map categories (e.g. <code>conversation</code>, <code>system</code>) to provider/model. <strong>v0.7.0</strong> adds an optional <code>task_types.orchestrator</code> block: when present, the multi-agent orchestrator uses it for decomposition instead of <code>system</code>. If you omit it, behaviour matches older configs (fallback to <code>system</code>). See the engine’s <code>llm_router.example.yaml</code> in the shipped docs for a full example.</p>
@@ -291,8 +319,8 @@ akasha update install   # Open the latest release download page in the browser</
         <!-- Themes -->
         <article class="docs-article" id="themes">
           <h2>Interfaces</h2>
-          <p>The <strong>TUI</strong> (<code>akasha tui</code>) has <strong>7 tabs</strong>: <strong>Chat</strong>, <strong>Scheduled</strong> (planned returns — agent responses for recurring/scheduled tasks, separate from the main chat), <strong>Router</strong> (LLM metrics), <strong>Doc</strong> (user guide), <strong>Tasks</strong>, <strong>Calendar</strong>, <strong>Memory</strong>. Use Tab to switch; R to refresh Router, Scheduled, or task list; F2 to cycle themes.</p>
-          <p>The <strong>desktop app</strong> (Akasha UI, if installed) connects to the same daemon on port 3876 and adds: <strong>Settings</strong> (Paramètres) with <strong>Agent profile</strong> (name, role, personality, rules), <strong>User RAG</strong> (My documents — add/remove documents; excerpts are used by the agent in answers), and <strong>attachments</strong> in Chat (images, PDFs, text). Use keys <strong>1–8</strong> to switch tabs when focus is not in an input field.</p>
+          <p>The <strong>TUI</strong> (<code>akasha tui</code>) has <strong>7 tabs</strong>: <strong>Chat</strong>, <strong>Scheduled</strong> (planned returns — agent responses for recurring/scheduled tasks, separate from the main chat), <strong>Router</strong> (LLM metrics), <strong>Doc</strong> (user guide), <strong>Tasks</strong>, <strong>Calendar</strong>, <strong>Memory</strong>. Use Tab to switch; R to refresh Router, Scheduled, or task list; F2 to cycle themes. <strong>Mission</strong> and full <strong>Settings</strong> are desktop/web only; you can still edit <code>autonomous_mission.yaml</code> or call the HTTP API from the CLI.</p>
+          <p>The <strong>desktop app</strong> (Akasha UI, if installed) connects to the same daemon on port 3876 and adds: <strong>Settings</strong> with <strong>Agent profile</strong> (including <strong>formality</strong> — formal / informal / default), <strong>Data</strong> with <strong>User RAG</strong> and <strong>Project graph</strong> (multiple indexed folders, HTML report per workspace), <strong>Mission</strong> tab for autonomous goals, and <strong>attachments</strong> in Chat (images, PDFs, text). Use keys <strong>1–9</strong> to switch tabs when focus is not in an input field (<strong>Mission</strong> = <strong>8</strong>, <strong>Settings</strong> = <strong>9</strong>).</p>
         </article>
 
         <!-- Tools policy -->
@@ -500,10 +528,10 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <pre><code>GET https://azerothl.github.io/Akasha_app/api/latest.json</code></pre>
           <h3>Response format</h3>
           <pre><code>{
-  "version": "v0.7.0",
-  "release_date": "2026-04-02",
+  "version": "v0.8.0",
+  "release_date": "2026-04-10",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
-  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.7.0",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.8.0",
   "changelog": "…",
   "min_supported_version": "0.5.0"
 }</code></pre>
