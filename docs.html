@@ -336,16 +336,85 @@ AKASHA_TELEGRAM_NOTIFY_CHAT_ID=123456789</code></pre>
           <h2>LLM router (<code>llm_router.yaml</code>)</h2>
           <p><strong>Location:</strong> <code>data_dir/llm_router.yaml</code> (or project root if missing from data_dir). <strong>Used by:</strong> daemon, <code>akasha config models …</code>. API keys can be <code>vault://key_name</code> or standard env vars (e.g. <code>OPENAI_API_KEY</code>).</p>
 
-          <h3>Top-level keys</h3>
+          <div class="callout callout-tip" style="margin: 1.25rem 0;">
+            <span class="callout-icon">📌</span>
+            <div class="callout-body">
+              <strong><code>task_types</code></strong> is the main knob: each entry is <code>task_types.&lt;name&gt;: { primary, fallback, constraints? }</code>. The router picks a <strong>task type name</strong> from classification, system prompts, orchestration, or tool context, then loads the matching route. Define a <strong>primary</strong> (<code>provider</code> + <code>model</code>) and optional <strong>fallback</strong> chain for every behaviour you care about.
+            </div>
+          </div>
+
+          <h3><code>task_types</code> — keys you can use</h3>
+          <p>YAML accepts any string as a key; the table below lists the <strong>names the engine actually resolves</strong>. If a name has no entry, defaults / fallbacks apply.</p>
+
+          <h4>A. Automatic classification (chat — keyword router)</h4>
+          <p>When no explicit override is set, the router classifies the user message into one of these six types:</p>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col"><code>task_types</code> key</th><th scope="col">Typical triggers</th></tr></thead>
+              <tbody>
+                <tr><td><code>conversation</code></td><td>Default when nothing more specific matches.</td></tr>
+                <tr><td><code>code_generation</code></td><td>Code, implement, debug, script, functions, …</td></tr>
+                <tr><td><code>creative_writing</code></td><td>Stories, poems, articles, emails, …</td></tr>
+                <tr><td><code>scientific_analysis</code></td><td>Papers, research wording, …</td></tr>
+                <tr><td><code>data_analysis</code></td><td>Statistics, charts, “analyze data”, …</td></tr>
+                <tr><td><code>system_diagnostic</code></td><td>Diagnostics, health, status, runbooks, …</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>B. System, orchestration, and image</h4>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col"><code>task_types</code> key</th><th scope="col">Role</th></tr></thead>
+              <tbody>
+                <tr><td><code>system</code></td><td>Internal “system” LLM work (memory extraction, compaction, summaries, etc.).</td></tr>
+                <tr><td><code>orchestrator</code></td><td>Optional (v0.7+): decomposition / planning LLM. If absent, orchestrator falls back to <code>system</code>.</td></tr>
+                <tr><td><code>image_generation</code></td><td><strong>Required</strong> for the <code>generate_image</code> tool: <code>primary</code> selects the <em>image</em> backend (e.g. OpenAI Images API, Ollama image-capable model). This is separate from the chat text model.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>C. Specialist / delegation routes (orchestrator &amp; sub-agents)</h4>
+          <p>When the pipeline assigns a <strong>specialist agent</strong>, the router looks up a route under that agent’s primary task type (and may fall back to related types if no custom model is set). You can define any of these keys to pin a provider/model per role:</p>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col"><code>task_types</code> key</th><th scope="col">Notes</th></tr></thead>
+              <tbody>
+                <tr><td><code>financial</code></td><td>May fall back to <code>data_analysis</code> → <code>conversation</code> if unset.</td></tr>
+                <tr><td><code>documentalist</code></td><td></td></tr>
+                <tr><td><code>project_manager</code></td><td></td></tr>
+                <tr><td><code>technical_writer</code></td><td>May fall back to <code>creative_writing</code>.</td></tr>
+                <tr><td><code>research</code></td><td>May fall back to <code>scientific_analysis</code>.</td></tr>
+                <tr><td><code>security_audit</code></td><td>May fall back to <code>code_generation</code>, <code>system_diagnostic</code>.</td></tr>
+                <tr><td><code>creative</code></td><td>May fall back to <code>creative_writing</code>.</td></tr>
+                <tr><td><code>analyst</code></td><td>May fall back to <code>creative_writing</code>.</td></tr>
+                <tr><td><code>architect</code></td><td>May fall back to <code>code_generation</code>, <code>system_diagnostic</code>.</td></tr>
+                <tr><td><code>frontend</code>, <code>backend</code>, <code>integration</code></td><td>Often aligned with <code>code_generation</code> fallbacks.</td></tr>
+                <tr><td><code>database</code></td><td>May fall back to <code>data_analysis</code> / <code>code_generation</code>.</td></tr>
+                <tr><td><code>qa</code></td><td>May fall back to <code>system_diagnostic</code> / <code>code_generation</code>.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>Delegation aliases:</strong> the agent id <code>code</code> resolves to the <code>code_generation</code> route; <code>search</code> resolves to <code>conversation</code>. There is no separate <code>task_types.search</code> key unless you add one yourself.</p>
+          <p><strong>Autonomous mission</strong> (<code>autonomous_mission.yaml</code>) accepts additional <strong>heartbeat</strong> symbols such as <code>search</code>, <code>code</code>, <code>schedule</code> for <code>heartbeat_preferred_task_type</code> — routing still uses the mappings above (e.g. <code>code</code> → <code>code_generation</code>).</p>
+
+          <h4>Structure of each <code>task_types.&lt;name&gt;</code></h4>
+          <ul>
+            <li><strong><code>primary</code></strong> — <code>provider</code>, <code>model</code>, optional <code>config</code> (see below).</li>
+            <li><strong><code>fallback</code></strong> — ordered list of <code>{ provider, model, config? }</code>.</li>
+            <li><strong><code>constraints</code></strong> — optional <code>max_cost_per_request</code> (USD), <code>max_latency_secs</code>.</li>
+          </ul>
+
+          <h3>Top-level keys (file layout)</h3>
           <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
             <table class="compare-table" style="min-width:100%;font-size:0.88rem">
               <thead><tr><th scope="col">Key</th><th scope="col">Type</th><th scope="col">Description</th></tr></thead>
               <tbody>
                 <tr><td><code>version</code></td><td>string</td><td>Optional, e.g. <code>"1.0"</code>.</td></tr>
-                <tr><td><code>global</code></td><td>object</td><td>See table below.</td></tr>
+                <tr><td><code>global</code></td><td>object</td><td>Timeouts, metrics, retries (see below).</td></tr>
                 <tr><td><code>providers</code></td><td>object</td><td>Named providers: <code>ollama</code>, <code>openai</code>, <code>azure_openai</code>, <code>openrouter</code>, <code>bitnet</code>. Each value uses the provider fields below.</td></tr>
                 <tr><td><code>model_options</code></td><td>object</td><td>Per-model metadata (e.g. from <code>akasha config models fetch</code>): <code>context_length_max</code>, <code>num_ctx</code>, <code>family</code>, <code>parameter_size</code>, optional <code>capabilities</code>, <code>modified_at</code>, <code>extra</code>.</td></tr>
-                <tr><td><code>task_types</code></td><td>object</td><td>Maps task type name → <code>primary</code>, <code>fallback</code>[], optional <code>constraints</code> (see below).</td></tr>
+                <tr><td><code>task_types</code></td><td>object</td><td><strong>Routes:</strong> see tables above.</td></tr>
               </tbody>
             </table>
           </div>
@@ -380,15 +449,6 @@ AKASHA_TELEGRAM_NOTIFY_CHAT_ID=123456789</code></pre>
           </div>
           <p>For <strong>Azure OpenAI</strong>, set <code>api_key_ref</code> and <code>base_url</code> (resource endpoint); the <strong>deployment name</strong> is the <code>model</code> in the route entry.</p>
 
-          <h3><code>task_types.&lt;name&gt;</code></h3>
-          <p>Common task types include <code>conversation</code>, <code>code_generation</code>, <code>creative_writing</code>, <code>scientific_analysis</code>, <code>data_analysis</code>, <code>system_diagnostic</code>, <code>system</code> (memory / internal work), and optional <code>orchestrator</code> (v0.7+). Built-in providers include <code>akasha_embedded</code>, <code>akasha_core</code>, plus configured cloud/local providers.</p>
-          <p>Each task type supports:</p>
-          <ul>
-            <li><strong><code>primary</code></strong> — <code>provider</code>, <code>model</code>, optional <code>config</code> (see below).</li>
-            <li><strong><code>fallback</code></strong> — list of <code>{ provider, model, config? }</code>.</li>
-            <li><strong><code>constraints</code></strong> — optional <code>max_cost_per_request</code> (USD), <code>max_latency_secs</code>.</li>
-          </ul>
-
           <h3><code>primary.config</code> / route <code>config</code> (per model)</h3>
           <p>Optional JSON/YAML object merged into completion requests: <code>temperature</code>, <code>top_p</code>, <code>top_k</code>, <code>frequency_penalty</code>, <code>presence_penalty</code>, <code>repeat_penalty</code>, <code>num_ctx</code>, <code>num_gpu</code>, <code>max_tokens</code> (legacy alias <code>max_token</code>), <code>thinking_level</code> (string). Large integers are clamped to 32-bit limits.</p>
 
@@ -416,7 +476,17 @@ task_types:
 task_types:
   conversation:
     primary: { provider: openai, model: gpt-4o, config: { temperature: 0.7, max_tokens: 4096 } }</code></pre>
-          <p>Use <code>akasha config models set &lt;category&gt; &lt;provider&gt; &lt;model&gt;</code> to update routes without hand-editing.</p>
+          <p><strong>Image generation</strong> (for the <code>generate_image</code> tool — distinct from chat):</p>
+          <pre><code>providers:
+  openai:
+    api_key_ref: "vault://openai_api_key"
+  ollama:
+    base_url: "http://localhost:11434"
+task_types:
+  image_generation:
+    primary: { provider: openai, model: dall-e-3, config: { default_size: "1024x1024" } }
+    # or: primary: { provider: ollama, model: flux, ... }</code></pre>
+          <p>Use <code>akasha config models set &lt;category&gt; &lt;provider&gt; &lt;model&gt;</code> to update text routes without hand-editing; image routes are often edited under <code>task_types.image_generation</code>.</p>
         </article>
 
         <!-- Vault CLI -->
@@ -506,6 +576,14 @@ AKASHA_DISCORD_ENABLED=1</code></pre>
             <li>Enough <strong>disk space</strong> for images and model weights (Ollama pulls; BitNet needs a GGUF in a volume; voice images build Python stacks).</li>
             <li><strong>RAM / GPU</strong> — Ollama and BitNet benefit from GPU on Linux (optional <code>deploy.resources</code> in compose for NVIDIA); CPU-only works but is slower.</li>
             <li>A directory containing <code>docker-compose.yml</code> — set <code>AKASHA_MODELS_DIR</code> to that path, or pass <code>--compose-dir</code> to every <code>akasha services</code> command.</li>
+          </ul>
+
+          <h3>If <code>docker-compose.yml</code> is missing</h3>
+          <p>If the file was deleted or your install did not ship the <strong>akasha-models</strong> tree, download the same Compose file from this site and save it as <code>docker-compose.yml</code> in an empty folder, then point <code>AKASHA_MODELS_DIR</code> (or <code>--compose-dir</code>) at that folder:</p>
+          <ul>
+            <li><a href="https://raw.githubusercontent.com/azerothl/Akasha_app/main/scripts/akasha-models-docker-compose.yml" target="_blank" rel="noopener">Download <code>akasha-models-docker-compose.yml</code> (raw)</a> — right-click → Save as… → rename to <code>docker-compose.yml</code> if needed.</li>
+            <li><strong>Ollama profile only</strong> (<code>--profile ollama</code>): this file is enough; the image is pulled from Docker Hub.</li>
+            <li><strong>Voice or BitNet</strong>: the compose file references <code>./tts</code>, <code>./stt</code>, and <code>./bitnet</code> build contexts. You need the full <strong>akasha-models</strong> directory from your engine bundle / release (or equivalent) beside the compose file, or those profiles will fail to build.</li>
           </ul>
 
           <h3>Services and ports</h3>
