@@ -193,6 +193,7 @@ function renderSkills(skills) {
             ${versionBadge}
             ${s.featured ? '<span class="badge badge-cyan">Featured</span>' : ''}
             ${s.coming_soon ? '<span class="badge badge-gray">Coming soon</span>' : ''}
+            ${s.akasha_daemon_min_version ? `<span class="badge badge-gray" title="Minimum Akasha daemon for this skill">Min daemon ${s.akasha_daemon_min_version}</span>` : ''}
             <span class="badge badge-gray">${categoryLabel(s.category)}</span>
           </div>
         </div>
