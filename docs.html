@@ -96,6 +96,14 @@
           <a href="#skills-api" class="docs-nav-link" data-target="skills-api">Slash commands</a>
         </div>
         <div class="docs-nav-section">
+          <div class="docs-nav-title">Hermes parity</div>
+          <a href="#hermes-overview" class="docs-nav-link" data-target="hermes-overview">Overview &amp; matrix</a>
+          <a href="#hermes-mcp" class="docs-nav-link" data-target="hermes-mcp">MCP (validate &amp; probe)</a>
+          <a href="#hermes-webhooks" class="docs-nav-link" data-target="hermes-webhooks">Webhooks &amp; automation</a>
+          <a href="#hermes-toolsets" class="docs-nav-link" data-target="hermes-toolsets">Toolsets &amp; tools policy</a>
+          <a href="#hermes-migration" class="docs-nav-link" data-target="hermes-migration">Migration &amp; ecosystem</a>
+        </div>
+        <div class="docs-nav-section">
           <div class="docs-nav-title">Developers</div>
           <a href="plugins.html" class="docs-nav-link">Plugins catalog (site)</a>
           <a href="#update-api" class="docs-nav-link" data-target="update-api">Update API</a>
@@ -856,6 +864,61 @@ When the user asks for X, use the tools A and B. Return the result in format …
             </table>
           </div>
           <p><strong>Vault:</strong> add or delete secrets only via CLI — <code>akasha vault set KEY [value]</code>, <code>akasha vault delete KEY</code> — or API <code>DELETE /api/vault</code> with body <code>{"key":"…"}</code>. No slash command writes vault values.</p>
+        </article>
+
+        <!-- Hermes parity (ecosystem) -->
+        <article class="docs-article" id="hermes-overview">
+          <h2>Hermes Agent — parity with Akasha</h2>
+          <p>
+            <a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener">Hermes Agent</a> (Nous Research) is a useful reference for <strong>toolsets</strong>, <strong>MCP</strong>, <strong>webhooks</strong>, and <strong>operator UX</strong>.
+            Akasha tracks gaps and progress in a <strong>versioned matrix</strong> in the main repository (not shipped in the binary):
+          </p>
+          <ul>
+            <li><a href="https://github.com/azerothl/Akasha/blob/main/docs/hermes-akasha-parity-matrix.md" target="_blank" rel="noopener"><code>docs/hermes-akasha-parity-matrix.md</code></a> — status per domain + which app (site, skills hub, plugins, Code Studio, Rbitnet, Tauri UI) exposes the capability.</li>
+            <li><a href="https://github.com/azerothl/Akasha/blob/main/docs/hermes-integration-remainder.md" target="_blank" rel="noopener"><code>docs/hermes-integration-remainder.md</code></a> — roadmap + <strong>Definition of Done</strong> for PRs (matrix bump + at least one satellite touchpoint).</li>
+          </ul>
+          <p>Product comparison including Hermes: <a href="compare.html#hermes">Compare</a> (table below on that page).</p>
+        </article>
+
+        <article class="docs-article" id="hermes-mcp">
+          <h2>MCP — validate and probe</h2>
+          <p>Akasha ships <strong>offline JSON validation</strong> and a short <strong>stdio JSON-RPC probe</strong> (<code>initialize</code>, optional <code>tools/list</code>) before you rely on a server.</p>
+          <ul>
+            <li>CLI: <code>akasha mcp validate &lt;mcp.json&gt;</code> · <code>akasha mcp probe &lt;mcp.json&gt; [--name SERVER] [--tools]</code></li>
+            <li>Docs: <a href="https://github.com/azerothl/Akasha/blob/main/docs/mcp-mvp.md" target="_blank" rel="noopener">mcp-mvp.md</a>, <a href="https://github.com/azerothl/Akasha/blob/main/docs/mcp-runtime.md" target="_blank" rel="noopener">mcp-runtime.md</a>, <a href="https://github.com/azerothl/Akasha/blob/main/docs/mcp-oauth.md" target="_blank" rel="noopener">mcp-oauth.md</a> (OAuth hardening checklist).</li>
+          </ul>
+          <div class="callout callout-tip"><span class="callout-icon">⚠</span><div class="callout-body">Probing runs the configured command from your JSON file — use only <strong>trusted</strong> configs (same trust model as other MCP hosts).</div></div>
+        </article>
+
+        <article class="docs-article" id="hermes-webhooks">
+          <h2>Signed webhooks &amp; direct delivery</h2>
+          <p>For <strong>server-to-server</strong> automation without invoking the LLM, the daemon exposes:</p>
+          <ul>
+            <li><code>POST /api/automation/webhook</code> — HMAC-SHA256 body, optional <code>Idempotency-Key</code>, rate limit (see env vars in doc).</li>
+            <li><code>POST /api/automation/webhook/direct</code> — same verification; response body from <code>AKASHA_WEBHOOK_DIRECT_BODY_JSON</code>.</li>
+          </ul>
+          <p>Full operator guide: <a href="https://github.com/azerothl/Akasha/blob/main/docs/automation-webhooks.md" target="_blank" rel="noopener">automation-webhooks.md</a>. Schedule shell hooks: <a href="https://github.com/azerothl/Akasha/blob/main/docs/gateway-shell-hooks.md" target="_blank" rel="noopener">gateway-shell-hooks.md</a>.</p>
+        </article>
+
+        <article class="docs-article" id="hermes-toolsets">
+          <h2>Toolsets &amp; effective tool state</h2>
+          <p>Hermes highlights <strong>toolsets</strong> (presets per channel or session). In Akasha, tool gating lives in <code>tools_policy.yaml</code> (<code>tool_profiles</code>) with operator helpers:</p>
+          <ul>
+            <li>CLI: <code>akasha toolset profiles</code> · <code>akasha toolset effective</code> (daemon must be up for <code>effective</code>).</li>
+            <li>API: <code>GET /api/tools/effective</code> — allowed / blocked / approval + rule source.</li>
+          </ul>
+        </article>
+
+        <article class="docs-article" id="hermes-migration">
+          <h2>Migration &amp; multi-repo ecosystem</h2>
+          <p>Akasha splits <strong>execution</strong> (Rust daemon) from <strong>catalogues and docs</strong>:</p>
+          <ul>
+            <li><strong>Skills</strong> — <a href="https://github.com/azerothl/Akasha_skills" target="_blank" rel="noopener">Akasha_skills</a> (gallery + <code>skills.json</code> synced to this site).</li>
+            <li><strong>Plugins</strong> — <a href="https://github.com/azerothl/Akasha_plugins" target="_blank" rel="noopener">Akasha_plugins</a> + WASM install under your data directory.</li>
+            <li><strong>Code Studio</strong> — <a href="https://github.com/azerothl/akasha-code-studio" target="_blank" rel="noopener">akasha-code-studio</a> web cockpit for project tasks (see <code>docs/HERMES_COCKPIT.md</code> in that repo).</li>
+            <li><strong>Local inference</strong> — <a href="https://github.com/azerothl/Rbitnet" target="_blank" rel="noopener">Rbitnet</a> (OpenAI-compatible; wire in <code>llm_router.yaml</code>).</li>
+          </ul>
+          <p>When importing settings from another assistant, prefer <code>akasha config validate</code> and the vault for secrets — never commit API keys to this static site.</p>
         </article>
 
         <!-- Update API -->

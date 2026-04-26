@@ -2,6 +2,8 @@
 
 Public website and **release mirror** for Akasha — downloads, docs, and changelog on GitHub Pages.
 
+**Hermes / parité produit :** la matrice vivante côté cœur Akasha est dans [`Akasha/docs/hermes-akasha-parity-matrix.md`](https://github.com/azerothl/Akasha/blob/main/docs/hermes-akasha-parity-matrix.md) ; synchroniser les pages publiques (`docs.html`, annonces) quand une ligne passe à « Existe ».
+
 ## Release pipeline (sanity checklist)
 
 1. A release is published on the **private** Akasha repo (binaries attached to the GitHub Release).

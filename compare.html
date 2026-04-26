@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compare — Akasha vs OpenClaw, Claude Code</title>
-  <meta name="description" content="How Akasha compares to OpenClaw and Claude Code — local-first assistant, IDE agents, and messaging bots." />
+  <title>Compare — Akasha vs OpenClaw, Claude Code, Hermes</title>
+  <meta name="description" content="How Akasha compares to OpenClaw, Claude Code, and Hermes Agent — local-first assistant, IDE agents, messaging bots, and toolsets." />
   <meta name="theme-color" content="#8b5cf6" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -145,6 +145,51 @@
     <p class="reveal delay-1" style="margin-top: 28px; font-size: 0.9rem; color: var(--text-muted);">
       Akasha downloads and docs live on this site and <a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub (Akasha_app)</a>. This table is not exhaustive and does not imply endorsement.
     </p>
+
+    <h2 id="hermes" class="reveal delay-1" style="margin-top: 48px; margin-bottom: 16px;">Akasha vs Hermes Agent (Nous Research)</h2>
+    <p class="reveal delay-1" style="max-width: 820px; color: var(--text-muted); margin-bottom: 20px;">
+      <a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener">Hermes Agent</a> emphasizes toolsets, MCP, webhooks, and operator-oriented workflows.
+      Akasha tracks parity in <a href="https://github.com/azerothl/Akasha/blob/main/docs/hermes-akasha-parity-matrix.md" target="_blank" rel="noopener">docs/hermes-akasha-parity-matrix.md</a> (versioned).
+      On-site guides: <a href="docs.html#hermes-overview">Docs → Hermes parity</a>.
+    </p>
+    <div class="compare-table-wrap reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th scope="col">Theme</th>
+            <th scope="col">Akasha (indicative)</th>
+            <th scope="col">Hermes (indicative)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">MCP</th>
+            <td>JSON validation + stdio probe (<code>akasha mcp</code>); OAuth hardening documented for roadmap.</td>
+            <td>Strong MCP-first operator story; see Hermes docs and releases.</td>
+          </tr>
+          <tr>
+            <th scope="row">Webhooks / automation</th>
+            <td>Signed inbound routes + optional static direct response; scheduler + <code>task_run</code> APIs.</td>
+            <td>Event-driven integrations and “direct delivery” patterns in product notes.</td>
+          </tr>
+          <tr>
+            <th scope="row">Toolsets</th>
+            <td><code>tool_profiles</code> in <code>tools_policy.yaml</code>, CLI <code>akasha toolset</code>, <code>GET /api/tools/effective</code>.</td>
+            <td>Named toolsets and presets per platform/session.</td>
+          </tr>
+          <tr>
+            <th scope="row">Terminal / long jobs</th>
+            <td>Shell tools + background sessions + process watch API; PTY interactive roadmap.</td>
+            <td>Multiple terminal backends and long-running job UX (see Hermes features overview).</td>
+          </tr>
+          <tr>
+            <th scope="row">Ecosystem repos</th>
+            <td>Static site (here), skills/plugins catalogs, Code Studio, Rbitnet for local inference — each aligned with the same matrix.</td>
+            <td>Hermes distribution model differs; compare vendor docs before choosing.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div class="text-center mt-lg reveal">
       <a href="releases.html#downloads" class="btn btn-primary btn-lg">⬇ Try Akasha</a>
