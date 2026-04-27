@@ -99,6 +99,7 @@
           <div class="docs-nav-title">Hermes parity</div>
           <a href="#hermes-overview" class="docs-nav-link" data-target="hermes-overview">Overview &amp; matrix</a>
           <a href="#hermes-mcp" class="docs-nav-link" data-target="hermes-mcp">MCP (validate &amp; probe)</a>
+          <a href="#hermes-terminal" class="docs-nav-link" data-target="hermes-terminal">Terminal &amp; PTY</a>
           <a href="#hermes-webhooks" class="docs-nav-link" data-target="hermes-webhooks">Webhooks &amp; automation</a>
           <a href="#hermes-toolsets" class="docs-nav-link" data-target="hermes-toolsets">Toolsets &amp; tools policy</a>
           <a href="#hermes-migration" class="docs-nav-link" data-target="hermes-migration">Migration &amp; ecosystem</a>
@@ -885,9 +886,16 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <p>Akasha ships <strong>offline JSON validation</strong> and a short <strong>stdio JSON-RPC probe</strong> (<code>initialize</code>, optional <code>tools/list</code>) before you rely on a server.</p>
           <ul>
             <li>CLI: <code>akasha mcp validate &lt;mcp.json&gt;</code> · <code>akasha mcp probe &lt;mcp.json&gt; [--name SERVER] [--tools]</code></li>
+            <li>API: <code>GET /api/mcp/status</code> (disk validation) · <code>GET /api/mcp/runtime</code> (stdio attach summary) · <code>POST /api/mcp/runtime/stdio/start</code> / <code>POST /api/mcp/runtime/stdio/stop</code> (optional long-lived child for operators).</li>
             <li>Docs: <a href="https://github.com/azerothl/Akasha/blob/main/docs/mcp-mvp.md" target="_blank" rel="noopener">mcp-mvp.md</a>, <a href="https://github.com/azerothl/Akasha/blob/main/docs/mcp-runtime.md" target="_blank" rel="noopener">mcp-runtime.md</a>, <a href="https://github.com/azerothl/Akasha/blob/main/docs/mcp-oauth.md" target="_blank" rel="noopener">mcp-oauth.md</a> (OAuth hardening checklist).</li>
           </ul>
           <div class="callout callout-tip"><span class="callout-icon">⚠</span><div class="callout-body">Probing runs the configured command from your JSON file — use only <strong>trusted</strong> configs (same trust model as other MCP hosts).</div></div>
+        </article>
+
+        <article class="docs-article" id="hermes-terminal">
+          <h2>Terminal &amp; PTY (operator API)</h2>
+          <p>Beyond one-shot <code>run_command</code>, the daemon exposes <strong>interactive PTY sessions</strong> over HTTP (create, read, write, resize, close). Capabilities: <code>GET /api/terminal/capabilities</code>. CLI: <code>akasha terminal capabilities</code>.</p>
+          <p>Specification: <a href="https://github.com/azerothl/Akasha/blob/main/spec/43_session_terminal.md" target="_blank" rel="noopener"><code>spec/43_session_terminal.md</code></a> · roadmap backends: <a href="https://github.com/azerothl/Akasha/blob/main/docs/terminal-backends-roadmap.md" target="_blank" rel="noopener">terminal-backends-roadmap.md</a>.</p>
         </article>
 
         <article class="docs-article" id="hermes-webhooks">
@@ -897,7 +905,7 @@ When the user asks for X, use the tools A and B. Return the result in format …
             <li><code>POST /api/automation/webhook</code> — HMAC-SHA256 body, optional <code>Idempotency-Key</code>, rate limit (see env vars in doc).</li>
             <li><code>POST /api/automation/webhook/direct</code> — same verification; response body from <code>AKASHA_WEBHOOK_DIRECT_BODY_JSON</code>.</li>
           </ul>
-          <p>Full operator guide: <a href="https://github.com/azerothl/Akasha/blob/main/docs/automation-webhooks.md" target="_blank" rel="noopener">automation-webhooks.md</a>. Schedule shell hooks: <a href="https://github.com/azerothl/Akasha/blob/main/docs/gateway-shell-hooks.md" target="_blank" rel="noopener">gateway-shell-hooks.md</a>.</p>
+          <p>Full operator guide: <a href="https://github.com/azerothl/Akasha/blob/main/docs/automation-webhooks.md" target="_blank" rel="noopener">automation-webhooks.md</a>. Optional shared idempotency DB path: <code>AKASHA_WEBHOOK_IDEM_SQLITE</code>. Schedule + gateway shell hooks: <a href="https://github.com/azerothl/Akasha/blob/main/docs/gateway-shell-hooks.md" target="_blank" rel="noopener">gateway-shell-hooks.md</a>.</p>
         </article>
 
         <article class="docs-article" id="hermes-toolsets">
