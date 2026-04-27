@@ -103,6 +103,7 @@
           <a href="#hermes-webhooks" class="docs-nav-link" data-target="hermes-webhooks">Webhooks &amp; automation</a>
           <a href="#hermes-toolsets" class="docs-nav-link" data-target="hermes-toolsets">Toolsets &amp; tools policy</a>
           <a href="#hermes-migration" class="docs-nav-link" data-target="hermes-migration">Migration &amp; ecosystem</a>
+          <a href="#hermes-closeout" class="docs-nav-link" data-target="hermes-closeout">Phase close-out proofs</a>
         </div>
         <div class="docs-nav-section">
           <div class="docs-nav-title">Developers</div>
@@ -927,6 +928,17 @@ When the user asks for X, use the tools A and B. Return the result in format …
             <li><strong>Local inference</strong> — <a href="https://github.com/azerothl/Rbitnet" target="_blank" rel="noopener">Rbitnet</a> (OpenAI-compatible; wire in <code>llm_router.yaml</code>).</li>
           </ul>
           <p>When importing settings from another assistant, prefer <code>akasha config validate</code> and the vault for secrets — never commit API keys to this static site.</p>
+        </article>
+
+        <article class="docs-article" id="hermes-closeout">
+          <h2>Hermes phase close-out (proof pack)</h2>
+          <p>Cross-repo evidence used to close a Hermes delivery batch:</p>
+          <ul>
+            <li><strong>Core status</strong>: <a href="https://github.com/azerothl/Akasha/blob/main/docs/hermes-akasha-parity-matrix.md" target="_blank" rel="noopener">hermes-akasha-parity-matrix.md</a> and <a href="https://github.com/azerothl/Akasha/blob/main/docs/hermes-integration-remainder.md" target="_blank" rel="noopener">hermes-integration-remainder.md</a>.</li>
+            <li><strong>Plugins trust</strong>: <a href="https://github.com/azerothl/Akasha_plugins/blob/main/TRUST_CATALOG.md" target="_blank" rel="noopener">Akasha_plugins/TRUST_CATALOG.md</a>.</li>
+            <li><strong>Skills evals</strong>: <a href="https://github.com/azerothl/Akasha_skills/blob/main/.github/workflows/skills-eval-smoke.yml" target="_blank" rel="noopener">skills-eval-smoke.yml</a>.</li>
+            <li><strong>Perf/SLO self-hosted</strong>: <a href="https://github.com/azerothl/Rbitnet/blob/main/docs/BENCHMARKS.md" target="_blank" rel="noopener">Rbitnet BENCHMARKS.md</a>.</li>
+          </ul>
         </article>
 
         <!-- Update API -->
