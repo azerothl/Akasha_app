@@ -213,9 +213,16 @@
           <h3>Permission, memory and budget API (v0.8+)</h3>
           <ul>
             <li><code>GET/POST /api/permissions/decisions</code> and <code>DELETE /api/permissions/decisions/:id</code> — persist approval rules by tool/scope.</li>
+            <li><code>GET/POST /api/permissions/mode</code> — global approval mode (<code>ask_me</code> / <code>allow_all</code>).</li>
             <li><code>GET/POST /api/memory/second-brain/settings</code> — enable/pause memory learning.</li>
             <li><code>GET /api/memory/second-brain/overview</code>, <code>POST /api/memory/second-brain/clear</code> — inspect and reset memory state.</li>
             <li><code>GET/POST /api/budget</code>, <code>POST /api/budget/reset-session</code> — manage token budget controls and session usage reset.</li>
+          </ul>
+          <h3>Telegram governance API (v0.8+)</h3>
+          <ul>
+            <li><code>GET /api/channel-access/telegram/users</code> — list approved and pending Telegram users.</li>
+            <li><code>POST /api/channel-access/telegram/request</code> — create pairing request with code.</li>
+            <li><code>POST /api/channel-access/telegram/approve|reject|remove|promote|demote|reset</code> — full access lifecycle.</li>
           </ul>
           <h3>Autonomous mission API (v0.8+)</h3>
           <ul>
@@ -259,7 +266,7 @@
           <pre><code>.\akasha.exe init
 .\akasha.exe start
 .\akasha.exe tui   # terminal interface</code></pre>
-          <p>Run <code>akasha start</code> from the folder where you extracted the archive so the in-app <strong>Doc</strong> tab can show the user guide (the daemon serves it from the <code>docs</code> folder in that directory).</p>
+          <p>Run <code>akasha up</code> for the one-command always-on flow (ensure running + health check), or <code>akasha start</code> for manual startup. Keep running from the extracted folder so the in-app <strong>Doc</strong> tab can show the user guide (served from local <code>docs</code>).</p>
         </article>
 
         <!-- First run -->
@@ -267,7 +274,8 @@
           <h2>First Run</h2>
           <p><code>akasha init</code> runs an interactive setup: LLM provider (embedded, Ollama, OpenRouter, OpenAI), vault, optional channels, and optional <strong>Docker services</strong> (Ollama, TTS/STT, BitNet) if the <strong>akasha-models</strong> compose directory is found — set <code>AKASHA_MODELS_DIR</code> or use <code>akasha services install --compose-dir …</code> later. Use <code>akasha init --defaults</code> for minimal setup without prompts.</p>
           <p>Then start the daemon and open the interface:</p>
-          <pre><code>akasha start      # background daemon (auto-restart on crash)
+          <pre><code>akasha up         # ensure daemon is running + verify status
+akasha start      # background daemon (auto-restart on crash)
 akasha tui        # terminal UI: Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory</code></pre>
           <p>If you have the desktop app (Akasha UI), launch it; it connects to the daemon on port 3876 (configurable via <code>AKASHA_PORT</code>).</p>
         </article>
@@ -276,9 +284,18 @@ akasha tui        # terminal UI: Chat, Scheduled, Router, Doc, Tasks, Calendar, 
         <article class="docs-article" id="commands">
           <h2>Commands Reference</h2>
           <h3>Daemon</h3>
-          <pre><code>akasha start              # Start daemon (auto-restart)
+          <pre><code>akasha up                 # Start if needed + verify status
+akasha start              # Start daemon (auto-restart)
 akasha start --foreground # Run in foreground (logs in terminal)
 akasha stop               # Stop daemon</code></pre>
+          <h3>Telegram access governance</h3>
+          <pre><code>akasha telegram list
+akasha telegram approve &lt;pairing_code|user_id&gt;
+akasha telegram reject &lt;user_id&gt;
+akasha telegram remove &lt;user_id&gt;
+akasha telegram promote &lt;user_id&gt;
+akasha telegram demote &lt;user_id&gt;
+akasha telegram reset</code></pre>
           <h3>Setup &amp; diagnostic</h3>
           <pre><code>akasha init              # Interactive setup
 akasha init --defaults   # Minimal setup, no prompts
@@ -702,7 +719,7 @@ browser_allowed_domains: ["*"]</code></pre>
           <h2>Channels (Telegram, Slack, Discord, Teams)</h2>
           <p>Optional connectors let the agent respond on external platforms. Store tokens in the vault and set the matching env var to <code>1</code>. Activation vars are loaded from <code>connectors.env</code> in the data directory (created or updated by <code>akasha init</code>).</p>
           <ul>
-            <li><strong>Telegram</strong> — <code>akasha vault set telegram_bot_token YOUR_TOKEN</code>, then <code>AKASHA_TELEGRAM_ENABLED=1</code>. Message the <strong>same bot</strong> as the token (check daemon log line <code>bot_username</code>). In <strong>private</strong>, plain text or <code>/akasha …</code>; in <strong>groups</strong>, <code>/akasha@BotUsername …</code>. <strong>Chat ID</strong> for notifications: send a message to <a href="https://t.me/userinfobot" rel="noopener">@userinfobot</a>, use the numeric id in <code>AKASHA_TELEGRAM_NOTIFY_CHAT_ID</code>. Only <strong>one</strong> process may poll Telegram per bot token (no second daemon / no webhook elsewhere). Optional startup ping may fail until you have opened the bot chat at least once.</li>
+            <li><strong>Telegram</strong> — <code>akasha vault set telegram_bot_token YOUR_TOKEN</code>, then <code>AKASHA_TELEGRAM_ENABLED=1</code>. Message the <strong>same bot</strong> as the token (check daemon log line <code>bot_username</code>). In <strong>private</strong>, plain text or <code>/akasha …</code>; in <strong>groups</strong>, <code>/akasha@BotUsername …</code>. Pairing: use <code>/start</code> to request access and obtain a code; admins approve with <code>akasha telegram approve &lt;code&gt;</code>. Admin lifecycle: <code>akasha telegram list|reject|remove|promote|demote|reset</code>. <strong>Chat ID</strong> for notifications: send a message to <a href="https://t.me/userinfobot" rel="noopener">@userinfobot</a>, use the numeric id in <code>AKASHA_TELEGRAM_NOTIFY_CHAT_ID</code>. Only <strong>one</strong> process may poll Telegram per bot token (no second daemon / no webhook elsewhere). Optional startup ping may fail until you have opened the bot chat at least once.</li>
             <li><strong>Slack</strong> — Vault <code>slack_signing_secret</code>, <code>AKASHA_SLACK_ENABLED=1</code>. Point the Slack slash command to <code>POST /channels/slack/command</code> on your daemon URL.</li>
             <li><strong>Discord</strong> — <code>akasha vault set discord_bot_token YOUR_TOKEN</code>, then <code>AKASHA_DISCORD_ENABLED=1</code>. Prefix: <code>!akasha &lt;message&gt;</code>.</li>
             <li><strong>Microsoft Teams</strong> — <code>AKASHA_TEAMS_ENABLED=1</code> when your Teams integration is configured (see vault / deployment docs for your build).</li>
@@ -824,7 +841,7 @@ browser_allowed_domains: ["*"]</code></pre>
             <li><strong>Body:</strong> Markdown with instructions for the agent (when to use the skill, which tools to call, guidelines, examples). See the <a href="https://agentskills.io/specification" target="_blank" rel="noopener">Agent Skills specification</a>.</li>
           </ul>
           <h3>skill.json (for the gallery / catalog)</h3>
-          <p>If you publish the skill in the <a href="skills.html">Skills Library</a> or another tool that reads the catalog, add a <code>skill.json</code> with: <code>id</code>, <code>name</code>, <code>version</code>, <code>description</code>, <code>author</code>, <code>category</code>, <code>tags</code>, <code>icon</code> (e.g. <a href="https://lucide.dev" target="_blank" rel="noopener">Lucide</a> name), <code>featured</code>, <code>install_url</code>, <code>install_command</code>.</p>
+          <p>If you publish the skill in the <a href="skills.html">Skills Library</a> or another tool that reads the catalog, add a <code>skill.json</code> with: <code>id</code>, <code>name</code>, <code>version</code>, <code>description</code>, <code>author</code>, <code>category</code>, <code>tags</code>, <code>icon</code> (e.g. <a href="https://lucide.dev" target="_blank" rel="noopener">Lucide</a> name), <code>featured</code>, <code>install_url</code>, <code>install_command</code>, and optional trust metadata (<code>trust_level</code>, <code>compat_status</code>).</p>
           <p>For a <strong>user-only</strong> skill (files in <code>data_dir/skills/</code> or install via URL without listing in the gallery), <strong>only SKILL.md is required</strong>; the daemon does not need <code>skill.json</code>.</p>
           <h3>Optional directory structure</h3>
           <p><code>references/</code> (extra docs), <code>scripts/</code>, <code>assets/</code> — see <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noopener">What are skills?</a>. When installing from GitHub, the daemon can fetch the repo tree; for other hosts, only the file at the install URL (usually <code>SKILL.md</code>) is downloaded.</p>
