@@ -156,6 +156,13 @@
 
         <article class="docs-article" id="whats-new">
           <h2>What's new in v0.8.0</h2>
+          <h3>Trust &amp; control enhancements</h3>
+          <ul>
+            <li><strong>Permission center</strong> — persistent allow/deny decisions for sensitive tools, with explicit approval events.</li>
+            <li><strong>Second Brain controls</strong> — settings and overview endpoints to pause learning, inspect typed memory, and clear memory when needed.</li>
+            <li><strong>Budget controls</strong> — configurable daily token limit, warning ratio, and auto-concise mode for long sessions.</li>
+            <li><strong>Agent-callable scheduler tools</strong> — schedule creation/list/cancel from tool calls to support recurring workflows.</li>
+          </ul>
           <h3>Autonomous mission</h3>
           <ul>
             <li><strong>Long-running goals</strong> — define an objective, context, rules, and roles; the daemon runs <strong>heartbeat</strong> tasks on a schedule while the mission is active.</li>
@@ -202,6 +209,13 @@
             <li><code>POST /api/plugins/reputation/reset</code> — body <code>{"plugin_id":"&lt;id&gt;"}</code> to reset one plugin, or empty body / omit id to reset all.</li>
             <li><code>GET /api/plugins/routing_rules</code> — optional <code>?message=…</code> — debug dynamic routing rules.</li>
             <li><code>POST /api/plugins/routing_rules/match</code> — JSON body to test routing match.</li>
+          </ul>
+          <h3>Permission, memory and budget API (v0.8+)</h3>
+          <ul>
+            <li><code>GET/POST /api/permissions/decisions</code> and <code>DELETE /api/permissions/decisions/:id</code> — persist approval rules by tool/scope.</li>
+            <li><code>GET/POST /api/memory/second-brain/settings</code> — enable/pause memory learning.</li>
+            <li><code>GET /api/memory/second-brain/overview</code>, <code>POST /api/memory/second-brain/clear</code> — inspect and reset memory state.</li>
+            <li><code>GET/POST /api/budget</code>, <code>POST /api/budget/reset-session</code> — manage token budget controls and session usage reset.</li>
           </ul>
           <h3>Autonomous mission API (v0.8+)</h3>
           <ul>
