@@ -21,6 +21,16 @@ Public website and **release mirror** for Akasha — downloads, docs, and change
 
 The public docs page is **hand-written HTML** in English. When shipping a new Akasha version, follow the checklist in [docs/DOCUMENTATION_SYNC.md](docs/DOCUMENTATION_SYNC.md) so commands, ports, and UI tabs stay consistent with `Akasha/docs/user_guide_final.md` and the actual CLI/TUI.
 
+### Upcoming cross-app features to reflect in docs/content
+
+When these features ship in core repositories, mirror them in public pages (`docs.html`, release notes, feature highlights):
+
+- Session fork in Code Studio.
+- Queued message delivery modes (steering / follow-up).
+- Unified task event timeline contract across clients.
+
+Keep wording clear about availability status (planned vs released) per version.
+
 ## Plugins catalog (`plugins.html`)
 
 The [plugins.html](plugins.html) page loads **`plugins.json` from the public [Akasha_plugins](https://github.com/azerothl/Akasha_plugins) repository** (via [jsDelivr](https://cdn.jsdelivr.net/gh/azerothl/Akasha_plugins@main/plugins.json), with a raw GitHub fallback). When a plugin is added or changed under `plugins/` on `main`, that repo’s CI rebuilds the JSON — the site list updates on the next page load without a commit to Akasha_app.
