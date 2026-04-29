@@ -78,6 +78,7 @@
         <div class="docs-nav-section">
           <div class="docs-nav-title">Using Akasha</div>
           <a href="#commands" class="docs-nav-link" data-target="commands">Commands</a>
+          <a href="#safety-queue" class="docs-nav-link" data-target="safety-queue">Safety queue &amp; reports</a>
           <a href="#configuration" class="docs-nav-link" data-target="configuration">Configuration</a>
           <a href="#llm-router-yaml" class="docs-nav-link" data-target="llm-router-yaml">LLM router (YAML)</a>
           <a href="#tools-policy" class="docs-nav-link" data-target="tools-policy">Tools policy (YAML)</a>
@@ -340,6 +341,25 @@ akasha services stop     # docker compose down</code></pre>
           <h3>Update</h3>
           <pre><code>akasha update check    # Check for a new version; prints download URL if available
 akasha update install   # Open the latest release download page in the browser</code></pre>
+        </article>
+
+        <article class="docs-article" id="safety-queue">
+          <h2>Safety queue &amp; operator reports</h2>
+          <p>Akasha is evolving from persistent decisions only to a full <strong>review queue</strong> model for sensitive actions. The queue is designed for CLI, TUI, and desktop workflows with explicit status transitions.</p>
+          <h3>Queue lifecycle</h3>
+          <ul>
+            <li><strong>pending</strong> — waiting for operator decision.</li>
+            <li><strong>approved</strong> — action may continue.</li>
+            <li><strong>denied</strong> — action is blocked with explicit feedback.</li>
+            <li><strong>expired</strong> — no decision in the allowed window.</li>
+          </ul>
+          <h3>Planned API surface</h3>
+          <ul>
+            <li><code>GET /api/permissions/queue</code>, <code>GET /api/permissions/queue/:id</code></li>
+            <li><code>POST /api/permissions/queue/:id/approve</code>, <code>POST /api/permissions/queue/:id/deny</code></li>
+            <li><code>GET /api/tasks/:id/report</code> — compact post-task operator summary (<code>done</code>, <code>needs_review</code>, <code>failed</code>, <code>next_steps</code>).</li>
+          </ul>
+          <p>This complements existing decision endpoints (<code>/api/permissions/decisions</code>) for persistent allow/deny rules and improves day-to-day governance in Code Studio and mission workflows.</p>
         </article>
 
         <!-- Configuration -->
