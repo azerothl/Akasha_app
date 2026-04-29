@@ -183,6 +183,8 @@
             <li><strong>Tools-first mode</strong> — when routing requires it, the first tool call is more deterministic; fewer spurious LLM round-trips for light chit-chat.</li>
             <li><strong>Cleaner summaries</strong> — trailing technical JSON “contract” blocks can be stripped from the user-facing summary when appropriate.</li>
             <li><strong><code>akasha doctor</code> / <code>doctor --fix</code></strong> — improved behaviour for <strong>zip / packaged</strong> installs and <code>spec/</code> resolution next to binaries.</li>
+            <li><strong>Live task timeline</strong> — task detail views can consume daemon live events (<code>/api/events</code>) with automatic fallback to <code>/api/tasks/:id/events</code> polling.</li>
+            <li><strong>CLI task ops</strong> — <code>akasha task watch</code>, <code>akasha task events</code>, <code>akasha task cancel</code> for operator-style run supervision.</li>
           </ul>
           <h3>Optional power-user CLIs</h3>
           <p>Built-in prompts may suggest <strong>AXI</strong>-style CLIs (e.g. <code>gh-axi</code>, <code>chrome-devtools-axi</code>) when installed — <strong>optional</strong>; Akasha still ships browser tools and <code>run_command</code> as before.</p>
@@ -289,6 +291,10 @@ akasha tui        # terminal UI: Chat, Scheduled, Router, Doc, Tasks, Calendar, 
 akasha start              # Start daemon (auto-restart)
 akasha start --foreground # Run in foreground (logs in terminal)
 akasha stop               # Stop daemon</code></pre>
+          <h3>Task operations</h3>
+          <pre><code>akasha task watch &lt;task_id&gt; [--interval-ms 1500]
+akasha task events &lt;task_id&gt; [--limit 40] [--json]
+akasha task cancel &lt;task_id&gt;</code></pre>
           <h3>Telegram access governance</h3>
           <pre><code>akasha telegram list
 akasha telegram approve &lt;pairing_code|user_id&gt;
