@@ -2,7 +2,7 @@
 
 Public website and **release mirror** for Akasha — downloads, docs, and changelog on GitHub Pages.
 
-**Hermes / parité produit :** la matrice vivante côté cœur Akasha est dans [`Akasha/docs/hermes-akasha-parity-matrix.md`](https://github.com/azerothl/Akasha/blob/main/docs/hermes-akasha-parity-matrix.md) ; synchroniser les pages publiques (`docs.html`, annonces) quand une ligne passe à « Existe ».
+**Parité opérateur / produits de référence :** la matrice vivante côté cœur Akasha est dans [`Akasha/spec/dev/roadmap/reference-products-parity-matrix.md`](https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/reference-products-parity-matrix.md) (alias historique [`hermes-akasha-parity-matrix.md`](https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/hermes-akasha-parity-matrix.md)) ; synchroniser les pages publiques (`docs.html`, `compare.html`, annonces) quand une ligne passe à « Existe ».
 
 ## Release pipeline (sanity checklist)
 
