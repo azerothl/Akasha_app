@@ -79,6 +79,8 @@
           <div class="docs-nav-title">Using Akasha</div>
           <a href="#commands" class="docs-nav-link" data-target="commands">Commands</a>
           <a href="#safety-queue" class="docs-nav-link" data-target="safety-queue">Safety queue &amp; reports</a>
+          <a href="#steering-follow-up" class="docs-nav-link" data-target="steering-follow-up">Steering &amp; follow-up</a>
+          <a href="#code-studio" class="docs-nav-link" data-target="code-studio">Code Studio &amp; swarm</a>
           <a href="#configuration" class="docs-nav-link" data-target="configuration">Configuration</a>
           <a href="#llm-router-yaml" class="docs-nav-link" data-target="llm-router-yaml">LLM router (YAML)</a>
           <a href="#tools-policy" class="docs-nav-link" data-target="tools-policy">Tools policy (YAML)</a>
@@ -365,10 +367,59 @@ akasha update install   # Open the latest release download page in the browser</
           <ul>
             <li><code>GET /api/permissions/queue</code> — optional <code>status</code>, <code>limit</code>, <code>cursor</code></li>
             <li><code>GET /api/permissions/queue/:id</code></li>
-            <li><code>POST /api/permissions/queue/:id/approve</code>, <code>POST /api/permissions/queue/:id/deny</code> — optional body <code>{ "note": "..." }</code></li>
+            <li><code>POST /api/permissions/queue/:id/approve</code>, <code>POST /api/permissions/queue/:id/deny</code>, <code>POST /api/permissions/queue/:id/expire</code> — optional body <code>{ "note": "..." }</code></li>
             <li><code>GET /api/tasks/:id/report</code> — compact post-task operator summary (<code>done</code>, <code>needs_review</code>, <code>failed</code>, <code>next_steps</code>).</li>
           </ul>
+          <h3>CLI</h3>
+          <pre><code>akasha permissions queue list [--status pending]
+akasha permissions queue approve &lt;id&gt; [--note "..."]
+akasha permissions queue deny &lt;id&gt; [--note "..."]</code></pre>
+          <h3>UI surfaces</h3>
+          <ul>
+            <li><strong>Desktop (Tauri)</strong> — <code>PermissionsBell</code> in the header; permission center for pending items.</li>
+            <li><strong>Code Studio</strong> — operator cockpit sections for task runs, swarm workers, and permission context.</li>
+            <li><strong>TUI</strong> — permission review integrated with task workflows.</li>
+          </ul>
+          <h3>Report schema</h3>
+          <p>Reports are generated on task completion, long autonomous cycles, and Code Studio run completion. Minimum fields: <code>done[]</code>, <code>needs_review[]</code>, <code>failed[]</code>, <code>next_steps[]</code>.</p>
           <p>This complements existing decision endpoints (<code>/api/permissions/decisions</code>) for persistent allow/deny rules and supports governance in Code Studio, the desktop permission center, and mission workflows.</p>
+        </article>
+
+        <article class="docs-article" id="steering-follow-up">
+          <h2>Steering &amp; follow-up during long tasks</h2>
+          <p>While a task runs tools or orchestration, you can queue user messages instead of starting a conflicting root task. Two delivery modes mirror Pi-style <em>steer</em> vs <em>follow-up</em>.</p>
+          <h3>Delivery modes</h3>
+          <ul>
+            <li><strong>steering</strong> — inject after the current LLM turn (priority mid-task guidance).</li>
+            <li><strong>follow_up</strong> — run after the current work unit completes.</li>
+          </ul>
+          <p>Set <code>message_delivery_mode</code> on <code>POST /api/message</code> (or use the client selector in Tauri / Code Studio).</p>
+          <h3>Task message queue API</h3>
+          <ul>
+            <li><code>GET /api/tasks/:id/queue</code> — snapshot <code>steering[]</code> and <code>follow_up[]</code></li>
+            <li><code>DELETE /api/tasks/:id/queue</code> — flush both queues</li>
+          </ul>
+          <h3>CLI</h3>
+          <pre><code>akasha task queue list &lt;task_id&gt;
+akasha task queue clear &lt;task_id&gt;</code></pre>
+          <h3>Events (SSE)</h3>
+          <p><code>user_steering_queued</code>, <code>user_follow_up_queued</code>, <code>user_steering_applied</code>, <code>user_follow_up_applied</code> — see daemon event stream on <code>GET /api/events</code>.</p>
+        </article>
+
+        <article class="docs-article" id="code-studio">
+          <h2>Code Studio &amp; swarm MVP</h2>
+          <p><a href="https://github.com/azerothl/akasha-code-studio">akasha-code-studio</a> is the operator cockpit for project-scoped agents. Swarm mode (wave 5) adds a coordinator plus bounded workers.</p>
+          <h3>Roles</h3>
+          <ul>
+            <li><code>studio_project_manager</code> — coordinator only; assigns subtasks.</li>
+            <li><code>studio_worker_*</code> — bounded parallel workers by specialization.</li>
+          </ul>
+          <h3>Worker states</h3>
+          <p><code>spawned</code> → <code>ready</code> → <code>running</code> → <code>blocked</code> | <code>completed</code> | <code>failed</code> | <code>stopped</code></p>
+          <h3>Events</h3>
+          <p>Structured events on <code>GET /api/tasks/:id/events</code>: <code>studio_worker_state_changed</code>, <code>studio_subtask_assigned</code>, <code>studio_subtask_completed</code>, <code>studio_subtask_failed</code>, <code>studio_conflict_notice</code>.</p>
+          <h3>Limits</h3>
+          <p>Respect <code>AKASHA_STUDIO_MAX_PARALLEL_OPS</code>; swarm is opt-in via task context. All writes stay inside the project disk root.</p>
         </article>
 
         <!-- Configuration -->
@@ -967,6 +1018,19 @@ When the user asks for X, use the tools A and B. Return the result in format …
             <li><code>POST /api/automation/webhook/direct</code> — same verification; response body from <code>AKASHA_WEBHOOK_DIRECT_BODY_JSON</code>.</li>
           </ul>
           <p>Full operator guide: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/integrations/automation-webhooks.md" target="_blank" rel="noopener">automation-webhooks.md</a>. Optional shared idempotency DB path: <code>AKASHA_WEBHOOK_IDEM_SQLITE</code>. Schedule + gateway shell hooks: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/runtime/gateway-shell-hooks.md" target="_blank" rel="noopener">gateway-shell-hooks.md</a>.</p>
+        </article>
+
+        <article class="docs-article" id="hermes-worktree">
+          <h2>Git worktree (happy path)</h2>
+          <p>Akasha exposes Git worktrees for parallel agent sessions without cloning twice. Typical operator flow:</p>
+          <ol>
+            <li><strong>List</strong> — <code>akasha worktree list</code> shows linked worktrees under your data directory or configured repo.</li>
+            <li><strong>Add</strong> — <code>akasha worktree add &lt;name&gt; [&lt;branch&gt;]</code> creates an isolated checkout for a feature or agent run.</li>
+            <li><strong>Work</strong> — point Code Studio evolutions or chat sessions at the worktree path; keep <code>main</code>/<code>master</code> clean for merges.</li>
+            <li><strong>Doctor</strong> — <code>akasha worktree doctor</code> reports stale paths, missing branches, or dirty state before removal.</li>
+            <li><strong>Remove</strong> — <code>akasha worktree remove &lt;name&gt;</code> after merge or abandon (daemon refuses if worktree is dirty unless forced).</li>
+          </ol>
+          <p>Specification: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/reference-products-parity-matrix.md" target="_blank" rel="noopener">reference-products-parity-matrix.md</a> (Git worktree row). For IDE-style git inside Code Studio projects, use the <strong>Branches</strong> tab on a studio project instead.</p>
         </article>
 
         <article class="docs-article" id="hermes-toolsets">
