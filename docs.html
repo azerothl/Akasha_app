@@ -216,6 +216,8 @@
           <h3>Permission, memory and budget API (v0.8+)</h3>
           <ul>
             <li><code>GET/POST /api/permissions/decisions</code> and <code>DELETE /api/permissions/decisions/:id</code> — persist approval rules by tool/scope.</li>
+            <li><code>GET /api/permissions/queue</code>, <code>GET /api/permissions/queue/:id</code>, <code>POST …/approve</code>, <code>POST …/deny</code> — review queue lifecycle (see <a href="#safety-queue">Safety queue</a>).</li>
+            <li><code>GET /api/tasks/:id/report</code> — post-task operator summary.</li>
             <li><code>GET/POST /api/permissions/mode</code> — global approval mode (<code>ask_me</code> / <code>allow_all</code>).</li>
             <li><code>GET/POST /api/memory/second-brain/settings</code> — enable/pause memory learning.</li>
             <li><code>GET /api/memory/second-brain/overview</code>, <code>POST /api/memory/second-brain/clear</code> — inspect and reset memory state.</li>
@@ -351,7 +353,7 @@ akasha update install   # Open the latest release download page in the browser</
 
         <article class="docs-article" id="safety-queue">
           <h2>Safety queue &amp; operator reports</h2>
-          <p>Akasha is evolving from persistent decisions only to a full <strong>review queue</strong> model for sensitive actions. The queue is designed for CLI, TUI, and desktop workflows with explicit status transitions.</p>
+          <p>Akasha provides a <strong>review queue</strong> for sensitive actions alongside persistent allow/deny decisions. The queue is available from CLI, TUI, and desktop workflows with explicit status transitions.</p>
           <h3>Queue lifecycle</h3>
           <ul>
             <li><strong>pending</strong> — waiting for operator decision.</li>
@@ -359,13 +361,14 @@ akasha update install   # Open the latest release download page in the browser</
             <li><strong>denied</strong> — action is blocked with explicit feedback.</li>
             <li><strong>expired</strong> — no decision in the allowed window.</li>
           </ul>
-          <h3>Planned API surface</h3>
+          <h3>HTTP API</h3>
           <ul>
-            <li><code>GET /api/permissions/queue</code>, <code>GET /api/permissions/queue/:id</code></li>
-            <li><code>POST /api/permissions/queue/:id/approve</code>, <code>POST /api/permissions/queue/:id/deny</code></li>
+            <li><code>GET /api/permissions/queue</code> — optional <code>status</code>, <code>limit</code>, <code>cursor</code></li>
+            <li><code>GET /api/permissions/queue/:id</code></li>
+            <li><code>POST /api/permissions/queue/:id/approve</code>, <code>POST /api/permissions/queue/:id/deny</code> — optional body <code>{ "note": "..." }</code></li>
             <li><code>GET /api/tasks/:id/report</code> — compact post-task operator summary (<code>done</code>, <code>needs_review</code>, <code>failed</code>, <code>next_steps</code>).</li>
           </ul>
-          <p>This complements existing decision endpoints (<code>/api/permissions/decisions</code>) for persistent allow/deny rules and improves day-to-day governance in Code Studio and mission workflows.</p>
+          <p>This complements existing decision endpoints (<code>/api/permissions/decisions</code>) for persistent allow/deny rules and supports governance in Code Studio, the desktop permission center, and mission workflows.</p>
         </article>
 
         <!-- Configuration -->
