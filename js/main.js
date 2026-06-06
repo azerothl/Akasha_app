@@ -31,6 +31,75 @@ function toast(msg, type = 'default', duration = 3000) {
   setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(24px)'; t.style.transition = '.3s ease'; setTimeout(() => t.remove(), 350); }, duration);
 }
 
+/* ── Notification center (marketing site) ─────────────────────── */
+const AkashaNotifications = (() => {
+  const items = [];
+  let drawerEl = null;
+  let listEl = null;
+  let badgeEl = null;
+
+  function render() {
+    if (!listEl || !badgeEl) return;
+    const unread = items.filter((n) => !n.read).length;
+    badgeEl.textContent = unread > 99 ? '99+' : String(unread);
+    badgeEl.style.display = unread > 0 ? 'inline-block' : 'none';
+    if (items.length === 0) {
+      listEl.innerHTML = '<li class="notification-center-empty">No notifications.</li>';
+      return;
+    }
+    listEl.innerHTML = items
+      .map(
+        (n) => `<li class="notification-center-item notification-center-item--${n.level}${n.read ? '' : ' notification-center-item--unread'}" role="alert">
+          <p class="notification-center-item-title">${escHtml(n.title)}</p>
+          ${n.detail ? `<p class="notification-center-item-detail">${escHtml(n.detail)}</p>` : ''}
+          ${n.source ? `<p class="notification-center-item-source">${escHtml(n.source)}</p>` : ''}
+        </li>`,
+      )
+      .join('');
+  }
+
+  function escHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function notify({ level = 'error', title, detail = '', source = '' }) {
+    items.unshift({ id: Date.now(), level, title, detail, source, read: false, timestamp: Date.now() });
+    if (items.length > 100) items.pop();
+    render();
+  }
+
+  function init() {
+    const actions = $('.nav-actions');
+    if (!actions || $('#akasha-notif-wrap')) return;
+    const wrap = el('div', 'notification-center-wrap');
+    wrap.id = 'akasha-notif-wrap';
+    const btn = el('button', 'notification-center-trigger', '<span aria-hidden="true">🔔</span>');
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Notifications');
+    badgeEl = el('span', 'notification-center-badge', '0');
+    badgeEl.style.display = 'none';
+    btn.appendChild(badgeEl);
+    drawerEl = el('div', 'notification-center-drawer notification-center-drawer--nav');
+    drawerEl.setAttribute('role', 'dialog');
+    drawerEl.innerHTML = `<div class="notification-center-drawer-head"><strong>Notifications</strong><button type="button" class="notif-close">×</button></div><ul class="notification-center-list"></ul>`;
+    listEl = drawerEl.querySelector('.notification-center-list');
+    wrap.appendChild(btn);
+    document.body.appendChild(drawerEl);
+    actions.insertBefore(wrap, actions.firstChild);
+    btn.addEventListener('click', () => drawerEl.classList.toggle('open'));
+    drawerEl.querySelector('.notif-close')?.addEventListener('click', () => drawerEl.classList.remove('open'));
+    render();
+  }
+
+  return { init, notify };
+})();
+
+function notifyPersistent(title, detail, source) {
+  AkashaNotifications.notify({ level: 'error', title, detail, source });
+}
+
 /* ── Navbar scroll effect ───────────────────────────────────────── */
 function initNavbar() {
   const navbar = $('#navbar');
@@ -500,6 +569,7 @@ function initCopyToken() {
 
 /* ── Init ───────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
+  AkashaNotifications.init();
   initNavbar();
   initReveal();
   initTerminal();
