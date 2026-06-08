@@ -78,6 +78,9 @@
         <div class="docs-nav-section">
           <div class="docs-nav-title">Using Akasha</div>
           <a href="#commands" class="docs-nav-link" data-target="commands">Commands</a>
+          <a href="#safety-queue" class="docs-nav-link" data-target="safety-queue">Safety queue &amp; reports</a>
+          <a href="#steering-follow-up" class="docs-nav-link" data-target="steering-follow-up">Steering &amp; follow-up</a>
+          <a href="#code-studio" class="docs-nav-link" data-target="code-studio">Code Studio &amp; swarm</a>
           <a href="#configuration" class="docs-nav-link" data-target="configuration">Configuration</a>
           <a href="#llm-router-yaml" class="docs-nav-link" data-target="llm-router-yaml">LLM router (YAML)</a>
           <a href="#tools-policy" class="docs-nav-link" data-target="tools-policy">Tools policy (YAML)</a>
@@ -96,7 +99,7 @@
           <a href="#skills-api" class="docs-nav-link" data-target="skills-api">Slash commands</a>
         </div>
         <div class="docs-nav-section">
-          <div class="docs-nav-title">Hermes parity</div>
+          <div class="docs-nav-title">Operator parity</div>
           <a href="#hermes-overview" class="docs-nav-link" data-target="hermes-overview">Overview &amp; matrix</a>
           <a href="#hermes-mcp" class="docs-nav-link" data-target="hermes-mcp">MCP (validate &amp; probe)</a>
           <a href="#hermes-terminal" class="docs-nav-link" data-target="hermes-terminal">Terminal &amp; PTY</a>
@@ -156,6 +159,13 @@
 
         <article class="docs-article" id="whats-new">
           <h2>What's new in v0.8.0</h2>
+          <h3>Trust &amp; control enhancements</h3>
+          <ul>
+            <li><strong>Permission center</strong> — persistent allow/deny decisions for sensitive tools, with explicit approval events.</li>
+            <li><strong>Second Brain controls</strong> — settings and overview endpoints to pause learning, inspect typed memory, and clear memory when needed.</li>
+            <li><strong>Budget controls</strong> — configurable daily token limit, warning ratio, and auto-concise mode for long sessions.</li>
+            <li><strong>Agent-callable scheduler tools</strong> — schedule creation/list/cancel from tool calls to support recurring workflows.</li>
+          </ul>
           <h3>Autonomous mission</h3>
           <ul>
             <li><strong>Long-running goals</strong> — define an objective, context, rules, and roles; the daemon runs <strong>heartbeat</strong> tasks on a schedule while the mission is active.</li>
@@ -175,6 +185,8 @@
             <li><strong>Tools-first mode</strong> — when routing requires it, the first tool call is more deterministic; fewer spurious LLM round-trips for light chit-chat.</li>
             <li><strong>Cleaner summaries</strong> — trailing technical JSON “contract” blocks can be stripped from the user-facing summary when appropriate.</li>
             <li><strong><code>akasha doctor</code> / <code>doctor --fix</code></strong> — improved behaviour for <strong>zip / packaged</strong> installs and <code>spec/</code> resolution next to binaries.</li>
+            <li><strong>Live task timeline</strong> — task detail views can consume daemon live events (<code>/api/events</code>) with automatic fallback to <code>/api/tasks/:id/events</code> polling.</li>
+            <li><strong>CLI task ops</strong> — <code>akasha task watch</code>, <code>akasha task events</code>, <code>akasha task cancel</code> for operator-style run supervision.</li>
           </ul>
           <h3>Optional power-user CLIs</h3>
           <p>Built-in prompts may suggest <strong>AXI</strong>-style CLIs (e.g. <code>gh-axi</code>, <code>chrome-devtools-axi</code>) when installed — <strong>optional</strong>; Akasha still ships browser tools and <code>run_command</code> as before.</p>
@@ -202,6 +214,22 @@
             <li><code>POST /api/plugins/reputation/reset</code> — body <code>{"plugin_id":"&lt;id&gt;"}</code> to reset one plugin, or empty body / omit id to reset all.</li>
             <li><code>GET /api/plugins/routing_rules</code> — optional <code>?message=…</code> — debug dynamic routing rules.</li>
             <li><code>POST /api/plugins/routing_rules/match</code> — JSON body to test routing match.</li>
+          </ul>
+          <h3>Permission, memory and budget API (v0.8+)</h3>
+          <ul>
+            <li><code>GET/POST /api/permissions/decisions</code> and <code>DELETE /api/permissions/decisions/:id</code> — persist approval rules by tool/scope.</li>
+            <li><code>GET /api/permissions/queue</code>, <code>GET /api/permissions/queue/:id</code>, <code>POST …/approve</code>, <code>POST …/deny</code> — review queue lifecycle (see <a href="#safety-queue">Safety queue</a>).</li>
+            <li><code>GET /api/tasks/:id/report</code> — post-task operator summary.</li>
+            <li><code>GET/POST /api/permissions/mode</code> — global approval mode (<code>ask_me</code> / <code>allow_all</code>).</li>
+            <li><code>GET/POST /api/memory/second-brain/settings</code> — enable/pause memory learning.</li>
+            <li><code>GET /api/memory/second-brain/overview</code>, <code>POST /api/memory/second-brain/clear</code> — inspect and reset memory state.</li>
+            <li><code>GET/POST /api/budget</code>, <code>POST /api/budget/reset-session</code> — manage token budget controls and session usage reset.</li>
+          </ul>
+          <h3>Telegram governance API (v0.8+)</h3>
+          <ul>
+            <li><code>GET /api/channel-access/telegram/users</code> — list approved and pending Telegram users.</li>
+            <li><code>POST /api/channel-access/telegram/request</code> — create pairing request with code.</li>
+            <li><code>POST /api/channel-access/telegram/approve|reject|remove|promote|demote|reset</code> — full access lifecycle.</li>
           </ul>
           <h3>Autonomous mission API (v0.8+)</h3>
           <ul>
@@ -245,7 +273,7 @@
           <pre><code>.\akasha.exe init
 .\akasha.exe start
 .\akasha.exe tui   # terminal interface</code></pre>
-          <p>Run <code>akasha start</code> from the folder where you extracted the archive so the in-app <strong>Doc</strong> tab can show the user guide (the daemon serves it from the <code>docs</code> folder in that directory).</p>
+          <p>Run <code>akasha up</code> for the one-command always-on flow (ensure running + health check), or <code>akasha start</code> for manual startup. Keep running from the extracted folder so the in-app <strong>Doc</strong> tab can show the user guide (served from local <code>docs</code>).</p>
         </article>
 
         <!-- First run -->
@@ -253,7 +281,8 @@
           <h2>First Run</h2>
           <p><code>akasha init</code> runs an interactive setup: LLM provider (embedded, Ollama, OpenRouter, OpenAI), vault, optional channels, and optional <strong>Docker services</strong> (Ollama, TTS/STT, BitNet) if the <strong>akasha-models</strong> compose directory is found — set <code>AKASHA_MODELS_DIR</code> or use <code>akasha services install --compose-dir …</code> later. Use <code>akasha init --defaults</code> for minimal setup without prompts.</p>
           <p>Then start the daemon and open the interface:</p>
-          <pre><code>akasha start      # background daemon (auto-restart on crash)
+          <pre><code>akasha up         # ensure daemon is running + verify status
+akasha start      # background daemon (auto-restart on crash)
 akasha tui        # terminal UI: Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory</code></pre>
           <p>If you have the desktop app (Akasha UI), launch it; it connects to the daemon on port 3876 (configurable via <code>AKASHA_PORT</code>).</p>
         </article>
@@ -262,9 +291,22 @@ akasha tui        # terminal UI: Chat, Scheduled, Router, Doc, Tasks, Calendar, 
         <article class="docs-article" id="commands">
           <h2>Commands Reference</h2>
           <h3>Daemon</h3>
-          <pre><code>akasha start              # Start daemon (auto-restart)
+          <pre><code>akasha up                 # Start if needed + verify status
+akasha start              # Start daemon (auto-restart)
 akasha start --foreground # Run in foreground (logs in terminal)
 akasha stop               # Stop daemon</code></pre>
+          <h3>Task operations</h3>
+          <pre><code>akasha task watch &lt;task_id&gt; [--interval-ms 1500]
+akasha task events &lt;task_id&gt; [--limit 40] [--json]
+akasha task cancel &lt;task_id&gt;</code></pre>
+          <h3>Telegram access governance</h3>
+          <pre><code>akasha telegram list
+akasha telegram approve &lt;pairing_code|user_id&gt;
+akasha telegram reject &lt;user_id&gt;
+akasha telegram remove &lt;user_id&gt;
+akasha telegram promote &lt;user_id&gt;
+akasha telegram demote &lt;user_id&gt;
+akasha telegram reset</code></pre>
           <h3>Setup &amp; diagnostic</h3>
           <pre><code>akasha init              # Interactive setup
 akasha init --defaults   # Minimal setup, no prompts
@@ -309,6 +351,75 @@ akasha services stop     # docker compose down</code></pre>
           <h3>Update</h3>
           <pre><code>akasha update check    # Check for a new version; prints download URL if available
 akasha update install   # Open the latest release download page in the browser</code></pre>
+        </article>
+
+        <article class="docs-article" id="safety-queue">
+          <h2>Safety queue &amp; operator reports</h2>
+          <p>Akasha provides a <strong>review queue</strong> for sensitive actions alongside persistent allow/deny decisions. The queue is available from CLI, TUI, and desktop workflows with explicit status transitions.</p>
+          <h3>Queue lifecycle</h3>
+          <ul>
+            <li><strong>pending</strong> — waiting for operator decision.</li>
+            <li><strong>approved</strong> — action may continue.</li>
+            <li><strong>denied</strong> — action is blocked with explicit feedback.</li>
+            <li><strong>expired</strong> — no decision in the allowed window.</li>
+          </ul>
+          <h3>HTTP API</h3>
+          <ul>
+            <li><code>GET /api/permissions/queue</code> — optional <code>status</code>, <code>limit</code>, <code>cursor</code></li>
+            <li><code>GET /api/permissions/queue/:id</code></li>
+            <li><code>POST /api/permissions/queue/:id/approve</code>, <code>POST /api/permissions/queue/:id/deny</code>, <code>POST /api/permissions/queue/:id/expire</code> — optional body <code>{ "note": "..." }</code></li>
+            <li><code>GET /api/tasks/:id/report</code> — compact post-task operator summary (<code>done</code>, <code>needs_review</code>, <code>failed</code>, <code>next_steps</code>).</li>
+          </ul>
+          <h3>CLI</h3>
+          <pre><code>akasha permissions queue list [--status pending]
+akasha permissions queue approve &lt;id&gt; [--note "..."]
+akasha permissions queue deny &lt;id&gt; [--note "..."]</code></pre>
+          <h3>UI surfaces</h3>
+          <ul>
+            <li><strong>Desktop (Tauri)</strong> — <code>PermissionsBell</code> in the header; permission center for pending items.</li>
+            <li><strong>Code Studio</strong> — operator cockpit sections for task runs, swarm workers, and permission context.</li>
+            <li><strong>TUI</strong> — permission review integrated with task workflows.</li>
+          </ul>
+          <h3>Report schema</h3>
+          <p>Reports are generated on task completion, long autonomous cycles, and Code Studio run completion. Minimum fields: <code>done[]</code>, <code>needs_review[]</code>, <code>failed[]</code>, <code>next_steps[]</code>.</p>
+          <p>This complements existing decision endpoints (<code>/api/permissions/decisions</code>) for persistent allow/deny rules and supports governance in Code Studio, the desktop permission center, and mission workflows.</p>
+        </article>
+
+        <article class="docs-article" id="steering-follow-up">
+          <h2>Steering &amp; follow-up during long tasks</h2>
+          <p>While a task runs tools or orchestration, you can queue user messages instead of starting a conflicting root task. Two delivery modes mirror Pi-style <em>steer</em> vs <em>follow-up</em>.</p>
+          <h3>Delivery modes</h3>
+          <ul>
+            <li><strong>steering</strong> — inject after the current LLM turn (priority mid-task guidance).</li>
+            <li><strong>follow_up</strong> — run after the current work unit completes.</li>
+          </ul>
+          <p>Set <code>message_delivery_mode</code> on <code>POST /api/message</code> (or use the client selector in Tauri / Code Studio).</p>
+          <h3>Task message queue API</h3>
+          <ul>
+            <li><code>GET /api/tasks/:id/queue</code> — snapshot <code>steering[]</code> and <code>follow_up[]</code></li>
+            <li><code>DELETE /api/tasks/:id/queue</code> — flush both queues</li>
+          </ul>
+          <h3>CLI</h3>
+          <pre><code>akasha task queue list &lt;task_id&gt;
+akasha task queue clear &lt;task_id&gt;</code></pre>
+          <h3>Events (SSE)</h3>
+          <p><code>user_steering_queued</code>, <code>user_follow_up_queued</code>, <code>user_steering_applied</code>, <code>user_follow_up_applied</code> — see daemon event stream on <code>GET /api/events</code>.</p>
+        </article>
+
+        <article class="docs-article" id="code-studio">
+          <h2>Code Studio &amp; swarm MVP</h2>
+          <p><a href="https://github.com/azerothl/akasha-code-studio">akasha-code-studio</a> is the operator cockpit for project-scoped agents. Swarm mode (wave 5) adds a coordinator plus bounded workers.</p>
+          <h3>Roles</h3>
+          <ul>
+            <li><code>studio_project_manager</code> — coordinator only; assigns subtasks.</li>
+            <li><code>studio_worker_*</code> — bounded parallel workers by specialization.</li>
+          </ul>
+          <h3>Worker states</h3>
+          <p><code>spawned</code> → <code>ready</code> → <code>running</code> → <code>blocked</code> | <code>completed</code> | <code>failed</code> | <code>stopped</code></p>
+          <h3>Events</h3>
+          <p>Structured events on <code>GET /api/tasks/:id/events</code>: <code>studio_worker_state_changed</code>, <code>studio_subtask_assigned</code>, <code>studio_subtask_completed</code>, <code>studio_subtask_failed</code>, <code>studio_conflict_notice</code>.</p>
+          <h3>Limits</h3>
+          <p>Respect <code>AKASHA_STUDIO_MAX_PARALLEL_OPS</code>; swarm is opt-in via task context. All writes stay inside the project disk root.</p>
         </article>
 
         <!-- Configuration -->
@@ -688,7 +799,7 @@ browser_allowed_domains: ["*"]</code></pre>
           <h2>Channels (Telegram, Slack, Discord, Teams)</h2>
           <p>Optional connectors let the agent respond on external platforms. Store tokens in the vault and set the matching env var to <code>1</code>. Activation vars are loaded from <code>connectors.env</code> in the data directory (created or updated by <code>akasha init</code>).</p>
           <ul>
-            <li><strong>Telegram</strong> — <code>akasha vault set telegram_bot_token YOUR_TOKEN</code>, then <code>AKASHA_TELEGRAM_ENABLED=1</code>. Message the <strong>same bot</strong> as the token (check daemon log line <code>bot_username</code>). In <strong>private</strong>, plain text or <code>/akasha …</code>; in <strong>groups</strong>, <code>/akasha@BotUsername …</code>. <strong>Chat ID</strong> for notifications: send a message to <a href="https://t.me/userinfobot" rel="noopener">@userinfobot</a>, use the numeric id in <code>AKASHA_TELEGRAM_NOTIFY_CHAT_ID</code>. Only <strong>one</strong> process may poll Telegram per bot token (no second daemon / no webhook elsewhere). Optional startup ping may fail until you have opened the bot chat at least once.</li>
+            <li><strong>Telegram</strong> — <code>akasha vault set telegram_bot_token YOUR_TOKEN</code>, then <code>AKASHA_TELEGRAM_ENABLED=1</code>. Message the <strong>same bot</strong> as the token (check daemon log line <code>bot_username</code>). In <strong>private</strong>, plain text or <code>/akasha …</code>; in <strong>groups</strong>, <code>/akasha@BotUsername …</code>. Pairing: use <code>/start</code> to request access and obtain a code; admins approve with <code>akasha telegram approve &lt;code&gt;</code>. Admin lifecycle: <code>akasha telegram list|reject|remove|promote|demote|reset</code>. <strong>Chat ID</strong> for notifications: send a message to <a href="https://t.me/userinfobot" rel="noopener">@userinfobot</a>, use the numeric id in <code>AKASHA_TELEGRAM_NOTIFY_CHAT_ID</code>. Only <strong>one</strong> process may poll Telegram per bot token (no second daemon / no webhook elsewhere). Optional startup ping may fail until you have opened the bot chat at least once.</li>
             <li><strong>Slack</strong> — Vault <code>slack_signing_secret</code>, <code>AKASHA_SLACK_ENABLED=1</code>. Point the Slack slash command to <code>POST /channels/slack/command</code> on your daemon URL.</li>
             <li><strong>Discord</strong> — <code>akasha vault set discord_bot_token YOUR_TOKEN</code>, then <code>AKASHA_DISCORD_ENABLED=1</code>. Prefix: <code>!akasha &lt;message&gt;</code>.</li>
             <li><strong>Microsoft Teams</strong> — <code>AKASHA_TEAMS_ENABLED=1</code> when your Teams integration is configured (see vault / deployment docs for your build).</li>
@@ -810,7 +921,7 @@ browser_allowed_domains: ["*"]</code></pre>
             <li><strong>Body:</strong> Markdown with instructions for the agent (when to use the skill, which tools to call, guidelines, examples). See the <a href="https://agentskills.io/specification" target="_blank" rel="noopener">Agent Skills specification</a>.</li>
           </ul>
           <h3>skill.json (for the gallery / catalog)</h3>
-          <p>If you publish the skill in the <a href="skills.html">Skills Library</a> or another tool that reads the catalog, add a <code>skill.json</code> with: <code>id</code>, <code>name</code>, <code>version</code>, <code>description</code>, <code>author</code>, <code>category</code>, <code>tags</code>, <code>icon</code> (e.g. <a href="https://lucide.dev" target="_blank" rel="noopener">Lucide</a> name), <code>featured</code>, <code>install_url</code>, <code>install_command</code>.</p>
+          <p>If you publish the skill in the <a href="skills.html">Skills Library</a> or another tool that reads the catalog, add a <code>skill.json</code> with: <code>id</code>, <code>name</code>, <code>version</code>, <code>description</code>, <code>author</code>, <code>category</code>, <code>tags</code>, <code>icon</code> (e.g. <a href="https://lucide.dev" target="_blank" rel="noopener">Lucide</a> name), <code>featured</code>, <code>install_url</code>, <code>install_command</code>, and optional trust metadata (<code>trust_level</code>, <code>compat_status</code>).</p>
           <p>For a <strong>user-only</strong> skill (files in <code>data_dir/skills/</code> or install via URL without listing in the gallery), <strong>only SKILL.md is required</strong>; the daemon does not need <code>skill.json</code>.</p>
           <h3>Optional directory structure</h3>
           <p><code>references/</code> (extra docs), <code>scripts/</code>, <code>assets/</code> — see <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noopener">What are skills?</a>. When installing from GitHub, the daemon can fetch the repo tree; for other hosts, only the file at the install URL (usually <code>SKILL.md</code>) is downloaded.</p>
@@ -868,18 +979,18 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <p><strong>Vault:</strong> add or delete secrets only via CLI — <code>akasha vault set KEY [value]</code>, <code>akasha vault delete KEY</code> — or API <code>DELETE /api/vault</code> with body <code>{"key":"…"}</code>. No slash command writes vault values.</p>
         </article>
 
-        <!-- Hermes parity (ecosystem) -->
+        <!-- Operator parity (ecosystem); anchor ids kept for bookmarks -->
         <article class="docs-article" id="hermes-overview">
-          <h2>Hermes Agent — parity with Akasha</h2>
+          <h2>Reference products — parity with Akasha</h2>
           <p>
-            <a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener">Hermes Agent</a> (Nous Research) is a useful reference for <strong>toolsets</strong>, <strong>MCP</strong>, <strong>webhooks</strong>, and <strong>operator UX</strong>.
+            <a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener">Hermes Agent</a> (Nous Research) is one useful public reference for <strong>toolsets</strong>, <strong>MCP</strong>, <strong>webhooks</strong>, and <strong>operator UX</strong>.
             Akasha tracks gaps and progress in a <strong>versioned matrix</strong> in the main repository (not shipped in the binary):
           </p>
           <ul>
-            <li><a href="https://github.com/azerothl/Akasha/blob/main/docs/hermes-akasha-parity-matrix.md" target="_blank" rel="noopener"><code>docs/hermes-akasha-parity-matrix.md</code></a> — status per domain + which app (site, skills hub, plugins, Code Studio, Rbitnet, Tauri UI) exposes the capability.</li>
-            <li><a href="https://github.com/azerothl/Akasha/blob/main/docs/hermes-integration-remainder.md" target="_blank" rel="noopener"><code>docs/hermes-integration-remainder.md</code></a> — roadmap + <strong>Definition of Done</strong> for PRs (matrix bump + at least one satellite touchpoint).</li>
+            <li><a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/reference-products-parity-matrix.md" target="_blank" rel="noopener"><code>spec/dev/roadmap/reference-products-parity-matrix.md</code></a> — multi-reference parity (Hermes, OpenClaw, Claude Code, Cursor, Mercury Agent, RFC jcode column) + which app (site, skills hub, plugins, Code Studio, Rbitnet, Tauri UI) exposes the capability.</li>
+            <li><a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/hermes-integration-remainder.md" target="_blank" rel="noopener"><code>spec/dev/roadmap/hermes-integration-remainder.md</code></a> — roadmap + <strong>Definition of Done</strong> for PRs (matrix bump + at least one satellite touchpoint).</li>
           </ul>
-          <p>Product comparison including Hermes: <a href="compare.html#hermes">Compare</a> (table below on that page).</p>
+          <p>Product comparison (Hermes, Mercury Agent, Cursor, others): <a href="compare.html">Compare</a>.</p>
         </article>
 
         <article class="docs-article" id="hermes-mcp">
@@ -888,7 +999,7 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <ul>
             <li>CLI: <code>akasha mcp validate &lt;mcp.json&gt;</code> · <code>akasha mcp probe &lt;mcp.json&gt; [--name SERVER] [--tools]</code></li>
             <li>API: <code>GET /api/mcp/status</code> (disk validation) · <code>GET /api/mcp/runtime</code> (stdio attach summary) · <code>POST /api/mcp/runtime/stdio/start</code> / <code>POST /api/mcp/runtime/stdio/stop</code> (optional long-lived child for operators).</li>
-            <li>Docs: <a href="https://github.com/azerothl/Akasha/blob/main/docs/mcp-mvp.md" target="_blank" rel="noopener">mcp-mvp.md</a>, <a href="https://github.com/azerothl/Akasha/blob/main/docs/mcp-runtime.md" target="_blank" rel="noopener">mcp-runtime.md</a>, <a href="https://github.com/azerothl/Akasha/blob/main/docs/mcp-oauth.md" target="_blank" rel="noopener">mcp-oauth.md</a> (OAuth hardening checklist).</li>
+            <li>Docs: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/integrations/mcp-mvp.md" target="_blank" rel="noopener">mcp-mvp.md</a>, <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/integrations/mcp-runtime.md" target="_blank" rel="noopener">mcp-runtime.md</a>, <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/integrations/mcp-oauth.md" target="_blank" rel="noopener">mcp-oauth.md</a> (OAuth hardening checklist).</li>
           </ul>
           <div class="callout callout-tip"><span class="callout-icon">⚠</span><div class="callout-body">Probing runs the configured command from your JSON file — use only <strong>trusted</strong> configs (same trust model as other MCP hosts).</div></div>
         </article>
@@ -896,7 +1007,7 @@ When the user asks for X, use the tools A and B. Return the result in format …
         <article class="docs-article" id="hermes-terminal">
           <h2>Terminal &amp; PTY (operator API)</h2>
           <p>Beyond one-shot <code>run_command</code>, the daemon exposes <strong>interactive PTY sessions</strong> over HTTP (create, read, write, resize, close). Capabilities: <code>GET /api/terminal/capabilities</code>. CLI: <code>akasha terminal capabilities</code>.</p>
-          <p>Specification: <a href="https://github.com/azerothl/Akasha/blob/main/spec/43_session_terminal.md" target="_blank" rel="noopener"><code>spec/43_session_terminal.md</code></a> · roadmap backends: <a href="https://github.com/azerothl/Akasha/blob/main/docs/terminal-backends-roadmap.md" target="_blank" rel="noopener">terminal-backends-roadmap.md</a>.</p>
+          <p>Specification: <a href="https://github.com/azerothl/Akasha/blob/main/spec/43_session_terminal.md" target="_blank" rel="noopener"><code>spec/43_session_terminal.md</code></a> · roadmap backends: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/runtime/terminal-backends-roadmap.md" target="_blank" rel="noopener">terminal-backends-roadmap.md</a>.</p>
         </article>
 
         <article class="docs-article" id="hermes-webhooks">
@@ -906,12 +1017,25 @@ When the user asks for X, use the tools A and B. Return the result in format …
             <li><code>POST /api/automation/webhook</code> — HMAC-SHA256 body, optional <code>Idempotency-Key</code>, rate limit (see env vars in doc).</li>
             <li><code>POST /api/automation/webhook/direct</code> — same verification; response body from <code>AKASHA_WEBHOOK_DIRECT_BODY_JSON</code>.</li>
           </ul>
-          <p>Full operator guide: <a href="https://github.com/azerothl/Akasha/blob/main/docs/automation-webhooks.md" target="_blank" rel="noopener">automation-webhooks.md</a>. Optional shared idempotency DB path: <code>AKASHA_WEBHOOK_IDEM_SQLITE</code>. Schedule + gateway shell hooks: <a href="https://github.com/azerothl/Akasha/blob/main/docs/gateway-shell-hooks.md" target="_blank" rel="noopener">gateway-shell-hooks.md</a>.</p>
+          <p>Full operator guide: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/integrations/automation-webhooks.md" target="_blank" rel="noopener">automation-webhooks.md</a>. Optional shared idempotency DB path: <code>AKASHA_WEBHOOK_IDEM_SQLITE</code>. Schedule + gateway shell hooks: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/runtime/gateway-shell-hooks.md" target="_blank" rel="noopener">gateway-shell-hooks.md</a>.</p>
+        </article>
+
+        <article class="docs-article" id="hermes-worktree">
+          <h2>Git worktree (happy path)</h2>
+          <p>Akasha exposes Git worktrees for parallel agent sessions without cloning twice. Typical operator flow:</p>
+          <ol>
+            <li><strong>List</strong> — <code>akasha worktree list</code> shows linked worktrees under your data directory or configured repo.</li>
+            <li><strong>Add</strong> — <code>akasha worktree add &lt;name&gt; [&lt;branch&gt;]</code> creates an isolated checkout for a feature or agent run.</li>
+            <li><strong>Work</strong> — point Code Studio evolutions or chat sessions at the worktree path; keep <code>main</code>/<code>master</code> clean for merges.</li>
+            <li><strong>Doctor</strong> — <code>akasha worktree doctor</code> reports stale paths, missing branches, or dirty state before removal.</li>
+            <li><strong>Remove</strong> — <code>akasha worktree remove &lt;name&gt;</code> after merge or abandon (daemon refuses if worktree is dirty unless forced).</li>
+          </ol>
+          <p>Specification: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/reference-products-parity-matrix.md" target="_blank" rel="noopener">reference-products-parity-matrix.md</a> (Git worktree row). For IDE-style git inside Code Studio projects, use the <strong>Branches</strong> tab on a studio project instead.</p>
         </article>
 
         <article class="docs-article" id="hermes-toolsets">
           <h2>Toolsets &amp; effective tool state</h2>
-          <p>Hermes highlights <strong>toolsets</strong> (presets per channel or session). In Akasha, tool gating lives in <code>tools_policy.yaml</code> (<code>tool_profiles</code>) with operator helpers:</p>
+          <p>Reference stacks often highlight <strong>toolsets</strong> (presets per channel or session). In Akasha, tool gating lives in <code>tools_policy.yaml</code> (<code>tool_profiles</code>) with operator helpers:</p>
           <ul>
             <li>CLI: <code>akasha toolset profiles</code> · <code>akasha toolset effective</code> (daemon must be up for <code>effective</code>).</li>
             <li>API: <code>GET /api/tools/effective</code> — allowed / blocked / approval + rule source.</li>
@@ -924,18 +1048,18 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <ul>
             <li><strong>Skills</strong> — <a href="https://github.com/azerothl/Akasha_skills" target="_blank" rel="noopener">Akasha_skills</a> (gallery + <code>skills.json</code> synced to this site).</li>
             <li><strong>Plugins</strong> — <a href="https://github.com/azerothl/Akasha_plugins" target="_blank" rel="noopener">Akasha_plugins</a> + WASM install under your data directory.</li>
-            <li><strong>Code Studio</strong> — <a href="https://github.com/azerothl/akasha-code-studio" target="_blank" rel="noopener">akasha-code-studio</a> web cockpit for project tasks (see <code>docs/HERMES_COCKPIT.md</code> in that repo).</li>
+            <li><strong>Code Studio</strong> — <a href="https://github.com/azerothl/akasha-code-studio" target="_blank" rel="noopener">akasha-code-studio</a> web cockpit for project tasks (see <code>docs/OPERATOR_COCKPIT.md</code> in that repo).</li>
             <li><strong>Local inference</strong> — <a href="https://github.com/azerothl/Rbitnet" target="_blank" rel="noopener">Rbitnet</a> (OpenAI-compatible; wire in <code>llm_router.yaml</code>).</li>
           </ul>
           <p>When importing settings from another assistant, prefer <code>akasha config validate</code> and the vault for secrets — never commit API keys to this static site.</p>
         </article>
 
         <article class="docs-article" id="hermes-closeout">
-          <h2>Hermes phase close-out (proof pack)</h2>
-          <p>Cross-repo evidence used to close a Hermes delivery batch:</p>
+          <h2>Phase close-out (proof pack)</h2>
+          <p>Cross-repo evidence used to close an operator-parity delivery batch:</p>
           <ul>
-            <li><strong>Core status</strong>: <a href="https://github.com/azerothl/Akasha/blob/main/docs/hermes-akasha-parity-matrix.md" target="_blank" rel="noopener">hermes-akasha-parity-matrix.md</a> and <a href="https://github.com/azerothl/Akasha/blob/main/docs/hermes-integration-remainder.md" target="_blank" rel="noopener">hermes-integration-remainder.md</a>.</li>
-            <li><strong>Remaining partials roadmap</strong>: <a href="https://github.com/azerothl/Akasha/blob/main/docs/hermes-partial-domains-roadmap.md" target="_blank" rel="noopener">hermes-partial-domains-roadmap.md</a>.</li>
+            <li><strong>Core status</strong>: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/reference-products-parity-matrix.md" target="_blank" rel="noopener">reference-products-parity-matrix.md</a> and <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/hermes-integration-remainder.md" target="_blank" rel="noopener">hermes-integration-remainder.md</a>.</li>
+            <li><strong>Remaining partials roadmap</strong>: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/hermes-partial-domains-roadmap.md" target="_blank" rel="noopener">hermes-partial-domains-roadmap.md</a>.</li>
             <li><strong>Plugins trust</strong>: <a href="https://github.com/azerothl/Akasha_plugins/blob/main/TRUST_CATALOG.md" target="_blank" rel="noopener">Akasha_plugins/TRUST_CATALOG.md</a>.</li>
             <li><strong>Skills evals</strong>: <a href="https://github.com/azerothl/Akasha_skills/blob/main/.github/workflows/skills-eval-smoke.yml" target="_blank" rel="noopener">skills-eval-smoke.yml</a>.</li>
             <li><strong>Perf/SLO self-hosted</strong>: <a href="https://github.com/azerothl/Rbitnet/blob/main/docs/BENCHMARKS.md" target="_blank" rel="noopener">Rbitnet BENCHMARKS.md</a>.</li>
