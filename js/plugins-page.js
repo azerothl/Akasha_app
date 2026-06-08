@@ -18,8 +18,16 @@
 
   function setStatus(msg, isError) {
     if (!statusEl) return;
+    if (isError) {
+      statusEl.textContent = 'See notifications (bell icon) for details.';
+      statusEl.className = 'plugins-status plugins-status-error';
+      if (typeof notifyPersistent === 'function') {
+        notifyPersistent('Plugin catalog error', msg, 'plugins.html');
+      }
+      return;
+    }
     statusEl.textContent = msg;
-    statusEl.className = isError ? 'plugins-status plugins-status-error' : 'plugins-status';
+    statusEl.className = 'plugins-status';
   }
 
   async function loadJson(url) {

@@ -116,7 +116,7 @@
     <div class="section-header reveal">
       <span class="section-eyebrow">✦ Core Features</span>
       <h2 class="section-title">Everything you need, <span class="gradient-text">nothing you don't</span></h2>
-      <p class="section-desc">v0.8 adds <strong>autonomous mission</strong> (periodic goals + Mission tab), <strong>multi-root project graphs</strong> with search and HTML reports, <strong>permission center + budget controls</strong>, and stronger memory controls — still local-first.</p>
+      <p class="section-desc">v0.8 adds <strong>autonomous mission</strong> (periodic goals + Mission tab), <strong>multi-root project graphs</strong> with search and HTML reports, <strong>permission center + budget controls</strong>, and stronger memory controls. Also shipped: a <strong>permission review queue</strong>, <strong>session operator reports</strong> (<code>GET /api/tasks/:id/report</code>), and a <strong>Code Studio swarm MVP</strong> (coordinator + bounded workers + cockpit graph states).</p>
     </div>
     <div class="features-grid">
 
@@ -151,6 +151,12 @@
       </div>
 
       <div class="card reveal delay-3">
+        <div class="feature-icon" aria-hidden="true">✅</div>
+        <h4 class="feature-title">Review queue &amp; audit trail</h4>
+        <p class="feature-desc">Sensitive actions can be queued for approval with explicit decision history (pending/approved/denied/expired), plus compact operator summaries after task completion.</p>
+      </div>
+
+      <div class="card reveal delay-3">
         <div class="feature-icon" aria-hidden="true">🌗</div>
         <h4 class="feature-title">TUI &amp; desktop</h4>
         <p class="feature-desc"><code>akasha tui</code> — Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory. Desktop app: Settings, user RAG, <strong>project graph</strong> (multi-folder), <strong>Mission</strong> tab, attachments. Optional Slack, Discord, Telegram.</p>
@@ -171,7 +177,7 @@
       <div class="card reveal delay-3">
         <div class="feature-icon" aria-hidden="true">⚖️</div>
         <h4 class="feature-title">Compare</h4>
-        <p class="feature-desc">See how Akasha differs from OpenClaw, Claude Code, and similar tools — <a href="compare.html">comparison table →</a></p>
+        <p class="feature-desc">See how Akasha differs from OpenClaw, Claude Code, Cursor, Hermes Agent, Mercury Agent, and similar tools — <a href="compare.html">comparison table →</a></p>
       </div>
 
     </div>
