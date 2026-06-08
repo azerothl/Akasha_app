@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compare — Akasha vs OpenClaw, Claude Code</title>
-  <meta name="description" content="How Akasha compares to OpenClaw and Claude Code — local-first assistant, IDE agents, and messaging bots." />
+  <title>Compare — Akasha vs OpenClaw, Claude Code, Cursor, Hermes, Mercury Agent</title>
+  <meta name="description" content="How Akasha compares to OpenClaw, Claude Code, Cursor, Hermes Agent, and Mercury Agent — local-first assistant, IDE agents, messaging bots, and toolsets." />
   <meta name="theme-color" content="#8b5cf6" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -63,7 +63,7 @@
     <div class="callout callout-tip reveal" style="margin-bottom: 32px;">
       <span class="callout-icon">ℹ️</span>
       <div class="callout-body">
-        <strong>OpenClaw</strong> — general assistant via CLI, many chat apps (see <a href="https://openclaws.io" target="_blank" rel="noopener">openclaws.io</a>). <strong>Claude Code</strong> — Anthropic’s coding agent inside the IDE workflow. <strong>Akasha</strong> — Rust-based daemon + TUI + desktop, embedded model default, explicit tools policy; <strong>application source is private</strong> — end users receive prebuilt binaries only.
+        <strong>OpenClaw</strong> — general assistant via CLI, many chat apps (see <a href="https://openclaws.io" target="_blank" rel="noopener">openclaws.io</a>). <strong>Claude Code</strong> — Anthropic’s coding agent inside the IDE workflow. <strong>Cursor</strong> — AI features inside the <a href="https://cursor.com" target="_blank" rel="noopener">Cursor</a> editor (Anysphere). <strong>Hermes Agent</strong> — Nous Research operator stack (MCP, toolsets, webhooks). <strong>Mercury Agent</strong> — open-source CLI/Telegram agent with permission and budget tooling (see <a href="https://github.com/cosmicstack-labs/mercury-agent" target="_blank" rel="noopener">mercury-agent</a>). <strong>Akasha</strong> — Rust-based daemon + TUI + desktop, embedded model default, explicit tools policy; <strong>application source is private</strong> — end users receive prebuilt binaries only.
       </div>
     </div>
 
@@ -75,6 +75,7 @@
             <th scope="col">Akasha</th>
             <th scope="col">OpenClaw</th>
             <th scope="col">Claude Code</th>
+            <th scope="col">Cursor</th>
           </tr>
         </thead>
         <tbody>
@@ -83,59 +84,83 @@
             <td>Personal assistant daemon (24/7), TUI + web + optional channels</td>
             <td>Do-things assistant; CLI + many messengers (Slack, Telegram, WhatsApp, …)</td>
             <td>Software development inside editor/terminal (Anthropic ecosystem)</td>
+            <td>AI-assisted editing and agents inside the Cursor IDE workflow</td>
           </tr>
           <tr>
             <th scope="row">Default LLM</th>
             <td>Embedded small model (no account); Ollama / APIs optional</td>
             <td>Bring your own API keys or local (e.g. Ollama)</td>
             <td>Claude models (subscription / API)</td>
+            <td>User- or vendor-configured models (see Cursor pricing/docs)</td>
           </tr>
           <tr>
             <th scope="row">Runtime stack</th>
             <td>Rust binaries + optional Tauri UI</td>
             <td>Node-based CLI (typical install)</td>
             <td>IDE / terminal integration</td>
+            <td>Desktop IDE (Electron) + optional cloud-backed features</td>
           </tr>
           <tr>
             <th scope="row">Tool / file access</th>
             <td><code>tools_policy.yaml</code> — deny-by-default paths &amp; commands</td>
             <td>Configurable (full access or sandbox per docs)</td>
             <td>Repo-scoped coding tasks</td>
+            <td>Workspace rules, MCP, and project-scoped tools (per vendor docs)</td>
+          </tr>
+          <tr>
+            <th scope="row">Sensitive action governance</th>
+            <td>Permission review queue (pending/approved/denied/expired) + persistent decisions + task-level operator reports (<code>GET /api/tasks/:id/report</code>)</td>
+            <td>Workflow-dependent</td>
+            <td>Vendor workflow and account controls</td>
+            <td>IDE/vendor controls and team policies (varies by plan)</td>
           </tr>
           <tr>
             <th scope="row">Skills / extensions</th>
             <td>SKILL.md skills + WASM plugins; install via chat or files; catalog on site (v0.7+); project graphs + mission tools in v0.8+</td>
             <td>Skills &amp; plugins ecosystem</td>
             <td>MCP, slash commands, project context</td>
+            <td>Rules, MCP servers, and editor-integrated agent features</td>
           </tr>
           <tr>
             <th scope="row">Observability</th>
             <td>Timeline &amp; metrics HTTP API, plugin list/reload/reputation (v0.7+), autonomous mission &amp; workspace-graph APIs (v0.8+), Router tab in TUI</td>
             <td>Dashboard / logs (varies by version)</td>
             <td>IDE-integrated output</td>
+            <td>In-IDE chat, logs, and vendor dashboards (varies)</td>
           </tr>
           <tr>
             <th scope="row">Long-running goals &amp; project context (v0.8+)</th>
             <td><strong>Autonomous mission</strong> — YAML + heartbeat + Mission tab. <strong>Project graphs</strong> — multiple indexed roots, automatic context + <code>workspace_graph_search</code>, HTML reports per workspace.</td>
             <td>Workflow-dependent</td>
             <td>Repository-scoped coding context</td>
+            <td>Mostly session- and workspace-scoped (check current product docs)</td>
+          </tr>
+          <tr>
+            <th scope="row">Parallel coding workflow (studio)</th>
+            <td>Code Studio swarm MVP shipped: one coordinator + bounded workers + cockpit graph states</td>
+            <td>Depends on stack/tools chosen by user</td>
+            <td>Primarily single-agent IDE coding loop</td>
+            <td>Depends on Cursor release (multi-file edits, background agents — verify on vendor site)</td>
           </tr>
           <tr>
             <th scope="row">Source code</th>
             <td><strong>Not published</strong> — engine is proprietary; only binaries are distributed</td>
             <td>Public repositories (open source)</td>
             <td>Closed source (vendor)</td>
+            <td>Closed source client (vendor)</td>
           </tr>
           <tr>
             <th scope="row">Account required</th>
             <td>No (for embedded path)</td>
             <td>No for OSS; APIs billed separately</td>
             <td>Yes (Anthropic)</td>
+            <td>Yes for typical cloud-backed usage (see vendor)</td>
           </tr>
           <tr>
             <th scope="row">License (typical)</th>
             <td><strong>Proprietary</strong> — use governed by terms shipped with the binary / release</td>
             <td>Open source (e.g. MIT per project)</td>
+            <td>Commercial product + ToS</td>
             <td>Commercial product + ToS</td>
           </tr>
         </tbody>
@@ -145,6 +170,101 @@
     <p class="reveal delay-1" style="margin-top: 28px; font-size: 0.9rem; color: var(--text-muted);">
       Akasha downloads and docs live on this site and <a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub (Akasha_app)</a>. This table is not exhaustive and does not imply endorsement.
     </p>
+
+    <h2 id="hermes" class="reveal delay-1" style="margin-top: 48px; margin-bottom: 16px;">Akasha vs Hermes Agent (Nous Research)</h2>
+    <p class="reveal delay-1" style="max-width: 820px; color: var(--text-muted); margin-bottom: 20px;">
+      <a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener">Hermes Agent</a> emphasizes toolsets, MCP, webhooks, and operator-oriented workflows.
+      Akasha tracks multi-product parity in <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/reference-products-parity-matrix.md" target="_blank" rel="noopener">spec/dev/roadmap/reference-products-parity-matrix.md</a> (versioned; legacy filename <code>hermes-akasha-parity-matrix.md</code> redirects there).
+      On-site guides: <a href="docs.html#hermes-overview">Docs → Operator parity</a>.
+    </p>
+    <div class="compare-table-wrap reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th scope="col">Theme</th>
+            <th scope="col">Akasha (indicative)</th>
+            <th scope="col">Hermes (indicative)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">MCP</th>
+            <td>JSON validation + stdio probe (<code>akasha mcp</code>); OAuth hardening documented for roadmap.</td>
+            <td>Strong MCP-first operator story; see Hermes docs and releases.</td>
+          </tr>
+          <tr>
+            <th scope="row">Webhooks / automation</th>
+            <td>Signed inbound routes + optional static direct response; scheduler + <code>task_run</code> APIs.</td>
+            <td>Event-driven integrations and “direct delivery” patterns in product notes.</td>
+          </tr>
+          <tr>
+            <th scope="row">Toolsets</th>
+            <td><code>tool_profiles</code> in <code>tools_policy.yaml</code>, CLI <code>akasha toolset</code>, <code>GET /api/tools/effective</code>.</td>
+            <td>Named toolsets and presets per platform/session.</td>
+          </tr>
+          <tr>
+            <th scope="row">Terminal / long jobs</th>
+            <td>Shell tools + background sessions + process watch API; PTY interactive roadmap.</td>
+            <td>Multiple terminal backends and long-running job UX (see Hermes features overview).</td>
+          </tr>
+          <tr>
+            <th scope="row">Ecosystem repos</th>
+            <td>Static site (here), skills/plugins catalogs, Code Studio, Rbitnet for local inference — each aligned with the same matrix.</td>
+            <td>Hermes distribution model differs; compare vendor docs before choosing.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="mercury" class="reveal delay-1" style="margin-top: 48px; margin-bottom: 16px;">Akasha vs Mercury Agent (Cosmic Stack Labs)</h2>
+    <p class="reveal delay-1" style="max-width: 820px; color: var(--text-muted); margin-bottom: 20px;">
+      <a href="https://github.com/cosmicstack-labs/mercury-agent" target="_blank" rel="noopener">Mercury Agent</a> is an open-source, CLI-first assistant with optional Telegram access, permission-hardened tools, token budgets, and a local “second brain” memory story — check its README for the exact feature set as it evolves.
+    </p>
+    <div class="compare-table-wrap reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th scope="col">Theme</th>
+            <th scope="col">Akasha (indicative)</th>
+            <th scope="col">Mercury Agent (indicative)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Primary surface</th>
+            <td>TUI, Tauri desktop, HTTP API, Code Studio web cockpit</td>
+            <td>CLI and optional chat channels (per upstream docs)</td>
+          </tr>
+          <tr>
+            <th scope="row">Default intelligence path</th>
+            <td>Embedded small model without cloud account; external providers optional</td>
+            <td>Bring-your-own models / APIs (see project documentation)</td>
+          </tr>
+          <tr>
+            <th scope="row">Permissions &amp; cost</th>
+            <td><code>tools_policy.yaml</code>, vault, human-in-the-loop; router metrics</td>
+            <td>Explicit permission layers and token budget controls (per upstream)</td>
+          </tr>
+          <tr>
+            <th scope="row">Memory &amp; recall</th>
+            <td>Short/long-term memory, recall metrics API, mission state (v0.8+)</td>
+            <td>Local SQLite-oriented “second brain” narrative (verify in README)</td>
+          </tr>
+          <tr>
+            <th scope="row">Distribution</th>
+            <td>Proprietary engine; binaries + static ecosystem repos</td>
+            <td>Open source repository; self-hosted operation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-tip reveal delay-1" style="margin-top: 40px; margin-bottom: 24px;">
+      <span class="callout-icon">📎</span>
+      <div class="callout-body">
+        <strong>Roadmap note — jcode-inspired integration</strong> — Some Akasha design directions are documented in an internal RFC (<a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/jcode_inspired_integration_rfc.md" target="_blank" rel="noopener">jcode_inspired_integration_rfc.md</a>). It is <strong>not</strong> a third-party product row here; it describes concepts the core team may adopt incrementally.
+      </div>
+    </div>
 
     <div class="text-center mt-lg reveal">
       <a href="releases.html#downloads" class="btn btn-primary btn-lg">⬇ Try Akasha</a>
