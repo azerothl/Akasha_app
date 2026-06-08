@@ -2,6 +2,8 @@
 
 Public website and **release mirror** for Akasha — downloads, docs, and changelog on GitHub Pages.
 
+**Parité opérateur / produits de référence :** la matrice vivante côté cœur Akasha est dans [`Akasha/spec/dev/roadmap/reference-products-parity-matrix.md`](https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/reference-products-parity-matrix.md) (alias historique [`hermes-akasha-parity-matrix.md`](https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/hermes-akasha-parity-matrix.md)) ; synchroniser les pages publiques (`docs.html`, `compare.html`, annonces) quand une ligne passe à « Existe ».
+
 ## Release pipeline (sanity checklist)
 
 1. A release is published on the **private** Akasha repo (binaries attached to the GitHub Release).
@@ -18,6 +20,16 @@ Public website and **release mirror** for Akasha — downloads, docs, and change
 ## Documentation site (`docs.html`)
 
 The public docs page is **hand-written HTML** in English. When shipping a new Akasha version, follow the checklist in [docs/DOCUMENTATION_SYNC.md](docs/DOCUMENTATION_SYNC.md) so commands, ports, and UI tabs stay consistent with `Akasha/docs/user_guide_final.md` and the actual CLI/TUI.
+
+### Upcoming cross-app features to reflect in docs/content
+
+When these features ship in core repositories, mirror them in public pages (`docs.html`, release notes, feature highlights):
+
+- Session fork in Code Studio.
+- Queued message delivery modes (steering / follow-up).
+- Unified task event timeline contract across clients.
+
+Keep wording clear about availability status (planned vs released) per version.
 
 ## Plugins catalog (`plugins.html`)
 
