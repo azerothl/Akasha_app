@@ -1,8 +1,8 @@
 {
-  "version": "v0.8.0",
-  "release_date": "2026-04-10",
+  "version": "v0.9.0",
+  "release_date": "2026-06-09",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
-  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.8.0",
-  "changelog": "## What's new in v0.8.0\n\n### Autonomous mission\n- Periodic heartbeat tasks for long-running goals; state in autonomous_mission.yaml and REST API (GET/PUT state, pause/resume, event log with optional limit/since).\n- Mission tab in the desktop app.\n\n### Project knowledge graphs\n- Register multiple project roots; SQLite-backed index, workspace_graph_search tool, HTML/Markdown reports under workspace_graph/out/<id>/.\n- Settings → Data → Project graph.\n\n### Agent profile\n- Formality (formal / informal / default) for tone and address.\n\n### Reliability\n- Stronger tools-first routing when enabled; cleaner user-facing summaries; improved akasha doctor for packaged installs.\n\n### Optional CLIs\n- Prompts may reference AXI-style CLIs (e.g. gh-axi) when installed — optional.\n\n**Full changelog:** https://github.com/azerothl/Akasha/compare/v0.7.0...v0.8.0",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.9.0",
+  "changelog": "## What's new in v0.9.0\n\n### Workspace UI\n- **Cookbook** — local model pulls (Hugging Face / Ollama / BitNet) plus **12 guided recipes** (RAG, fine-tuning, agents, evaluation, deployment).\n- **Compare** — blind A/B model comparison with prefill from Cookbook.\n- **Deep research** — dedicated research workflow panel.\n- **Notes** — user notes panel in the desktop app.\n\n### Embedded documentation\n- Multi-page user guide in the **Doc** tab (sidebar navigation); `GET /api/docs` index + per-page markdown.\n\n### Channels & plugins\n- **Matrix** and **CalDAV** sidecar channel plugins in the public catalog (5 plugins).\n\n### Code Studio\n- Install via npm: `npx akasha-code-studio@0.9.0` (daemon on port 3876 required).\n\n**Full changelog:** https://github.com/azerothl/Akasha/compare/v0.8.0...v0.9.0",
   "min_supported_version": "0.5.0"
 }

@@ -1,9 +1,9 @@
 /* Akasha — Plugins catalog (loads JSON from Akasha_plugins via jsDelivr) */
 (function () {
   const PRIMARY =
-    'https://cdn.jsdelivr.net/gh/azerothl/Akasha_plugins@main/plugins.json';
-  const FALLBACK =
     'https://raw.githubusercontent.com/azerothl/Akasha_plugins/main/plugins.json';
+  const FALLBACK =
+    'https://cdn.jsdelivr.net/gh/azerothl/Akasha_plugins@main/plugins.json';
 
   const metaEl = document.getElementById('plugins-meta');
   const statusEl = document.getElementById('plugins-status');
@@ -70,7 +70,7 @@
       const perms = (p.permissions || []).length
         ? `<p class="plugin-line"><strong>Permissions:</strong> ${esc((p.permissions || []).join(', '))}</p>`
         : '';
-      const tools = (p.entry_tools || []).join(', ') || '—';
+      const tools = (p.entry_tools || []).join(', ') || (p.sidecar ? 'Sidecar channel' : '—');
       const wasm = p.wasm_sha256
         ? `<p class="plugin-line"><strong>WASM SHA256:</strong> <code title="${esc(p.wasm_sha256)}">${esc(
             String(p.wasm_sha256).slice(0, 14)

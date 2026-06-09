@@ -1,5 +1,15 @@
 [
   {
+    "version": "v0.9.0",
+    "date": "2026-06-09",
+    "type": "minor",
+    "title": "v0.9.0",
+    "description": "## What's new in v0.9.0\n\n### Workspace UI\n- **Cookbook** — local model pulls + **12 guided recipes** (RAG, fine-tuning, agents, evaluation, deployment).\n- **Compare** — blind A/B model comparison with Cookbook prefill.\n- **Deep research** and **Notes** panels.\n\n### Embedded documentation\n- Multi-page user guide in the Doc tab; `GET /api/docs` index + per-page markdown.\n\n### Plugins & Code Studio\n- Matrix and CalDAV channel plugins (5 plugins in catalog).\n- `npx akasha-code-studio@0.9.0` for the operator cockpit.\n\n**Compare:** https://github.com/azerothl/Akasha/compare/v0.8.0...v0.9.0",
+    "changes": [],
+    "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.9.0",
+    "assets": []
+  },
+  {
     "version": "v0.8.0",
     "date": "2026-04-10",
     "type": "minor",

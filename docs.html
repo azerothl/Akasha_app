@@ -29,7 +29,7 @@
       <a href="releases.html">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.8.0</span>
+      <span class="version-pill" aria-label="Current version">v0.9.0</span>
       <a href="releases.html#downloads" class="btn btn-primary btn-sm">
         ⬇ Download
       </a>
@@ -70,7 +70,7 @@
         <div class="docs-nav-section">
           <div class="docs-nav-title">Getting Started</div>
           <a href="#getting-started" class="docs-nav-link" data-target="getting-started">Introduction</a>
-          <a href="#whats-new" class="docs-nav-link" data-target="whats-new">What's new (v0.8.0)</a>
+          <a href="#whats-new" class="docs-nav-link" data-target="whats-new">What's new (v0.9.0)</a>
           <a href="#api-integration" class="docs-nav-link" data-target="api-integration">API &amp; plugins</a>
           <a href="#installation" class="docs-nav-link" data-target="installation">Installation</a>
           <a href="#first-run" class="docs-nav-link" data-target="first-run">First Run</a>
@@ -151,45 +151,48 @@
               <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);">Chat</figcaption>
             </figure>
             <figure style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <img src="assets/screenshots/ui-cookbook-recipes.png" alt="Akasha Cookbook recipes" style="width: 100%; height: auto; display: block;" loading="lazy" />
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);">Cookbook — recipes</figcaption>
+            </figure>
+            <figure style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <img src="assets/screenshots/ui-compare.png" alt="Akasha Compare" style="width: 100%; height: auto; display: block;" loading="lazy" />
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);">Compare models</figcaption>
+            </figure>
+            <figure style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
               <img src="assets/screenshots/ui-docs.png" alt="Akasha documentation tab" style="width: 100%; height: auto; display: block;" loading="lazy" />
-              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);">Documentation tab</figcaption>
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);">Documentation (multi-page)</figcaption>
             </figure>
           </div>
         </article>
 
         <article class="docs-article" id="whats-new">
-          <h2>What's new in v0.8.0</h2>
-          <h3>Trust &amp; control enhancements</h3>
+          <h2>What's new in v0.9.0</h2>
+          <h3>Workspace UI</h3>
           <ul>
-            <li><strong>Permission center</strong> — persistent allow/deny decisions for sensitive tools, with explicit approval events.</li>
-            <li><strong>Second Brain controls</strong> — settings and overview endpoints to pause learning, inspect typed memory, and clear memory when needed.</li>
-            <li><strong>Budget controls</strong> — configurable daily token limit, warning ratio, and auto-concise mode for long sessions.</li>
-            <li><strong>Agent-callable scheduler tools</strong> — schedule creation/list/cancel from tool calls to support recurring workflows.</li>
+            <li><strong>Cookbook</strong> — pull local models (Hugging Face, Ollama, BitNet) and browse <strong>12 guided recipes</strong> (RAG, fine-tuning, agents, evaluation, deployment).</li>
+            <li><strong>Compare</strong> — blind A/B model comparison; prefill from Cookbook recipes.</li>
+            <li><strong>Deep research</strong> — dedicated research workflow panel in the desktop app.</li>
+            <li><strong>Notes</strong> — user notes panel synced with the daemon.</li>
           </ul>
-          <h3>Autonomous mission</h3>
+          <h3>Embedded documentation</h3>
           <ul>
-            <li><strong>Long-running goals</strong> — define an objective, context, rules, and roles; the daemon runs <strong>heartbeat</strong> tasks on a schedule while the mission is active.</li>
-            <li><strong><code>autonomous_mission.yaml</code></strong> in the data directory; <strong>Mission</strong> tab in the desktop app for configuration and activity.</li>
-            <li><strong>HTTP API</strong> — <code>GET</code> / <code>PUT /api/autonomous-mission</code>, <code>POST /api/autonomous-mission/pause</code> and <code>/resume</code>, <code>GET /api/autonomous-mission/events</code> (optional <code>limit</code>, <code>since</code> for the event log).</li>
-            <li><strong>Chat alignment</strong> — use the same <code>session_id</code> as the mission so “no unnecessary questions” behaviour applies to chat as well as heartbeats.</li>
+            <li><strong>Multi-page user guide</strong> in the <strong>Doc</strong> tab with sidebar navigation.</li>
+            <li><strong>HTTP API</strong> — <code>GET /api/docs</code> returns a page index; <code>GET /api/docs/:id</code> returns markdown for each topic.</li>
           </ul>
-          <h3>Project knowledge graphs</h3>
+          <h3>Channels &amp; plugins</h3>
           <ul>
-            <li><strong>Multiple workspaces</strong> — register several project roots (name + absolute path); each build writes <code>graph.json</code>, <code>GRAPH_REPORT.md</code>, and <code>graph.html</code> under <code>workspace_graph/out/&lt;id&gt;/</code> in the data directory.</li>
-            <li><strong>Agent context</strong> — relevant graph lines are injected automatically; the <code>workspace_graph_search</code> tool queries indexed symbols/paths (allow it in tools policy if you restrict tools).</li>
-            <li><strong>Settings → Data → Project graph</strong> — manage workspaces, rebuild, open HTML report; improved memory search presentation.</li>
+            <li><strong>Matrix Channel</strong> and <strong>CalDAV Channel</strong> sidecar plugins in the public catalog (5 plugins total).</li>
+            <li>Plugin catalog on this site loads from GitHub <code>main</code> first (jsDelivr mirror as fallback).</li>
           </ul>
-          <h3>Agent profile &amp; reliability</h3>
+          <h3>Code Studio</h3>
+          <p>Install the operator cockpit via npm: <code>npx akasha-code-studio@0.9.0</code> (requires a running daemon on port <strong>3876</strong>). See <a href="#code-studio">Code Studio</a>.</p>
+          <h3>Previously in v0.8.0</h3>
           <ul>
-            <li><strong>Formality</strong> — optional <strong>formal / informal / default</strong> tone and address (e.g. <em>vous</em> vs <em>tu</em> in French); stored in <code>agent_profile.json</code> and editable in Settings → Agent profile.</li>
-            <li><strong>Tools-first mode</strong> — when routing requires it, the first tool call is more deterministic; fewer spurious LLM round-trips for light chit-chat.</li>
-            <li><strong>Cleaner summaries</strong> — trailing technical JSON “contract” blocks can be stripped from the user-facing summary when appropriate.</li>
-            <li><strong><code>akasha doctor</code> / <code>doctor --fix</code></strong> — improved behaviour for <strong>zip / packaged</strong> installs and <code>spec/</code> resolution next to binaries.</li>
-            <li><strong>Live task timeline</strong> — task detail views can consume daemon live events (<code>/api/events</code>) with automatic fallback to <code>/api/tasks/:id/events</code> polling.</li>
-            <li><strong>CLI task ops</strong> — <code>akasha task watch</code>, <code>akasha task events</code>, <code>akasha task cancel</code> for operator-style run supervision.</li>
+            <li><strong>Permission center</strong>, <strong>Second Brain controls</strong>, <strong>budget controls</strong>, and agent-callable scheduler tools.</li>
+            <li><strong>Autonomous mission</strong> — heartbeat tasks, Mission tab, REST API (<code>autonomous_mission.yaml</code>).</li>
+            <li><strong>Project knowledge graphs</strong> — multiple indexed roots, <code>workspace_graph_search</code>, HTML reports.</li>
+            <li><strong>Agent profile formality</strong>, tools-first routing, improved <code>akasha doctor</code> for zip installs.</li>
           </ul>
-          <h3>Optional power-user CLIs</h3>
-          <p>Built-in prompts may suggest <strong>AXI</strong>-style CLIs (e.g. <code>gh-axi</code>, <code>chrome-devtools-axi</code>) when installed — <strong>optional</strong>; Akasha still ships browser tools and <code>run_command</code> as before.</p>
           <h3>Previously in v0.7.0</h3>
           <ul>
             <li><strong>Orchestrator route</strong> — <code>task_types.orchestrator</code> in <code>llm_router.yaml</code>; verified deliverables, path safety, targeted retry, <code>.akasha/plan_&lt;task_id&gt;.md</code>, meta-response retry.</li>
@@ -408,7 +411,8 @@ akasha task queue clear &lt;task_id&gt;</code></pre>
 
         <article class="docs-article" id="code-studio">
           <h2>Code Studio &amp; swarm MVP</h2>
-          <p><a href="https://github.com/azerothl/akasha-code-studio">akasha-code-studio</a> is the operator cockpit for project-scoped agents. Swarm mode (wave 5) adds a coordinator plus bounded workers.</p>
+          <p><strong>Install (v0.9+):</strong> <code>npx akasha-code-studio@0.9.0</code> — serves the cockpit on <code>http://127.0.0.1:5178</code> and proxies <code>/api</code> to the daemon (default port <strong>3876</strong>). Override with <code>VITE_DAEMON_URL</code> or <code>AKASHA_STUDIO_PORT</code>.</p>
+          <p>Source repository: <a href="https://github.com/azerothl/akasha-code-studio">akasha-code-studio</a>. Swarm mode adds a coordinator plus bounded workers.</p>
           <h3>Roles</h3>
           <ul>
             <li><code>studio_project_manager</code> — coordinator only; assigns subtasks.</li>
@@ -1073,10 +1077,10 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <pre><code>GET https://azerothl.github.io/Akasha_app/api/latest.json</code></pre>
           <h3>Response format</h3>
           <pre><code>{
-  "version": "v0.8.0",
+  "version": "v0.9.0",
   "release_date": "2026-04-10",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
-  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.8.0",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.9.0",
   "changelog": "…",
   "min_supported_version": "0.5.0"
 }</code></pre>

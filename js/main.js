@@ -145,7 +145,7 @@ async function initTerminal() {
   const body = $('.terminal-body');
   if (!body) return;
 
-  let ver = 'v0.8.0';
+  let ver = 'v0.9.0';
   try {
     const res = await fetch('api/latest.json');
     if (res.ok) {
