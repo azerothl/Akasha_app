@@ -1,8 +1,8 @@
 {
-  "version": "v0.9.0",
+  "version": "v0.10.0",
   "release_date": "2026-06-21",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
-  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.9.0",
-  "changelog": "<!-- Release notes generated using configuration in .github/release.yml at v0.9.0 -->\n\n## What's Changed\n### Features\n* feat(code-studio): add project code RAG indexing and hybrid retrieval by @azerothl in https://github.com/azerothl/Akasha/pull/107\n### Other\n* feat(code-studio): modes studio, planner read-only, meta résumé/polit… by @azerothl in https://github.com/azerothl/Akasha/pull/106\n* Design studio by @azerothl in https://github.com/azerothl/Akasha/pull/108\n* Code studio by @azerothl in https://github.com/azerothl/Akasha/pull/105\n* Clean code by @azerothl in https://github.com/azerothl/Akasha/pull/112\n* Update documentation structure and content for user and developer guides by @azerothl in https://github.com/azerothl/Akasha/pull/111\n* Evol agnt 2 by @azerothl in https://github.com/azerothl/Akasha/pull/110\n* feat: enhance task event handling with schema versioning and improved… by @azerothl in https://github.com/azerothl/Akasha/pull/113\n* feat(studio): add task-scoped git worktree orchestration by @azerothl in https://github.com/azerothl/Akasha/pull/115\n* Aipm by @azerothl in https://github.com/azerothl/Akasha/pull/114\n* Evol agnt next by @azerothl in https://github.com/azerothl/Akasha/pull/116\n* Evol agnt by @azerothl in https://github.com/azerothl/Akasha/pull/109\n* Caldav by @azerothl in https://github.com/azerothl/Akasha/pull/118\n* Embedded model by @azerothl in https://github.com/azerothl/Akasha/pull/119\n* 0.9.0 by @azerothl in https://github.com/azerothl/Akasha/pull/117\n* Fix Windows CUDA release build by restoring explicit `cudart` linkage by @azerothl with @Copilot in https://github.com/azerothl/Akasha/pull/120\n\n\n**Full Changelog**: https://github.com/azerothl/Akasha/compare/v0.8.0...v0.9.0",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.10.0",
+  "changelog": "## v0.10.0 — First-use embedded journey, full CUDA zip, wizard download API.",
   "min_supported_version": "0.5.0"
 }
