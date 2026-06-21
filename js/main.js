@@ -365,6 +365,7 @@ const RELEASE_ASSETS = [
   { name: 'akasha-full-macos-x86_64.zip', label: 'macOS Intel (full)', os: 'macos' },
   { name: 'akasha-full-macos-aarch64.zip', label: 'macOS Apple Silicon (full)', os: 'macos' },
   { name: 'akasha-windows-x86_64.zip', label: 'Windows (CLI only)', os: 'windows' },
+  { name: 'akasha-windows-x86_64-cuda.zip', label: 'Windows (CLI, NVIDIA CUDA)', os: 'windows' },
   { name: 'akasha-linux-x86_64.zip', label: 'Linux (CLI only)', os: 'linux' },
   { name: 'akasha-macos-x86_64.zip', label: 'macOS Intel (CLI only)', os: 'macos' },
   { name: 'akasha-macos-aarch64.zip', label: 'macOS Apple Silicon (CLI only)', os: 'macos' },
@@ -411,7 +412,7 @@ function renderReleases(releases, container, sidebar) {
     const oneLinerWin = 'powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/azerothl/Akasha_app/main/scripts/get-akasha.ps1 | iex"';
     const oneLinerUnix = 'curl -sSL https://raw.githubusercontent.com/azerothl/Akasha_app/main/scripts/get-akasha.sh | bash';
     const downloadBlock = isLatest
-      ? `<div class="release-downloads reveal" id="downloads"><p class="release-downloads-note"><strong>One-line install:</strong> paste in your terminal — Windows: <code style="font-size:.85em">${oneLinerWin.replace(/"/g, '&quot;')}</code> · Linux/macOS: <code style="font-size:.85em">${oneLinerUnix}</code></p><p class="release-downloads-note">Or download the archive for your OS below. Full zip: Windows users double-click <code>INSTALL.cmd</code> after extracting; Linux/macOS run <code>chmod +x scripts/setup.sh &amp;&amp; ./scripts/setup.sh</code>. Do not use the &quot;Source code (zip)&quot; links on GitHub.</p><div class="release-asset-list">${assetLinks}</div></div>`
+      ? `<div class="release-downloads reveal" id="downloads"><p class="release-downloads-note"><strong>One-line install:</strong> paste in your terminal — Windows: <code style="font-size:.85em">${oneLinerWin.replace(/"/g, '&quot;')}</code> · Linux/macOS: <code style="font-size:.85em">${oneLinerUnix}</code> (CPU embedded model; see <a href="docs.html#installation-cuda">CUDA build</a> for NVIDIA GPU).</p><p class="release-downloads-note">Or download the archive for your OS below. Full zip: Windows users double-click <code>INSTALL.cmd</code> after extracting; Linux/macOS run <code>chmod +x scripts/setup.sh &amp;&amp; ./scripts/setup.sh</code>. Do not use the &quot;Source code (zip)&quot; links on GitHub.</p><div class="release-asset-list">${assetLinks}</div></div>`
       : (r.download_url ? `<a href="${r.download_url}" class="btn btn-outline btn-sm mt-md" target="_blank" rel="noopener">View release on GitHub</a>` : '');
     return `
     <div class="release-item reveal" id="release-${r.version.replace(/\./g, '-')}">
