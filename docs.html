@@ -284,7 +284,7 @@
           <p><strong>Windows:</strong> double-click <code>INSTALL.cmd</code> at the root of the extracted folder to run the installer (no PowerShell execution policy prompt), or run <code>.\scripts\setup.ps1</code>. <strong>Linux / macOS:</strong> run <code>chmod +x scripts/setup.sh &amp;&amp; ./scripts/setup.sh</code>.</p>
           <p>You get the <code>akasha</code> (or <code>akasha.exe</code>), <code>akasha-daemon</code>, <code>akasha-tui</code> executables, a <code>docs</code> folder with the user guide, and in the full zip a <code>ui</code> subfolder with the desktop app installer.</p>
           <h3 id="installation-cuda">Windows with NVIDIA GPU (CUDA build)</h3>
-          <p>For fast local inference on an <strong>NVIDIA GPU</strong>, download <strong>akasha-windows-x86_64-cuda.zip</strong> from <a href="releases.html#downloads">Releases</a> (not the default full zip). Requires recent NVIDIA drivers (<code>nvcuda.dll</code>); the archive includes CUDA runtime DLLs — no CUDA Toolkit install needed.</p>
+          <p>For fast local inference on an <strong>NVIDIA GPU</strong>, download <strong>akasha-windows-x86_64-cuda.zip</strong> (CLI) or <strong>akasha-full-windows-x86_64-cuda.zip</strong> (CLI + desktop UI + scripts) from <a href="releases.html#downloads">Releases</a>. Requires recent NVIDIA drivers (<code>nvcuda.dll</code>); the archive includes CUDA runtime DLLs — no CUDA Toolkit install needed. One-liner GPU: <code>get-akasha-cuda.ps1</code> or <code>get-akasha.ps1 -Cuda</code>.</p>
           <pre><code>Expand-Archive .\akasha-windows-x86_64-cuda.zip -DestinationPath C:\Akasha -Force
 cd C:\Akasha
 .\scripts\setup.ps1 -InstallDir C:\Akasha
