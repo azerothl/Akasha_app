@@ -1,15 +1,16 @@
 [
   {
     "version": "v0.10.0",
-    "date": "2026-06-21",
+    "date": "2026-07-14",
     "type": "minor",
     "title": "v0.10.0",
-    "description": "## What's new in v0.10.0\n\n### First-use journey\n- Setup wizard: embedded status, GGUF download with progress, multi-model picker, first message test.\n- `setup.ps1` / `install.ps1`: optional `embedded-download`, CPU vs CUDA messaging.\n- `doctor --json`: evidence-gated `embedded_llm` with `action: embedded-download`.\n\n### Packaging\n- **`akasha-full-windows-x86_64-cuda.zip`** (CLI CUDA + UI + scripts).\n- API `POST/GET /api/router/embedded/download`.\n\n### Quality\n- Bench scripts `bench_embedded.ps1` / `.sh`, baselines template, GPU self-hosted CI checklist.",
+    "description": "## What's new in v0.10.0\n\n### First-use journey\n- Setup wizard: embedded status, GGUF download with progress, multi-model picker, first message test.\n- `setup.ps1` / `install.ps1`: optional `embedded-download`, CPU vs CUDA messaging; CUDA DLL runtime copied to install dir.\n- `doctor --json`: evidence-gated `embedded_llm` with `action: embedded-download`.\n\n### Packaging\n- **`akasha-full-windows-x86_64-cuda.zip`** (CLI CUDA + UI + scripts).\n- API `POST/GET /api/router/embedded/download`, `POST /api/router/embedded/calibrate`.\n\n### Integrations\n- **Service discovery** (`akasha discover`, `GET /api/discovery`) for Ollama and Home Assistant.\n- **Home Assistant** connector, Settings UI, plugin + agent tools (`ha_*`).\n\n### Engineering\n- Daemon API refactor: six new `api_routes_*` modules (tasks, memory, config, router, plugins, docs).\n- GPU CI workflow (`gpu-ci.yml`) for self-hosted NVIDIA runners.\n- Bench scripts `bench_embedded.ps1` / `.sh` and documented baselines.\n\n### Plugins catalog\n- **6 plugins** (Matrix, CalDAV, Home Assistant, graph, maps, simulation).",
     "changes": [],
     "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.10.0",
     "assets": []
   },
   {
+    "version": "v0.9.0",
     "date": "2026-06-21",
     "type": "minor",
     "title": "v0.9.0",

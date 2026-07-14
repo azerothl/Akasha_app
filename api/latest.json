@@ -1,8 +1,8 @@
 {
   "version": "v0.10.0",
-  "release_date": "2026-06-21",
+  "release_date": "2026-07-14",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
   "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.10.0",
-  "changelog": "## v0.10.0 — First-use embedded journey, full CUDA zip, wizard download API.",
+  "changelog": "## v0.10.0 — First-use embedded, HA discovery, full CUDA zip, API refactor, GPU CI workflow.",
   "min_supported_version": "0.5.0"
 }

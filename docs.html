@@ -29,7 +29,7 @@
       <a href="releases.html">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.9.0</span>
+      <span class="version-pill" aria-label="Current version">v0.10.0</span>
       <a href="releases.html#downloads" class="btn btn-primary btn-sm">
         ⬇ Download
       </a>
@@ -70,7 +70,7 @@
         <div class="docs-nav-section">
           <div class="docs-nav-title">Getting Started</div>
           <a href="#getting-started" class="docs-nav-link" data-target="getting-started">Introduction</a>
-          <a href="#whats-new" class="docs-nav-link" data-target="whats-new">What's new (v0.9.0)</a>
+          <a href="#whats-new" class="docs-nav-link" data-target="whats-new">What's new (v0.10.0)</a>
           <a href="#api-integration" class="docs-nav-link" data-target="api-integration">API &amp; plugins</a>
           <a href="#installation" class="docs-nav-link" data-target="installation">Installation</a>
           <a href="#first-run" class="docs-nav-link" data-target="first-run">First Run</a>
@@ -182,26 +182,32 @@
         </article>
 
         <article class="docs-article" id="whats-new">
-          <h2>What's new in v0.9.0</h2>
-          <h3>Workspace UI</h3>
+          <h2>What's new in v0.10.0</h2>
+          <h3>First-use embedded</h3>
           <ul>
-            <li><strong>Cookbook</strong> — pull local models (Hugging Face, Ollama, BitNet) and browse <strong>12 guided recipes</strong> (RAG, fine-tuning, agents, evaluation, deployment).</li>
-            <li><strong>Compare</strong> — blind A/B model comparison; prefill from Cookbook recipes.</li>
-            <li><strong>Deep research</strong> — dedicated research workflow panel in the desktop app.</li>
-            <li><strong>Notes</strong> — user notes panel synced with the daemon.</li>
+            <li><strong>Setup wizard</strong> — embedded status, GGUF download with progress, multi-model picker, first message test.</li>
+            <li><strong>Full CUDA zip</strong> — <code>akasha-full-windows-x86_64-cuda.zip</code> (CLI + UI + scripts); <code>install.ps1</code> copies CUDA runtime DLLs.</li>
+            <li><strong>Doctor</strong> — <code>akasha doctor --json</code> suggests <code>embedded-download</code> when GGUF is missing.</li>
+            <li><strong>API</strong> — <code>POST/GET /api/router/embedded/download</code>, calibration endpoint.</li>
           </ul>
-          <h3>Embedded documentation</h3>
+          <h3>Discovery &amp; Home Assistant</h3>
           <ul>
-            <li><strong>Multi-page user guide</strong> in the <strong>Doc</strong> tab with sidebar navigation.</li>
-            <li><strong>HTTP API</strong> — <code>GET /api/docs</code> returns a page index; <code>GET /api/docs/:id</code> returns markdown for each topic.</li>
+            <li><strong>Service discovery</strong> — <code>akasha discover</code>, <code>GET /api/discovery</code> (Ollama, Home Assistant on LAN).</li>
+            <li><strong>Home Assistant</strong> — connector in Settings, plugin <code>homeassistant</code>, agent tools <code>ha_*</code>.</li>
           </ul>
-          <h3>Channels &amp; plugins</h3>
+          <h3>Plugins</h3>
           <ul>
-            <li><strong>Matrix Channel</strong> and <strong>CalDAV Channel</strong> sidecar plugins in the public catalog (5 plugins total).</li>
-            <li>Plugin catalog on this site loads from GitHub <code>main</code> first (jsDelivr mirror as fallback).</li>
+            <li><strong>6 plugins</strong> in the public catalog (Matrix, CalDAV, Home Assistant, graph, maps, simulation).</li>
           </ul>
           <h3>Code Studio</h3>
-          <p>Install the operator cockpit via npm: <code>npx akasha-code-studio@0.9.0</code> (requires a running daemon on port <strong>3876</strong>). See <a href="#code-studio">Code Studio</a>.</p>
+          <p>Install the operator cockpit via npm: <code>npx akasha-code-studio@0.10.0</code> (requires a running daemon on port <strong>3876</strong>). See <a href="#code-studio">Code Studio</a>.</p>
+          <h3>Previously in v0.9.0</h3>
+          <h4>Workspace UI</h4>
+          <ul>
+            <li><strong>Cookbook</strong> — pull local models and browse <strong>12 guided recipes</strong>.</li>
+            <li><strong>Compare</strong>, <strong>Deep research</strong>, <strong>Notes</strong> workspace panels.</li>
+            <li><strong>Multi-page user guide</strong> in the Doc tab; Matrix/CalDAV channel plugins.</li>
+          </ul>
           <h3>Previously in v0.8.0</h3>
           <ul>
             <li><strong>Permission center</strong>, <strong>Second Brain controls</strong>, <strong>budget controls</strong>, and agent-callable scheduler tools.</li>
@@ -436,7 +442,7 @@ akasha task queue clear &lt;task_id&gt;</code></pre>
 
         <article class="docs-article" id="code-studio">
           <h2>Code Studio &amp; swarm MVP</h2>
-          <p><strong>Install (v0.9+):</strong> <code>npx akasha-code-studio@0.9.0</code> — serves the cockpit on <code>http://127.0.0.1:5178</code> and proxies <code>/api</code> to the daemon (default port <strong>3876</strong>). Override with <code>VITE_DAEMON_URL</code> or <code>AKASHA_STUDIO_PORT</code>.</p>
+          <p><strong>Install (v0.10+):</strong> <code>npx akasha-code-studio@0.10.0</code> — serves the cockpit on <code>http://127.0.0.1:5178</code> and proxies <code>/api</code> to the daemon (default port <strong>3876</strong>). Override with <code>VITE_DAEMON_URL</code> or <code>AKASHA_STUDIO_PORT</code>.</p>
           <p>Source repository: <a href="https://github.com/azerothl/akasha-code-studio">akasha-code-studio</a>. Swarm mode adds a coordinator plus bounded workers.</p>
           <h3>Roles</h3>
           <ul>
@@ -1102,10 +1108,10 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <pre><code>GET https://azerothl.github.io/Akasha_app/api/latest.json</code></pre>
           <h3>Response format</h3>
           <pre><code>{
-  "version": "v0.9.0",
-  "release_date": "2026-04-10",
+  "version": "v0.10.0",
+  "release_date": "2026-07-14",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
-  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.9.0",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.10.0",
   "changelog": "…",
   "min_supported_version": "0.5.0"
 }</code></pre>
