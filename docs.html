@@ -183,24 +183,10 @@
 
         <article class="docs-article" id="whats-new">
           <h2>What's new in v0.10.0</h2>
-          <h3>Companion LAN (ESP32 client)</h3>
-          <ul>
-            <li><strong>Bind address</strong> — set <code>AKASHA_BIND</code> to listen beyond loopback (default <code>127.0.0.1</code>; use <code>0.0.0.0</code> on a trusted LAN so a Companion device can reach the daemon).</li>
-            <li><strong>HTTP API</strong> — <code>/api/companion/*</code> for snapshot, device pairing, and hands-free VAD policy (<code>GET /api/companion/snapshot</code>, <code>POST /api/companion/pair</code>, and related routes).</li>
-            <li><strong>Discovery</strong> — UDP on port <strong>3877</strong> answers <code>AKASHA_DISCOVER</code> probes so hardware on the LAN can find the daemon.</li>
-            <li>Companion TTS returns 16&nbsp;kHz mono WAV with Markdown stripped before speech. See the engine’s <code>docs/user/configuration.md</code> for <code>AKASHA_COMPANION_*</code> variables.</li>
-          </ul>
-          <h3>Embedded &amp; local inference</h3>
-          <ul>
-            <li><strong>First-use path</strong> — guided embedded model download, setup wizard, and calibration so the bundled local model is ready without a separate install step.</li>
-            <li>Shipped as part of the v0.10.0 release merge (agentic cockpit and life-layer updates ride the same train).</li>
-          </ul>
-          <h3>Ollama &amp; Cookbook</h3>
-          <ul>
-            <li><strong>Compact prompts</strong> — mid-size and embedded Ollama models use a shorter system prompt so they do not echo the full rule dump; large (70B-class) tags keep the full prompt.</li>
-            <li><strong>Context window</strong> — Ollama routes default <code>num_ctx</code> to <strong>8192</strong> when unset (still overridable in router config; tiny models stay unset).</li>
-            <li><strong>Cookbook</strong> — Ollama library source, embedded catalog fallback, and detected VRAM in the hardware panel.</li>
-          </ul>
+          <p>Your assistant can live on the machine — and talk to a small companion on the LAN.</p>
+          <p>Bind the daemon so an ESP32 Companion can find it, pair, and use voice without leaving your network (<code>AKASHA_BIND</code>, <code>/api/companion/*</code>).</p>
+          <p>First use can download and set up a local model: wizard, calibration, then you stay embedded when you want.</p>
+          <p>On mid-size Ollama models, prompts stay compact and context defaults to 8k, so the model works with you instead of drowning in rules.</p>
           <p>Product references: <a href="https://github.com/azerothl/Akasha/pull/122" target="_blank" rel="noopener">#122</a> (Companion), <a href="https://github.com/azerothl/Akasha/pull/123" target="_blank" rel="noopener">#123</a> (Ollama), <a href="https://github.com/azerothl/Akasha/pull/125" target="_blank" rel="noopener">#125</a> (v0.10.0 merge).</p>
           <h3>Previously in v0.9.0</h3>
           <h4>Workspace UI</h4>
