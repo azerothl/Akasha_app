@@ -1,5 +1,15 @@
 [
   {
+    "version": "v0.10.0",
+    "date": "2026-09-25",
+    "type": "minor",
+    "title": "v0.10.0",
+    "description": "<!-- Release notes generated using configuration in .github/release.yml at v0.10.0 -->\n\n## What's Changed\n### Other\n* feat(companion): LAN daemon APIs for the ESP32 client by @azerothl in https://github.com/azerothl/Akasha/pull/122\n* feat(llm): compact prompts and 8k context for mid-size Ollama by @azerothl in https://github.com/azerothl/Akasha/pull/123\n* fix(ci): EmbeddedLlm::preload + InfoTip for llama-cpp / ui-e2e by @azerothl in https://github.com/azerothl/Akasha/pull/124\n* release: merge local-inference (v0.10.0) into main by @azerothl in https://github.com/azerothl/Akasha/pull/125\n\n\n**Full Changelog**: https://github.com/azerothl/Akasha/compare/v0.9.0...v0.10.0",
+    "changes": [],
+    "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.10.0",
+    "assets": []
+  },
+  {
     "version": "v0.9.0",
     "date": "2026-06-21",
     "type": "minor",
