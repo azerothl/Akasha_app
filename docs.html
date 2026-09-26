@@ -81,6 +81,7 @@
           <a href="#safety-queue" class="docs-nav-link" data-target="safety-queue">Safety queue &amp; reports</a>
           <a href="#steering-follow-up" class="docs-nav-link" data-target="steering-follow-up">Steering &amp; follow-up</a>
           <a href="#code-studio" class="docs-nav-link" data-target="code-studio">Code Studio &amp; swarm</a>
+          <a href="#companion" class="docs-nav-link" data-target="companion">Companion (ESP32)</a>
           <a href="#configuration" class="docs-nav-link" data-target="configuration">Configuration</a>
           <a href="#llm-router-yaml" class="docs-nav-link" data-target="llm-router-yaml">LLM router (YAML)</a>
           <a href="#tools-policy" class="docs-nav-link" data-target="tools-policy">Tools policy (YAML)</a>
@@ -455,6 +456,31 @@ akasha task queue clear &lt;task_id&gt;</code></pre>
           <p>Structured events on <code>GET /api/tasks/:id/events</code>: <code>studio_worker_state_changed</code>, <code>studio_subtask_assigned</code>, <code>studio_subtask_completed</code>, <code>studio_subtask_failed</code>, <code>studio_conflict_notice</code>.</p>
           <h3>Limits</h3>
           <p>Respect <code>AKASHA_STUDIO_MAX_PARALLEL_OPS</code>; swarm is opt-in via task context. All writes stay inside the project disk root.</p>
+        </article>
+
+        <article class="docs-article" id="companion">
+          <h2>Companion (ESP32)</h2>
+          <p>
+            <strong>Akasha Companion</strong> is a voice-first Freenove FNK0104B thin client: avatar on the TFT, MEMS mic → daemon STT, reply → TTS on the speaker.
+            Text and image are secondary surfaces. Conversational STT/TTS stay on the daemon (<code>/api/voice/*</code>).
+          </p>
+          <ul>
+            <li>Daemon must listen on the LAN: <code>AKASHA_BIND=0.0.0.0</code>.</li>
+            <li>Configure STT/TTS in <code>voice_router.yaml</code>.</li>
+            <li>Optional pairing / snapshot / hands-free VAD via <code>/api/companion/*</code>.</li>
+          </ul>
+          <p>
+            Full guide (flash, secrets, gestures, VAD):
+            <a href="https://github.com/azerothl/Akasha_companion/blob/main/docs/user/getting-started.md" target="_blank" rel="noopener">Getting started</a>
+            ·
+            <a href="https://github.com/azerothl/Akasha_companion" target="_blank" rel="noopener">Akasha_companion repo</a>
+          </p>
+          <div class="callout callout-tip">
+            <span class="callout-icon">💡</span>
+            <div class="callout-body">
+              Supported product SKU is <strong>FNK0104B</strong>. Flash with the repo scripts: <code>scripts/flash.ps1</code> / <code>scripts/flash.sh</code>.
+            </div>
+          </div>
         </article>
 
         <!-- Configuration -->
