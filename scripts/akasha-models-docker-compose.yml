@@ -1,0 +1,77 @@
+# Akasha Models — optional Docker services for Akasha (Ollama, BitNet, TTS/STT).
+# Same file as the engine akasha-models/docker-compose.yml — hosted here so you can
+# restore it if the file was deleted from your install.
+#
+# Usage:
+#   docker compose --profile ollama up -d        # LLM Ollama only (public image; this file is enough)
+#   docker compose --profile bitnet up -d        # needs ./bitnet/ build context + model volume
+#   docker compose --profile voice up -d         # needs ./tts/ and ./stt/ directories to build images
+#
+# For voice and BitNet profiles, obtain the full akasha-models tree (tts/, stt/, bitnet/) from your
+# engine bundle or release; the compose file alone is not sufficient to build those services.
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: akasha-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    profiles:
+      - ollama
+    # Pour GPU (Linux) : décommenter et adapter
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+  bitnet:
+    build:
+      context: ./bitnet
+      dockerfile: Dockerfile
+    container_name: akasha-bitnet
+    ports:
+      - "8080:8080"
+    volumes:
+      - bitnet_models:/models
+    environment:
+      - BITNET_MODEL_PATH=/models
+      - BITNET_THREADS=2
+    profiles:
+      - bitnet
+
+  tts:
+    build:
+      context: ./tts
+      dockerfile: Dockerfile
+    container_name: akasha-tts
+    ports:
+      - "8765:8765"
+    environment:
+      - TTS_HOST=0.0.0.0
+      - TTS_PORT=8765
+      - TTS_VOICE=fr-FR-DeniseNeural
+    profiles:
+      - voice
+
+  stt:
+    build:
+      context: ./stt
+      dockerfile: Dockerfile
+    container_name: akasha-stt
+    ports:
+      - "8766:8766"
+    environment:
+      - STT_HOST=0.0.0.0
+      - STT_PORT=8766
+      - WHISPER_MODEL=base
+    profiles:
+      - voice
+
+volumes:
+  ollama_data:
+  bitnet_models:

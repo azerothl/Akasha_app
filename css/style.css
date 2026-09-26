@@ -3,40 +3,16 @@
    Modern dark theme with purple / cyan accent palette
    ================================================================ */
 
-/* ── Custom properties ──────────────────────────────────────────── */
+@import url('akasha-design-system.css');
+
+/* ── Custom properties (marketing-specific) ─────────────────────── */
 :root {
-  --bg-primary:   #0d0d14;
-  --bg-secondary: #12121e;
-  --bg-card:      #1a1a2e;
-  --bg-card-hover:#1e1e38;
-  --border:       rgba(139,92,246,.25);
   --border-hover: rgba(139,92,246,.6);
-
-  --purple:       #8b5cf6;
-  --purple-light: #a78bfa;
-  --purple-dark:  #7c3aed;
-  --cyan:         #06b6d4;
-  --cyan-light:   #22d3ee;
-  --green:        #10b981;
-  --yellow:       #f59e0b;
-  --red:          #ef4444;
-
-  --text-primary:   #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted:     #64748b;
-
   --gradient: linear-gradient(135deg, var(--purple), var(--cyan));
   --gradient-text: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
-
-  --radius-sm: 6px;
-  --radius:    12px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-
-  --shadow:    0 4px 24px rgba(0,0,0,.45);
-  --shadow-lg: 0 12px 48px rgba(0,0,0,.6);
-  --shadow-glow: 0 0 40px rgba(139,92,246,.2);
-
+  --shadow: none;
+  --shadow-lg: none;
+  --shadow-glow: none;
   --transition: .2s ease;
   --font: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -96,13 +72,14 @@ p  { color: var(--text-secondary); }
   transition: all var(--transition);
 }
 .btn-primary {
-  background: var(--gradient);
+  background: var(--purple);
   color: #fff;
-  box-shadow: 0 4px 20px rgba(139,92,246,.4);
+  box-shadow: none;
 }
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(139,92,246,.55);
+  background: var(--purple-dark);
+  transform: none;
+  box-shadow: none;
 }
 .btn-outline {
   background: transparent;
@@ -111,7 +88,7 @@ p  { color: var(--text-secondary); }
 }
 .btn-outline:hover {
   background: rgba(139,92,246,.12);
-  transform: translateY(-2px);
+  transform: none;
 }
 .btn-ghost {
   background: rgba(255,255,255,.05);
@@ -127,7 +104,7 @@ p  { color: var(--text-secondary); }
   align-items: center;
   gap: 4px;
   padding: 3px 10px;
-  border-radius: 100px;
+  border-radius: var(--radius);
   font-size: .72rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -143,16 +120,17 @@ p  { color: var(--text-secondary); }
 /* ── Cards ──────────────────────────────────────────────────────── */
 .card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: none;
+  border-inline-start: 2px solid var(--border);
+  border-radius: var(--radius);
   padding: 28px;
-  transition: all var(--transition);
+  transition: background var(--transition);
 }
 .card:hover {
   background: var(--bg-card-hover);
-  border-color: var(--border-hover);
-  box-shadow: var(--shadow-glow);
-  transform: translateY(-3px);
+  border-inline-start-color: var(--purple);
+  box-shadow: none;
+  transform: none;
 }
 .card-sm { padding: 18px; border-radius: var(--radius); }
 
@@ -191,8 +169,8 @@ p  { color: var(--text-secondary); }
 .nav-logo-icon {
   width: 34px;
   height: 34px;
-  border-radius: 10px;
-  background: var(--gradient);
+  border-radius: var(--radius);
+  background: var(--purple);
   display: flex;
   align-items: center;
   justify-content: center;

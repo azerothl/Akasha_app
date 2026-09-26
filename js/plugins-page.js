@@ -1,9 +1,9 @@
 /* Akasha — Plugins catalog (loads JSON from Akasha_plugins via jsDelivr) */
 (function () {
   const PRIMARY =
-    'https://cdn.jsdelivr.net/gh/azerothl/Akasha_plugins@main/plugins.json';
-  const FALLBACK =
     'https://raw.githubusercontent.com/azerothl/Akasha_plugins/main/plugins.json';
+  const FALLBACK =
+    'https://cdn.jsdelivr.net/gh/azerothl/Akasha_plugins@main/plugins.json';
 
   const metaEl = document.getElementById('plugins-meta');
   const statusEl = document.getElementById('plugins-status');
@@ -18,8 +18,16 @@
 
   function setStatus(msg, isError) {
     if (!statusEl) return;
+    if (isError) {
+      statusEl.textContent = 'See notifications (bell icon) for details.';
+      statusEl.className = 'plugins-status plugins-status-error';
+      if (typeof notifyPersistent === 'function') {
+        notifyPersistent('Plugin catalog error', msg, 'plugins.html');
+      }
+      return;
+    }
     statusEl.textContent = msg;
-    statusEl.className = isError ? 'plugins-status plugins-status-error' : 'plugins-status';
+    statusEl.className = 'plugins-status';
   }
 
   async function loadJson(url) {
@@ -62,17 +70,40 @@
       const perms = (p.permissions || []).length
         ? `<p class="plugin-line"><strong>Permissions:</strong> ${esc((p.permissions || []).join(', '))}</p>`
         : '';
-      const tools = (p.entry_tools || []).join(', ') || '—';
+      const tools = (p.entry_tools || []).join(', ') || (p.sidecar ? 'Sidecar channel' : '—');
+      const wasm = p.wasm_sha256
+        ? `<p class="plugin-line"><strong>WASM SHA256:</strong> <code title="${esc(p.wasm_sha256)}">${esc(
+            String(p.wasm_sha256).slice(0, 14)
+          )}…</code> <button type="button" class="btn btn-outline btn-sm plugin-copy-sha" data-sha="${esc(
+            p.wasm_sha256
+          )}">Copy digest</button></p>`
+        : '';
       card.innerHTML = `
         <h3 class="plugin-title">${esc(p.name)} <span class="badge badge-purple">${esc(p.version || '')}</span></h3>
         <p class="plugin-desc">${esc(p.description || '')}</p>
         <p class="plugin-line muted"><code>${esc(p.id)}</code> · ${esc(p.category || 'n/a')}</p>
         <p class="plugin-line"><strong>Entry tools:</strong> ${esc(tools)}</p>
         ${perms}
+        ${wasm}
         <div class="plugin-tags">${tags}</div>
         <p class="plugin-footer">${sourceLink(p.path)}</p>
       `;
       gridEl.appendChild(card);
+    });
+
+    gridEl.querySelectorAll('.plugin-copy-sha').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const sha = btn.getAttribute('data-sha') || '';
+        if (sha && navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(sha).then(() => {
+            const t = btn.textContent;
+            btn.textContent = 'Copied';
+            setTimeout(() => {
+              btn.textContent = t;
+            }, 1500);
+          });
+        }
+      });
     });
 
     const obs = new IntersectionObserver(

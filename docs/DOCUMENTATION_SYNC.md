@@ -11,7 +11,7 @@ Le fichier [docs.html](../docs.html) est une **page HTML statique** (anglais) su
 
 À cocher après comparaison avec [Akasha/docs/user_guide_final.md](https://github.com/azerothl/Akasha/blob/main/docs/user_guide_final.md) (ou la branche/tag correspondante) :
 
-1. **Version** : pastille de version dans `docs.html` (et `index.html` si affichée) = tag de release cible (ex. v0.7.0).
+1. **Version** : pastille de version dans `docs.html` (et `index.html` si affichée) = tag de release cible (ex. v0.8.0).
 2. **Port daemon** : `3876` et variable `AKASHA_PORT` — cohérents avec le guide.
 3. **Onglets TUI** : sept onglets — Chat, Scheduled / planned replies, Router, Doc, Tasks, Calendar, Memory (libellés EN sur le site ; vérifier l’équivalent fonctionnel).
 4. **Onglets UI web** : inclure **Scheduled** (Retours planifiés) + Paramètres comme dans le guide.
@@ -19,6 +19,7 @@ Le fichier [docs.html](../docs.html) est une **page HTML statique** (anglais) su
 6. **Liens** : URL des releases (`releases.html`, GitHub Releases Akasha_app), scripts d’installation (`get-akasha.ps1` / `.sh`).
 7. **Nouveautés** : section « What's new » mise à jour ou marquée comme résumé haut niveau si le détail est dans les notes de release.
 8. **Plugins** : page [plugins.html](../plugins.html) — le catalogue est chargé côté client depuis `https://cdn.jsdelivr.net/gh/azerothl/Akasha_plugins@main/plugins.json` (dépôt [Akasha_plugins](https://github.com/azerothl/Akasha_plugins), branche `main`). Aucun commit dans Akasha_app n’est nécessaire quand un plugin est ajouté ou modifié ; vérifier après une release majeure que la section Plugins / API dans `docs.html` reste alignée avec le daemon.
+9. **Parité opérateur** : si une ligne de [`reference-products-parity-matrix.md`](https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/reference-products-parity-matrix.md) ou du [`hermes-integration-remainder.md`](https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/hermes-integration-remainder.md) change le périmètre visible sur le site (`compare.html`, `docs.html`, `skills.html`, `plugins.html`, scripts `js/`), mettre à jour ce dépôt en même temps que la matrice côté Akasha.
 
 ## Génération automatique (optionnel)
 

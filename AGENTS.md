@@ -34,10 +34,10 @@ There are no automated test suites. Validation is manual — open the site in a 
 
 | Page | What it renders |
 |------|----------------|
-| `index.html` | Homepage with terminal animation, features, stats |
+| `index.html` | Homepage with terminal animation, features, stats, product screenshots (`assets/screenshots/`) |
 | `skills.html` | Skills library (loaded from `data/skills.json`) |
 | `plugins.html` | Plugin catalog (fetched from external jsDelivr CDN — needs internet) |
-| `docs.html` | Documentation with tabbed sidebar navigation |
+| `docs.html` | Documentation with tabbed sidebar navigation; interface screenshots under `assets/screenshots/` |
 | `releases.html` | Release timeline (loaded from `data/releases.json`) |
 | `compare.html` | Feature comparison table |
 | `404.html` | Custom 404 page |

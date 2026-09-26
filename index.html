@@ -32,7 +32,7 @@
       <a href="releases.html">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.7.0</span>
+      <span class="version-pill" aria-label="Current version">v0.10.0</span>
       <a href="releases.html#downloads" class="btn btn-primary btn-sm">
         ⬇ Download
       </a>
@@ -116,20 +116,20 @@
     <div class="section-header reveal">
       <span class="section-eyebrow">✦ Core Features</span>
       <h2 class="section-title">Everything you need, <span class="gradient-text">nothing you don't</span></h2>
-      <p class="section-desc">v0.7 adds multi-agent orchestration with verified deliverables, stricter path security, plugin APIs and UI (routing, reputation), and more robust LLM config — still local-first.</p>
+      <p class="section-desc"><strong>v0.10.0</strong> — your assistant on the machine, and a small companion on the LAN: bind the daemon (<code>AKASHA_BIND</code>, <code>/api/companion/*</code>) so an ESP32 can find it, pair, and use voice locally. First use can download and set up a local model (wizard, calibration); mid-size Ollama keeps prompts compact with 8k context. <a href="docs.html#whats-new">What's new</a></p>
     </div>
     <div class="features-grid">
 
       <div class="card reveal delay-1">
-        <div class="feature-icon" aria-hidden="true">🔒</div>
-        <h4 class="feature-title">Privacy-first</h4>
-        <p class="feature-desc">No account required for the embedded path. Conversations and memory stay in <em>your</em> data directory. Cloud providers are optional — you control keys in the vault.</p>
+        <div class="feature-icon" aria-hidden="true">🧠</div>
+        <h4 class="feature-title">Second Brain controls</h4>
+        <p class="feature-desc">No account required for the embedded path. Conversations and memory stay in <em>your</em> data directory, with dedicated controls to pause learning, inspect memory summaries, and clear context when needed.</p>
       </div>
 
       <div class="card reveal delay-2">
         <div class="feature-icon" aria-hidden="true">🛡️</div>
         <h4 class="feature-title">Policy &amp; tools</h4>
-        <p class="feature-desc"><strong>Deny-by-default</strong> file and command access via <code>tools_policy.yaml</code>. Allow only the paths and binaries you trust. Web search and skill installs are gated the same way.</p>
+        <p class="feature-desc"><strong>Deny-by-default</strong> file and command access via <code>tools_policy.yaml</code>, plus a permission center for persistent allow/deny decisions on sensitive actions.</p>
       </div>
 
       <div class="card reveal delay-3">
@@ -151,9 +151,15 @@
       </div>
 
       <div class="card reveal delay-3">
+        <div class="feature-icon" aria-hidden="true">✅</div>
+        <h4 class="feature-title">Review queue &amp; audit trail</h4>
+        <p class="feature-desc">Sensitive actions can be queued for approval with explicit decision history (pending/approved/denied/expired), plus compact operator summaries after task completion.</p>
+      </div>
+
+      <div class="card reveal delay-3">
         <div class="feature-icon" aria-hidden="true">🌗</div>
         <h4 class="feature-title">TUI &amp; desktop</h4>
-        <p class="feature-desc"><code>akasha tui</code> — Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory. Desktop app: Settings, user RAG, attachments. Optional Slack, Discord, Telegram.</p>
+        <p class="feature-desc"><code>akasha tui</code> — Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory. Desktop app: Settings, user RAG, <strong>project graph</strong> (multi-folder), <strong>Mission</strong> tab, attachments. Optional Slack, Discord, Telegram.</p>
       </div>
 
       <div class="card reveal delay-1">
@@ -171,9 +177,30 @@
       <div class="card reveal delay-3">
         <div class="feature-icon" aria-hidden="true">⚖️</div>
         <h4 class="feature-title">Compare</h4>
-        <p class="feature-desc">See how Akasha differs from OpenClaw, Claude Code, and similar tools — <a href="compare.html">comparison table →</a></p>
+        <p class="feature-desc">See how Akasha differs from OpenClaw, Claude Code, Cursor, Hermes Agent, Mercury Agent, and similar tools — <a href="compare.html">comparison table →</a></p>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ── Product screenshots (from Playwright E2E in Akasha repo) ── -->
+<section class="section" id="product-screenshots">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">✦ Interface</span>
+      <h2 class="section-title">Desktop <span class="gradient-text">UI</span></h2>
+      <p class="section-desc">Web UI (same bundle as the Tauri app): chat and in-app documentation when <code>akasha start</code> is running.</p>
+    </div>
+    <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+      <figure class="card reveal" style="padding: 0; overflow: hidden; margin: 0;">
+        <img src="assets/screenshots/ui-chat.png" alt="Akasha chat interface" width="960" height="540" loading="lazy" style="width:100%; height:auto; display:block;" />
+        <figcaption style="padding: 12px 16px; font-size: 0.9rem; color: var(--text-muted);">Chat</figcaption>
+      </figure>
+      <figure class="card reveal" style="padding: 0; overflow: hidden; margin: 0;">
+        <img src="assets/screenshots/ui-docs.png" alt="Akasha documentation tab" width="960" height="540" loading="lazy" style="width:100%; height:auto; display:block;" />
+        <figcaption style="padding: 12px 16px; font-size: 0.9rem; color: var(--text-muted);">Documentation tab</figcaption>
+      </figure>
     </div>
   </div>
 </section>
