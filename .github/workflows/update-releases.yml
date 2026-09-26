@@ -162,7 +162,7 @@ jobs:
           release_type = os.environ.get("RELEASE_TYPE", "patch")
           title        = os.environ.get("TITLE", "")
           description  = os.environ.get("DESCRIPTION", "")
-          # Users download from Akasha_app (public), not from private Akasha repo.
+          # Users download from Akasha_app (public mirror), not directly from Akasha release assets alone.
           tag = version if version.startswith("v") else "v" + version
           download_url = f"https://github.com/azerothl/Akasha_app/releases/tag/{tag}"
 
@@ -226,7 +226,7 @@ jobs:
           version      = os.environ.get("VERSION", "")
           release_date = os.environ.get("RELEASE_DATE", "")
           description  = os.environ.get("DESCRIPTION", "")
-          # Users download from Akasha_app (public), not from private Akasha repo.
+          # Users download from Akasha_app (public mirror), not directly from Akasha release assets alone.
           tag = version if version.startswith("v") else f"v{version}"
           download_url = f"https://github.com/azerothl/Akasha_app/releases/tag/{tag}"
 
