@@ -29,7 +29,7 @@
       <a href="releases.html">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.9.0</span>
+      <span class="version-pill" aria-label="Current version">v0.10.0</span>
       <a href="releases.html#downloads" class="btn btn-primary btn-sm">
         ⬇ Download
       </a>
@@ -70,7 +70,7 @@
         <div class="docs-nav-section">
           <div class="docs-nav-title">Getting Started</div>
           <a href="#getting-started" class="docs-nav-link" data-target="getting-started">Introduction</a>
-          <a href="#whats-new" class="docs-nav-link" data-target="whats-new">What's new (v0.9.0)</a>
+          <a href="#whats-new" class="docs-nav-link" data-target="whats-new">What's new (v0.10.0)</a>
           <a href="#api-integration" class="docs-nav-link" data-target="api-integration">API &amp; plugins</a>
           <a href="#installation" class="docs-nav-link" data-target="installation">Installation</a>
           <a href="#first-run" class="docs-nav-link" data-target="first-run">First Run</a>
@@ -182,25 +182,31 @@
         </article>
 
         <article class="docs-article" id="whats-new">
-          <h2>What's new in v0.9.0</h2>
-          <h3>Workspace UI</h3>
+          <h2>What's new in v0.10.0</h2>
+          <p>Your assistant can live on the machine — and talk to a small companion on the LAN.</p>
+          <p>Bind the daemon so an ESP32 Companion can find it, pair, and use voice without leaving your network (<code>AKASHA_BIND</code>, <code>/api/companion/*</code>).</p>
+          <p>First use can download and set up a local model: wizard, calibration, then you stay embedded when you want.</p>
+          <p>On mid-size Ollama models, prompts stay compact and context defaults to 8k, so the model works with you instead of drowning in rules.</p>
+          <p>Product references: <a href="https://github.com/azerothl/Akasha/pull/122" target="_blank" rel="noopener">#122</a> (Companion), <a href="https://github.com/azerothl/Akasha/pull/123" target="_blank" rel="noopener">#123</a> (Ollama), <a href="https://github.com/azerothl/Akasha/pull/125" target="_blank" rel="noopener">#125</a> (v0.10.0 merge).</p>
+          <h3>Previously in v0.9.0</h3>
+          <h4>Workspace UI</h4>
           <ul>
             <li><strong>Cookbook</strong> — pull local models (Hugging Face, Ollama, BitNet) and browse <strong>12 guided recipes</strong> (RAG, fine-tuning, agents, evaluation, deployment).</li>
             <li><strong>Compare</strong> — blind A/B model comparison; prefill from Cookbook recipes.</li>
             <li><strong>Deep research</strong> — dedicated research workflow panel in the desktop app.</li>
             <li><strong>Notes</strong> — user notes panel synced with the daemon.</li>
           </ul>
-          <h3>Embedded documentation</h3>
+          <h4>Embedded documentation</h4>
           <ul>
             <li><strong>Multi-page user guide</strong> in the <strong>Doc</strong> tab with sidebar navigation.</li>
             <li><strong>HTTP API</strong> — <code>GET /api/docs</code> returns a page index; <code>GET /api/docs/:id</code> returns markdown for each topic.</li>
           </ul>
-          <h3>Channels &amp; plugins</h3>
+          <h4>Channels &amp; plugins</h4>
           <ul>
             <li><strong>Matrix Channel</strong> and <strong>CalDAV Channel</strong> sidecar plugins in the public catalog (5 plugins total).</li>
             <li>Plugin catalog on this site loads from GitHub <code>main</code> first (jsDelivr mirror as fallback).</li>
           </ul>
-          <h3>Code Studio</h3>
+          <h4>Code Studio</h4>
           <p>Install the operator cockpit via npm: <code>npx akasha-code-studio@0.9.0</code> (requires a running daemon on port <strong>3876</strong>). See <a href="#code-studio">Code Studio</a>.</p>
           <h3>Previously in v0.8.0</h3>
           <ul>
@@ -1102,10 +1108,10 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <pre><code>GET https://azerothl.github.io/Akasha_app/api/latest.json</code></pre>
           <h3>Response format</h3>
           <pre><code>{
-  "version": "v0.9.0",
-  "release_date": "2026-04-10",
+  "version": "v0.10.0",
+  "release_date": "2026-09-25",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
-  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.9.0",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.10.0",
   "changelog": "…",
   "min_supported_version": "0.5.0"
 }</code></pre>

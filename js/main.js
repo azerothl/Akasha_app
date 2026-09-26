@@ -145,7 +145,7 @@ async function initTerminal() {
   const body = $('.terminal-body');
   if (!body) return;
 
-  let ver = 'v0.9.0';
+  let ver = 'v0.10.0';
   try {
     const res = await fetch('api/latest.json');
     if (res.ok) {
@@ -364,6 +364,7 @@ const RELEASE_ASSETS = [
   { name: 'akasha-full-linux-x86_64.zip', label: 'Linux (full)', os: 'linux' },
   { name: 'akasha-full-macos-x86_64.zip', label: 'macOS Intel (full)', os: 'macos' },
   { name: 'akasha-full-macos-aarch64.zip', label: 'macOS Apple Silicon (full)', os: 'macos' },
+  { name: 'akasha-full-windows-x86_64-cuda.zip', label: 'Windows (full, NVIDIA CUDA)', os: 'windows' },
   { name: 'akasha-windows-x86_64.zip', label: 'Windows (CLI only)', os: 'windows' },
   { name: 'akasha-windows-x86_64-cuda.zip', label: 'Windows (CLI, NVIDIA CUDA)', os: 'windows' },
   { name: 'akasha-linux-x86_64.zip', label: 'Linux (CLI only)', os: 'linux' },
