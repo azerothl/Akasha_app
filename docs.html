@@ -184,6 +184,10 @@
 
         <article class="docs-article" id="whats-new">
           <h2>What's new in v0.10.0</h2>
+          <p>Your assistant can live on the machine — and talk to a small companion on the LAN.</p>
+          <p>Bind the daemon so an ESP32 Companion can find it, pair, and use voice without leaving your network (<code>AKASHA_BIND</code>, <code>/api/companion/*</code>).</p>
+          <p>First use can download and set up a local model: wizard, calibration, then you stay embedded when you want. On mid-size Ollama models, prompts stay compact and context defaults to 8k.</p>
+          <p>Product references: <a href="https://github.com/azerothl/Akasha/pull/122" target="_blank" rel="noopener">#122</a> (Companion), <a href="https://github.com/azerothl/Akasha/pull/123" target="_blank" rel="noopener">#123</a> (Ollama), <a href="https://github.com/azerothl/Akasha/pull/125" target="_blank" rel="noopener">#125</a> (v0.10.0 merge).</p>
           <h3>First-use embedded</h3>
           <ul>
             <li><strong>Setup wizard</strong> — embedded status, GGUF download with progress, multi-model picker, first message test.</li>
@@ -1135,7 +1139,7 @@ When the user asks for X, use the tools A and B. Return the result in format …
           <h3>Response format</h3>
           <pre><code>{
   "version": "v0.10.0",
-  "release_date": "2026-07-14",
+  "release_date": "2026-09-25",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
   "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.10.0",
   "changelog": "…",

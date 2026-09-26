@@ -1,8 +1,8 @@
 {
   "version": "v0.10.0",
-  "release_date": "2026-07-14",
+  "release_date": "2026-09-25",
   "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
   "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.10.0",
-  "changelog": "## v0.10.0 — First-use embedded, HA discovery, full CUDA zip, API refactor, GPU CI workflow.",
+  "changelog": "## What's new in v0.10.0\n\n### Companion (LAN)\n- Bind the daemon (`AKASHA_BIND`, `/api/companion/*`) so an ESP32 Companion can discover, pair, and use voice on your network.\n\n### First-use embedded\n- Setup wizard: GGUF download with progress, multi-model picker, calibration, first message test.\n- **`akasha-full-windows-x86_64-cuda.zip`** (CLI CUDA + UI + scripts); `doctor --json` suggests `embedded-download` when needed.\n\n### Local inference & integrations\n- Compact prompts and 8k context for mid-size Ollama.\n- Service discovery (`akasha discover`, `GET /api/discovery`) for Ollama and Home Assistant; HA connector, plugin, and `ha_*` tools.\n\n**Full Changelog**: https://github.com/azerothl/Akasha/compare/v0.9.0...v0.10.0",
   "min_supported_version": "0.5.0"
 }
