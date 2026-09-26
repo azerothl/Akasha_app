@@ -1,12 +1,18 @@
 # Akasha one-liner bootstrap (Windows)
 # Downloads the full zip from azerothl/Akasha_app releases, extracts, runs setup.
 # Invoke: powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/azerothl/Akasha_app/main/scripts/get-akasha.ps1 | iex"
+# GPU: ... | iex; ... -Cuda  OR  get-akasha-cuda.ps1
+
+param(
+    [switch]$Cuda
+)
 
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $Repo = "azerothl/Akasha_app"
-$ZipUrl = "https://github.com/$Repo/releases/latest/download/akasha-full-windows-x86_64.zip"
+$ZipName = if ($Cuda) { "akasha-full-windows-x86_64-cuda.zip" } else { "akasha-full-windows-x86_64.zip" }
+$ZipUrl = "https://github.com/$Repo/releases/latest/download/$ZipName"
 $InstallDir = "C:\Akasha"
 
 Write-Host "=== Akasha installation (one-liner) ===" -ForegroundColor Cyan

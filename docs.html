@@ -81,6 +81,7 @@
           <a href="#safety-queue" class="docs-nav-link" data-target="safety-queue">Safety queue &amp; reports</a>
           <a href="#steering-follow-up" class="docs-nav-link" data-target="steering-follow-up">Steering &amp; follow-up</a>
           <a href="#code-studio" class="docs-nav-link" data-target="code-studio">Code Studio &amp; swarm</a>
+          <a href="#companion" class="docs-nav-link" data-target="companion">Companion (ESP32)</a>
           <a href="#configuration" class="docs-nav-link" data-target="configuration">Configuration</a>
           <a href="#llm-router-yaml" class="docs-nav-link" data-target="llm-router-yaml">LLM router (YAML)</a>
           <a href="#tools-policy" class="docs-nav-link" data-target="tools-policy">Tools policy (YAML)</a>
@@ -185,29 +186,33 @@
           <h2>What's new in v0.10.0</h2>
           <p>Your assistant can live on the machine — and talk to a small companion on the LAN.</p>
           <p>Bind the daemon so an ESP32 Companion can find it, pair, and use voice without leaving your network (<code>AKASHA_BIND</code>, <code>/api/companion/*</code>).</p>
-          <p>First use can download and set up a local model: wizard, calibration, then you stay embedded when you want.</p>
-          <p>On mid-size Ollama models, prompts stay compact and context defaults to 8k, so the model works with you instead of drowning in rules.</p>
+          <p>First use can download and set up a local model: wizard, calibration, then you stay embedded when you want. On mid-size Ollama models, prompts stay compact and context defaults to 8k.</p>
           <p>Product references: <a href="https://github.com/azerothl/Akasha/pull/122" target="_blank" rel="noopener">#122</a> (Companion), <a href="https://github.com/azerothl/Akasha/pull/123" target="_blank" rel="noopener">#123</a> (Ollama), <a href="https://github.com/azerothl/Akasha/pull/125" target="_blank" rel="noopener">#125</a> (v0.10.0 merge).</p>
+          <h3>First-use embedded</h3>
+          <ul>
+            <li><strong>Setup wizard</strong> — embedded status, GGUF download with progress, multi-model picker, first message test.</li>
+            <li><strong>Full CUDA zip</strong> — <code>akasha-full-windows-x86_64-cuda.zip</code> (CLI + UI + scripts); <code>install.ps1</code> copies CUDA runtime DLLs.</li>
+            <li><strong>Doctor</strong> — <code>akasha doctor --json</code> suggests <code>embedded-download</code> when GGUF is missing.</li>
+            <li><strong>API</strong> — <code>POST/GET /api/router/embedded/download</code>, calibration endpoint.</li>
+          </ul>
+          <h3>Discovery &amp; Home Assistant</h3>
+          <ul>
+            <li><strong>Service discovery</strong> — <code>akasha discover</code>, <code>GET /api/discovery</code> (Ollama, Home Assistant on LAN).</li>
+            <li><strong>Home Assistant</strong> — connector in Settings, plugin <code>homeassistant</code>, agent tools <code>ha_*</code>.</li>
+          </ul>
+          <h3>Plugins</h3>
+          <ul>
+            <li><strong>6 plugins</strong> in the public catalog (Matrix, CalDAV, Home Assistant, graph, maps, simulation).</li>
+          </ul>
+          <h3>Code Studio</h3>
+          <p>Install the operator cockpit via npm: <code>npx akasha-code-studio@0.10.0</code> (requires a running daemon on port <strong>3876</strong>). See <a href="#code-studio">Code Studio</a>.</p>
           <h3>Previously in v0.9.0</h3>
           <h4>Workspace UI</h4>
           <ul>
-            <li><strong>Cookbook</strong> — pull local models (Hugging Face, Ollama, BitNet) and browse <strong>12 guided recipes</strong> (RAG, fine-tuning, agents, evaluation, deployment).</li>
-            <li><strong>Compare</strong> — blind A/B model comparison; prefill from Cookbook recipes.</li>
-            <li><strong>Deep research</strong> — dedicated research workflow panel in the desktop app.</li>
-            <li><strong>Notes</strong> — user notes panel synced with the daemon.</li>
+            <li><strong>Cookbook</strong> — pull local models and browse <strong>12 guided recipes</strong>.</li>
+            <li><strong>Compare</strong>, <strong>Deep research</strong>, <strong>Notes</strong> workspace panels.</li>
+            <li><strong>Multi-page user guide</strong> in the Doc tab; Matrix/CalDAV channel plugins.</li>
           </ul>
-          <h4>Embedded documentation</h4>
-          <ul>
-            <li><strong>Multi-page user guide</strong> in the <strong>Doc</strong> tab with sidebar navigation.</li>
-            <li><strong>HTTP API</strong> — <code>GET /api/docs</code> returns a page index; <code>GET /api/docs/:id</code> returns markdown for each topic.</li>
-          </ul>
-          <h4>Channels &amp; plugins</h4>
-          <ul>
-            <li><strong>Matrix Channel</strong> and <strong>CalDAV Channel</strong> sidecar plugins in the public catalog (5 plugins total).</li>
-            <li>Plugin catalog on this site loads from GitHub <code>main</code> first (jsDelivr mirror as fallback).</li>
-          </ul>
-          <h4>Code Studio</h4>
-          <p>Install the operator cockpit via npm: <code>npx akasha-code-studio@0.9.0</code> (requires a running daemon on port <strong>3876</strong>). See <a href="#code-studio">Code Studio</a>.</p>
           <h3>Previously in v0.8.0</h3>
           <ul>
             <li><strong>Permission center</strong>, <strong>Second Brain controls</strong>, <strong>budget controls</strong>, and agent-callable scheduler tools.</li>
@@ -290,7 +295,7 @@
           <p><strong>Windows:</strong> double-click <code>INSTALL.cmd</code> at the root of the extracted folder to run the installer (no PowerShell execution policy prompt), or run <code>.\scripts\setup.ps1</code>. <strong>Linux / macOS:</strong> run <code>chmod +x scripts/setup.sh &amp;&amp; ./scripts/setup.sh</code>.</p>
           <p>You get the <code>akasha</code> (or <code>akasha.exe</code>), <code>akasha-daemon</code>, <code>akasha-tui</code> executables, a <code>docs</code> folder with the user guide, and in the full zip a <code>ui</code> subfolder with the desktop app installer.</p>
           <h3 id="installation-cuda">Windows with NVIDIA GPU (CUDA build)</h3>
-          <p>For fast local inference on an <strong>NVIDIA GPU</strong>, download <strong>akasha-windows-x86_64-cuda.zip</strong> from <a href="releases.html#downloads">Releases</a> (not the default full zip). Requires recent NVIDIA drivers (<code>nvcuda.dll</code>); the archive includes CUDA runtime DLLs — no CUDA Toolkit install needed.</p>
+          <p>For fast local inference on an <strong>NVIDIA GPU</strong>, download <strong>akasha-windows-x86_64-cuda.zip</strong> (CLI) or <strong>akasha-full-windows-x86_64-cuda.zip</strong> (CLI + desktop UI + scripts) from <a href="releases.html#downloads">Releases</a>. Requires recent NVIDIA drivers (<code>nvcuda.dll</code>); the archive includes CUDA runtime DLLs — no CUDA Toolkit install needed. One-liner GPU: <code>get-akasha-cuda.ps1</code> or <code>get-akasha.ps1 -Cuda</code>.</p>
           <pre><code>Expand-Archive .\akasha-windows-x86_64-cuda.zip -DestinationPath C:\Akasha -Force
 cd C:\Akasha
 .\scripts\setup.ps1 -InstallDir C:\Akasha
@@ -442,7 +447,7 @@ akasha task queue clear &lt;task_id&gt;</code></pre>
 
         <article class="docs-article" id="code-studio">
           <h2>Code Studio &amp; swarm MVP</h2>
-          <p><strong>Install (v0.9+):</strong> <code>npx akasha-code-studio@0.9.0</code> — serves the cockpit on <code>http://127.0.0.1:5178</code> and proxies <code>/api</code> to the daemon (default port <strong>3876</strong>). Override with <code>VITE_DAEMON_URL</code> or <code>AKASHA_STUDIO_PORT</code>.</p>
+          <p><strong>Install (v0.10+):</strong> <code>npx akasha-code-studio@0.10.0</code> — serves the cockpit on <code>http://127.0.0.1:5178</code> and proxies <code>/api</code> to the daemon (default port <strong>3876</strong>). Override with <code>VITE_DAEMON_URL</code> or <code>AKASHA_STUDIO_PORT</code>.</p>
           <p>Source repository: <a href="https://github.com/azerothl/akasha-code-studio">akasha-code-studio</a>. Swarm mode adds a coordinator plus bounded workers.</p>
           <h3>Roles</h3>
           <ul>
@@ -455,6 +460,31 @@ akasha task queue clear &lt;task_id&gt;</code></pre>
           <p>Structured events on <code>GET /api/tasks/:id/events</code>: <code>studio_worker_state_changed</code>, <code>studio_subtask_assigned</code>, <code>studio_subtask_completed</code>, <code>studio_subtask_failed</code>, <code>studio_conflict_notice</code>.</p>
           <h3>Limits</h3>
           <p>Respect <code>AKASHA_STUDIO_MAX_PARALLEL_OPS</code>; swarm is opt-in via task context. All writes stay inside the project disk root.</p>
+        </article>
+
+        <article class="docs-article" id="companion">
+          <h2>Companion (ESP32)</h2>
+          <p>
+            <strong>Akasha Companion</strong> is a voice-first Freenove FNK0104B thin client: avatar on the TFT, MEMS mic → daemon STT, reply → TTS on the speaker.
+            Text and image are secondary surfaces. Conversational STT/TTS stay on the daemon (<code>/api/voice/*</code>).
+          </p>
+          <ul>
+            <li>Daemon must listen on the LAN: <code>AKASHA_BIND=0.0.0.0</code>.</li>
+            <li>Configure STT/TTS in <code>voice_router.yaml</code>.</li>
+            <li>Optional pairing / snapshot / hands-free VAD via <code>/api/companion/*</code>.</li>
+          </ul>
+          <p>
+            Full guide (flash, secrets, gestures, VAD):
+            <a href="https://github.com/azerothl/Akasha_companion/blob/main/docs/user/getting-started.md" target="_blank" rel="noopener">Getting started</a>
+            ·
+            <a href="https://github.com/azerothl/Akasha_companion" target="_blank" rel="noopener">Akasha_companion repo</a>
+          </p>
+          <div class="callout callout-tip">
+            <span class="callout-icon">💡</span>
+            <div class="callout-body">
+              Supported product SKU is <strong>FNK0104B</strong>. Flash with the repo scripts: <code>scripts/flash.ps1</code> / <code>scripts/flash.sh</code>.
+            </div>
+          </div>
         </article>
 
         <!-- Configuration -->
