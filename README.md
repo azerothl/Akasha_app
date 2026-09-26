@@ -6,7 +6,7 @@ Public website and **release mirror** for Akasha — downloads, docs, and change
 
 ## Release pipeline (sanity checklist)
 
-1. A release is published on the **private** Akasha repo (binaries attached to the GitHub Release).
+1. A release is published on the [Akasha](https://github.com/azerothl/Akasha) repository (binaries attached to the GitHub Release).
 2. That repo’s workflow sends `repository_dispatch` (`new_release`) to **Akasha_app**.
 3. **`.github/workflows/update-releases.yml`** runs with secret **`AKASHA_RELEASE_READ_TOKEN`** (read access to Akasha releases):
    - Downloads all release assets (`gh release download`).
@@ -47,4 +47,4 @@ Preview `plugins.html` the same way so the browser can fetch the catalog from js
 
 ## License
 
-MIT (site content and scripts).
+MIT (site content and scripts in this repository). The Akasha **engine** is Apache-2.0 in the [Akasha](https://github.com/azerothl/Akasha) repository.
