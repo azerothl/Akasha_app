@@ -21,7 +21,7 @@ Alternatively: `python3 -m http.server 3000`
 There is no configured linter in the repo. To validate:
 
 - **JavaScript syntax**: `node --check js/main.js && node --check js/plugins-page.js`
-- **JSON data files**: `node -e "JSON.parse(require('fs').readFileSync('data/releases.json','utf8'))"`
+- **JSON data files**: `node -e "['data/releases.json','data/skills.json','api/latest.json'].forEach(f => JSON.parse(require('fs').readFileSync(f,'utf8')))""`
 - **HTML**: `npx htmlhint index.html docs.html skills.html releases.html plugins.html compare.html 404.html`
 
 Note: `index.html` has a pre-existing unclosed `<div>` tag (line ~225) that htmlhint reports.
