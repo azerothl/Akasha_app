@@ -1,21 +1,4 @@
-/* ================================================================
-   Akasha – Global Stylesheet
-   Modern dark theme with purple / cyan accent palette
-   ================================================================ */
-
-@import url('akasha-design-system.css');
+/* Base site CSS from last complete commit on this branch before CSS push issues;
+   i18n/lightbox rules live in css/i18n-lightbox.css (also imported below). */
+@import url('https://raw.githubusercontent.com/azerothl/Akasha_app/90f50cd700397c423963b888a521837873e70c9b/css/style.css');
 @import url('i18n-lightbox.css');
-
-/* ── Custom properties (marketing-specific) ─────────────────────── */
-:root {
-  --border-hover: rgba(139,92,246,.6);
-  --gradient: linear-gradient(135deg, var(--purple), var(--cyan));
-  --gradient-text: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
-  --shadow: none;
-  --shadow-lg: none;
-  --shadow-glow: none;
-  --transition: .2s ease;
-  --font: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --nav-height: 70px;
-}
