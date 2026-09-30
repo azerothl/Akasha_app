@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compare — Akasha vs OpenClaw, Claude Code, Cursor, Hermes, Mercury Agent</title>
+  <title data-i18n-title="meta.title.compare">Compare — Akasha vs OpenClaw, Claude Code, Cursor, Hermes, Mercury Agent</title>
   <meta name="description" content="How Akasha compares to OpenClaw, Claude Code, Cursor, Hermes Agent, and Mercury Agent — local-first assistant, IDE agents, messaging bots, and toolsets." />
   <meta name="theme-color" content="#8b5cf6" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,39 +20,44 @@
       Akasha
     </a>
     <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="skills.html">Skills</a>
-      <a href="plugins.html">Plugins</a>
-      <a href="docs.html">Docs</a>
-      <a href="compare.html" class="active">Compare</a>
-      <a href="releases.html">Releases</a>
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="skills.html" data-i18n="nav.skills">Skills</a>
+      <a href="plugins.html" data-i18n="nav.plugins">Plugins</a>
+      <a href="docs.html" data-i18n="nav.docs">Docs</a>
+      <a href="compare.html" data-i18n="nav.compare" class="active">Compare</a>
+      <a href="releases.html" data-i18n="nav.releases">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.10.0</span>
-      <a href="releases.html#downloads" class="btn btn-primary btn-sm">⬇ Download</a>
+      <div class="lang-switcher" role="group" data-i18n-aria="nav.lang" aria-label="Language">
+        <button type="button" class="lang-btn" data-set-lang="fr" aria-pressed="false">FR</button>
+        <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <span class="version-pill" data-i18n-aria="nav.version" aria-label="Current version">v0.10.0</span>
+      <a href="releases.html#downloads" class="btn btn-primary btn-sm"><span data-i18n="nav.download">⬇ Download</span></a>
     </div>
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <button class="hamburger" data-i18n-aria="nav.menu" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 <div class="mobile-menu">
-  <a href="index.html">🏠 Home</a>
-  <a href="skills.html">🧩 Skills</a>
-  <a href="plugins.html">🔌 Plugins</a>
-  <a href="docs.html">📖 Docs</a>
-  <a href="compare.html" class="active">⚖ Compare</a>
-  <a href="releases.html">📋 Releases</a>
-  <a href="releases.html#downloads" class="btn btn-primary">⬇ Download</a>
+  <a href="index.html" data-i18n="nav.mobile.home">🏠 Home</a>
+  <a href="skills.html" data-i18n="nav.mobile.skills">🧩 Skills</a>
+  <a href="plugins.html" data-i18n="nav.mobile.plugins">🔌 Plugins</a>
+  <a href="docs.html" data-i18n="nav.mobile.docs">📖 Docs</a>
+  <a href="compare.html" data-i18n="nav.mobile.compare" class="active">⚖ Compare</a>
+  <a href="releases.html" data-i18n="nav.mobile.releases">📋 Releases</a>
+  <a href="releases.html#downloads" class="btn btn-primary" data-i18n="nav.mobile.download">⬇ Download</a>
 </div>
 
 <div style="padding-top: var(--nav-height); background: var(--bg-secondary); border-bottom: 1px solid var(--border);">
   <div class="container" style="padding-top: 48px; padding-bottom: 48px;">
-    <span class="section-eyebrow animate-fade-up">⚖ Product comparison</span>
-    <h1 class="animate-fade-up delay-1" style="margin-top: 14px; margin-bottom: 10px;">
+    <span class="section-eyebrow animate-fade-up" data-i18n="compare.eyebrow">⚖ Product comparison</span>
+    <h1 class="animate-fade-up delay-1" style="margin-top: 14px; margin-bottom: 10px;" data-i18n-html="compare.title">
       Akasha <span class="gradient-text">vs</span> similar tools
     </h1>
-    <p class="animate-fade-up delay-2" style="max-width: 720px;">
+    <p class="animate-fade-up delay-2" style="max-width: 720px;" data-i18n="compare.subtitle">
       Indicative comparison on a few axes. Products evolve quickly — check each vendor’s site before you decide.
     </p>
   </div>
@@ -332,6 +337,7 @@
   </div>
 </footer>
 
+<script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

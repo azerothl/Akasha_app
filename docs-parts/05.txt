@@ -1,0 +1,35 @@
+book — models</figcaption>
+            </figure>
+            <figure class="screenshot-card" style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <button type="button" class="screenshot-trigger" data-lightbox-src="assets/screenshots/ui-research.png" data-lightbox-alt="Akasha deep research" aria-haspopup="dialog">
+                <img src="assets/screenshots/ui-research.png" alt="Akasha deep research" width="1280" height="720" loading="lazy" class="screenshot-thumb" />
+              </button>
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);" data-i18n="docs.shots.research">Deep research</figcaption>
+            </figure>
+            <figure class="screenshot-card" style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <button type="button" class="screenshot-trigger" data-lightbox-src="assets/screenshots/ui-mission.png" data-lightbox-alt="Akasha mission tab" aria-haspopup="dialog">
+                <img src="assets/screenshots/ui-mission.png" alt="Akasha mission tab" width="1280" height="720" loading="lazy" class="screenshot-thumb" />
+              </button>
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);" data-i18n="docs.shots.mission">Autonomous mission</figcaption>
+            </figure>
+            <figure class="screenshot-card" style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <button type="button" class="screenshot-trigger" data-lightbox-src="assets/screenshots/ui-notes.png" data-lightbox-alt="Akasha notes" aria-haspopup="dialog">
+                <img src="assets/screenshots/ui-notes.png" alt="Akasha notes" width="1280" height="720" loading="lazy" class="screenshot-thumb" />
+              </button>
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);" data-i18n="docs.shots.notes">Notes</figcaption>
+            </figure>
+            <figure class="screenshot-card" style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <button type="button" class="screenshot-trigger" data-lightbox-src="assets/screenshots/ui-docs.png" data-lightbox-alt="Akasha documentation tab" aria-haspopup="dialog">
+                <img src="assets/screenshots/ui-docs.png" alt="Akasha documentation tab" width="1280" height="720" loading="lazy" class="screenshot-thumb" />
+              </button>
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);" data-i18n="docs.shots.docs">Documentation (multi-page)</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="docs-article" id="whats-new">
+          <h2>What's new in v0.10.0</h2>
+          <p>Your assistant can live on the machine — and talk to a small companion on the LAN.</p>
+          <p>Bind the daemon so an ESP32 Companion can find it, pair, and use voice without leaving your network (<code>AKASHA_BIND</code>, <code>/api/companion/*</code>).</p>
+          <p>First use can download and set up a local model: wizard, calibration, then you stay embedded when you want. On mid-size Ollama models, prompts stay compact and context defaults to 8k.</p>
+          <p>Product references: <a href="https://github.com/azerothl/Akasha/pull/122" target="_blank" rel="noopener">#122</a> (Companion), <a href=

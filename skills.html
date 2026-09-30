@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skills Library — Akasha</title>
+  <title data-i18n-title="meta.title.skills">Skills Library — Akasha</title>
   <meta name="description" content="Browse and install skills for Akasha — your privacy-first personal assistant." />
   <meta name="theme-color" content="#8b5cf6" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,42 +21,45 @@
       Akasha
     </a>
     <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="skills.html" class="active">Skills</a>
-      <a href="plugins.html">Plugins</a>
-      <a href="docs.html">Docs</a>
-      <a href="compare.html">Compare</a>
-      <a href="releases.html">Releases</a>
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="skills.html" data-i18n="nav.skills" class="active">Skills</a>
+      <a href="plugins.html" data-i18n="nav.plugins">Plugins</a>
+      <a href="docs.html" data-i18n="nav.docs">Docs</a>
+      <a href="compare.html" data-i18n="nav.compare">Compare</a>
+      <a href="releases.html" data-i18n="nav.releases">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.10.0</span>
-      <a href="releases.html#downloads" class="btn btn-primary btn-sm">
-        ⬇ Download
-      </a>
+      <div class="lang-switcher" role="group" data-i18n-aria="nav.lang" aria-label="Language">
+        <button type="button" class="lang-btn" data-set-lang="fr" aria-pressed="false">FR</button>
+        <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <span class="version-pill" data-i18n-aria="nav.version" aria-label="Current version">v0.10.0</span>
+      <a href="releases.html#downloads" class="btn btn-primary btn-sm"><span data-i18n="nav.download">⬇ Download</span></a>
     </div>
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <button class="hamburger" data-i18n-aria="nav.menu" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 <div class="mobile-menu">
-  <a href="index.html">🏠 Home</a>
-  <a href="skills.html" class="active">🧩 Skills</a>
-  <a href="plugins.html">🔌 Plugins</a>
-  <a href="docs.html">📖 Docs</a>
-  <a href="compare.html">⚖ Compare</a>
-  <a href="releases.html">📋 Releases</a>
-  <a href="releases.html#downloads" class="btn btn-primary">⬇ Download</a>
+  <a href="index.html" data-i18n="nav.mobile.home">🏠 Home</a>
+  <a href="skills.html" data-i18n="nav.mobile.skills" class="active">🧩 Skills</a>
+  <a href="plugins.html" data-i18n="nav.mobile.plugins">🔌 Plugins</a>
+  <a href="docs.html" data-i18n="nav.mobile.docs">📖 Docs</a>
+  <a href="compare.html" data-i18n="nav.mobile.compare">⚖ Compare</a>
+  <a href="releases.html" data-i18n="nav.mobile.releases">📋 Releases</a>
+  <a href="releases.html#downloads" class="btn btn-primary" data-i18n="nav.mobile.download">⬇ Download</a>
 </div>
 
 <!-- ── Page header ── -->
 <div style="padding-top: var(--nav-height); background: var(--bg-secondary); border-bottom: 1px solid var(--border);">
   <div class="container" style="padding-top: 64px; padding-bottom: 64px; text-align: center;">
-    <span class="section-eyebrow animate-fade-up">🧩 Skills Library</span>
-    <h1 class="animate-fade-up delay-1" style="margin-top: 14px; margin-bottom: 14px;">
+    <span class="section-eyebrow animate-fade-up" data-i18n="skills.eyebrow">🧩 Skills Library</span>
+    <h1 class="animate-fade-up delay-1" style="margin-top: 14px; margin-bottom: 14px;" data-i18n-html="skills.title">
       Extend Akasha with <span class="gradient-text">Skills</span>
     </h1>
-    <p style="max-width: 520px; margin: 0 auto; font-size: 1rem;" class="animate-fade-up delay-2">
+    <p style="max-width: 520px; margin: 0 auto; font-size: 1rem;" class="animate-fade-up delay-2" data-i18n="skills.subtitle">
       Browse available and upcoming skills. Ask the agent in chat to install from a URL or add files manually and reload.
     </p>
     <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-muted);" class="animate-fade-up delay-3">
@@ -72,10 +75,10 @@
     <div class="skills-toolbar">
       <div class="search-box">
         <span class="search-icon" aria-hidden="true">🔍</span>
-        <input type="search" id="skill-search" placeholder="Search skills…" autocomplete="off" />
+        <input type="search" id="skill-search" data-i18n-placeholder="skills.search_ph" placeholder="Search skills…" autocomplete="off" />
       </div>
       <div class="filter-btns" role="group" aria-label="Filter by category">
-        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn active" data-filter="all" data-i18n="skills.filter_all">All</button>
         <button class="filter-btn" data-filter="productivity">Productivity</button>
         <button class="filter-btn" data-filter="information">Information</button>
         <button class="filter-btn" data-filter="utility">Utility</button>
@@ -195,6 +198,7 @@
   </div>
 </footer>
 
+<script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

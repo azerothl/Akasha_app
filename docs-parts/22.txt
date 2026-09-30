@@ -1,0 +1,29 @@
+ed by <code>akasha init</code>).</p>
+          <ul>
+            <li><strong>Telegram</strong> — <code>akasha vault set telegram_bot_token YOUR_TOKEN</code>, then <code>AKASHA_TELEGRAM_ENABLED=1</code>. Message the <strong>same bot</strong> as the token (check daemon log line <code>bot_username</code>). In <strong>private</strong>, plain text or <code>/akasha …</code>; in <strong>groups</strong>, <code>/akasha@BotUsername …</code>. Pairing: use <code>/start</code> to request access and obtain a code; admins approve with <code>akasha telegram approve &lt;code&gt;</code>. Admin lifecycle: <code>akasha telegram list|reject|remove|promote|demote|reset</code>. <strong>Chat ID</strong> for notifications: send a message to <a href="https://t.me/userinfobot" rel="noopener">@userinfobot</a>, use the numeric id in <code>AKASHA_TELEGRAM_NOTIFY_CHAT_ID</code>. Only <strong>one</strong> process may poll Telegram per bot token (no second daemon / no webhook elsewhere). Optional startup ping may fail until you have opened the bot chat at least once.</li>
+            <li><strong>Slack</strong> — Vault <code>slack_signing_secret</code>, <code>AKASHA_SLACK_ENABLED=1</code>. Point the Slack slash command to <code>POST /channels/slack/command</code> on your daemon URL.</li>
+            <li><strong>Discord</strong> — <code>akasha vault set discord_bot_token YOUR_TOKEN</code>, then <code>AKASHA_DISCORD_ENABLED=1</code>. Prefix: <code>!akasha &lt;message&gt;</code>.</li>
+            <li><strong>Microsoft Teams</strong> — <code>AKASHA_TEAMS_ENABLED=1</code> when your Teams integration is configured (see vault / deployment docs for your build).</li>
+          </ul>
+        </article>
+
+        <!-- Environment variables -->
+        <article class="docs-article" id="env-vars">
+          <h2>Environment variables</h2>
+          <p>Persist values in <code>data_dir/akasha.env</code> via <code>akasha config env set KEY value</code> (loaded when the daemon starts). Connector flags often live in <code>connectors.env</code> instead.</p>
+
+          <h3>Daemon &amp; UI</h3>
+          <ul>
+            <li><code>AKASHA_PORT</code> — HTTP port (default <strong>3876</strong>).</li>
+            <li><code>AKASHA_DATA_DIR</code> — Config, vault, skills, DB (default <code>%USERPROFILE%\akasha</code> / <code>~/akasha</code>).</li>
+            <li><code>AKASHA_LOG</code> — <code>trace</code> | <code>debug</code> | <code>info</code> | <code>warn</code> | <code>error</code> (default <code>info</code>).</li>
+            <li><code>AKASHA_LANG</code> — TUI language: value starting with <code>en</code> → English; else French. Overrides <code>LANG</code> / <code>LC_ALL</code>.</li>
+            <li><code>AKASHA_APP_BASE_URL</code> — Site root for <code>api/latest.json</code> (update check). Default: this site’s GitHub Pages URL.</li>
+          </ul>
+
+          <h3>LLM &amp; chat behaviour</h3>
+          <ul>
+            <li><code>AKASHA_MAX_RESPONSE_TOKENS</code> — Max tokens per chat completion (default <strong>4096</strong>).</li>
+            <li><code>AKASHA_MAX_CONTEXT_TOKENS</code> — Token budget before short-term history compaction (default <strong>8192</strong>).</li>
+            <li><code>AKASHA_SYSTEM_TASK_MAX_TOKENS</code> — Max tokens for system tasks (summaries, extraction). Default <strong>4096</strong>; raise to <strong>8192</strong> if “thinking” models return empty outputs.</li>
+            <li><code>AKASHA_LLM_TIMEOUT_SECS</code> — Total LLM call timeout (default <strong>30

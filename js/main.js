@@ -497,7 +497,8 @@ function starRating(rating) {
 
 function formatDate(dateStr) {
   const d = new Date(dateStr);
-  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const loc = (window.AkashaI18n && AkashaI18n.lang === 'fr') ? 'fr-FR' : 'en-US';
+  return d.toLocaleDateString(loc, { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
 /** Escape HTML for fallback when markdown libs are unavailable */
@@ -557,17 +558,103 @@ function initCopyToken() {
     if (!btn) return;
     const address = btn.getAttribute('data-address') || '';
     if (!address) return;
+    const labelCopy = () => (window.AkashaI18n ? AkashaI18n.t('footer.copy') : 'Copy');
+    const labelCopied = () => (window.AkashaI18n ? AkashaI18n.t('footer.copied') : 'Copied!');
+    const toastOk = () => (window.AkashaI18n ? AkashaI18n.t('toast.copied') : 'Token address copied to clipboard');
+    const toastFail = () => (window.AkashaI18n ? AkashaI18n.t('toast.copy_fail') : 'Copy failed');
     navigator.clipboard.writeText(address).then(() => {
       btn.classList.add('copied');
-      btn.textContent = 'Copied!';
-      toast('Token address copied to clipboard', 'success', 2000);
+      btn.textContent = labelCopied();
+      toast(toastOk(), 'success', 2000);
       setTimeout(() => {
         btn.classList.remove('copied');
-        btn.textContent = 'Copy';
+        btn.textContent = labelCopy();
       }, 2000);
-    }).catch(() => toast('Copy failed', 'error', 3000));
+    }).catch(() => toast(toastFail(), 'error', 3000));
   });
 }
+
+/* ── Screenshot lightbox ────────────────────────────────────────── */
+const AkashaLightbox = (() => {
+  let overlay = null;
+  let dialog = null;
+  let imgEl = null;
+  let closeBtn = null;
+  let lastFocus = null;
+
+  function ensure() {
+    if (overlay) return;
+    overlay = el('div', 'lightbox-overlay');
+    overlay.setAttribute('hidden', '');
+    overlay.innerHTML = `
+      <div class="lightbox-dialog" role="dialog" aria-modal="true" tabindex="-1">
+        <button type="button" class="lightbox-close" aria-label="Close">×</button>
+        <img alt="" />
+      </div>`;
+    dialog = overlay.querySelector('.lightbox-dialog');
+    imgEl = overlay.querySelector('img');
+    closeBtn = overlay.querySelector('.lightbox-close');
+    document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) close();
+    });
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (!overlay.classList.contains('open')) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        close();
+      }
+    });
+  }
+
+  function open(src, alt) {
+    ensure();
+    lastFocus = document.activeElement;
+    const closeLabel = window.AkashaI18n ? AkashaI18n.t('lightbox.close') : 'Close';
+    const dialogLabel = window.AkashaI18n ? AkashaI18n.t('lightbox.label') : 'Enlarged screenshot';
+    closeBtn.setAttribute('aria-label', closeLabel);
+    dialog.setAttribute('aria-label', dialogLabel);
+    imgEl.src = src;
+    imgEl.alt = alt || '';
+    overlay.removeAttribute('hidden');
+    requestAnimationFrame(() => overlay.classList.add('open'));
+    document.body.classList.add('lightbox-open');
+    closeBtn.focus();
+  }
+
+  function close() {
+    if (!overlay) return;
+    overlay.classList.remove('open');
+    document.body.classList.remove('lightbox-open');
+    const finish = () => {
+      overlay.setAttribute('hidden', '');
+      imgEl.removeAttribute('src');
+      imgEl.alt = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      lastFocus = null;
+    };
+    setTimeout(finish, 200);
+  }
+
+  function init() {
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('.screenshot-trigger');
+      if (!trigger) return;
+      e.preventDefault();
+      const src = trigger.getAttribute('data-lightbox-src')
+        || trigger.querySelector('img')?.getAttribute('src');
+      if (!src) return;
+      const alt = trigger.getAttribute('data-lightbox-alt')
+        || trigger.querySelector('img')?.getAttribute('alt')
+        || '';
+      open(src, alt);
+    });
+  }
+
+  return { init, open, close };
+})();
 
 /* ── Init ───────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -581,4 +668,5 @@ document.addEventListener('DOMContentLoaded', () => {
   loadReleases();
   checkVersion();
   initCopyToken();
+  AkashaLightbox.init();
 });

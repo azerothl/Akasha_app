@@ -1,0 +1,33 @@
+s API -->
+        <article class="docs-article" id="skills-api">
+          <h2>Slash commands (in chat)</h2>
+          <p>In <strong>Chat</strong> (TUI or web), lines starting with <code>/</code> are commands (not sent to the LLM). <strong><code>/help</code></strong> or <strong><code>/?</code></strong> prints the authoritative list for your build. Reference below:</p>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col">Command</th><th scope="col">Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>/help</code>, <code>/?</code></td><td>List all slash commands.</td></tr>
+                <tr><td><code>/task create "message"</code></td><td>Create a task (same as sending that message to the agent).</td></tr>
+                <tr><td><code>/schedule create NAME INTERVAL_SEC "description"</code></td><td>Recurring schedule (interval in seconds).</td></tr>
+                <tr><td><code>/schedule delete SCHEDULE_ID</code></td><td>Remove a schedule.</td></tr>
+                <tr><td><code>/stop TASK_ID</code>, <code>/cancel TASK_ID</code></td><td>Cancel a running or queued task.</td></tr>
+                <tr><td><code>/newsession</code></td><td>New session: clear short-term chat context.</td></tr>
+                <tr><td><code>/status</code></td><td>Daemon status.</td></tr>
+                <tr><td><code>/doctor</code></td><td>Health checks (Ollama, vault, embedded model, etc.).</td></tr>
+                <tr><td><code>/advice</code></td><td>Diagnostic help using RAG + LLM (daemon must be up).</td></tr>
+                <tr><td><code>/embedded</code></td><td>Embedded local model status (loaded or not).</td></tr>
+                <tr><td><code>/embedded reload</code></td><td>Unload embedded weights; next request reloads.</td></tr>
+                <tr><td><code>/metrics</code></td><td>LLM router metrics.</td></tr>
+                <tr><td><code>/models</code></td><td>All models from configured providers.</td></tr>
+                <tr><td><code>/models list</code></td><td>Primary + fallback model per category.</td></tr>
+                <tr><td><code>/models set CATEGORY PROVIDER MODEL</code></td><td>Set category model (e.g. <code>/models set conversation ollama llama3.2</code>); previous primary becomes fallback; saved to <code>llm_router.yaml</code>.</td></tr>
+                <tr><td><code>/routes</code></td><td>Same routing view as <code>/models list</code>.</td></tr>
+                <tr><td><code>/config list</code></td><td>Keys in <code>akasha.env</code>.</td></tr>
+                <tr><td><code>/config get KEY</code></td><td>Show one env value.</td></tr>
+                <tr><td><code>/config set KEY value</code></td><td>Set persistent env (restart may be needed).</td></tr>
+                <tr><td><code>/vault list</code></td><td>Vault key names only (no values).</td></tr>
+                <tr><td><code>/plugins</code></td><td>Installed plugins.</td></tr>
+                <tr><td><code>/reload</code></td><td>Reload plugins without daemon restart.</td></tr>
+                <tr><td><code>/skills</code>, <code>/skills list</code></td><td>Installed skills (name + description).</td></tr>
+                <tr><td><code>/skills reload</code></td><td>Rescan skill folders after add/edit.</td></tr>
+                <tr><td><code>/skills uninstall &lt;name&gt;</code></td><td>Remove a skill b

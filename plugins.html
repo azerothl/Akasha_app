@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plugins — Akasha</title>
+  <title data-i18n-title="meta.title.plugins">Plugins — Akasha</title>
   <meta name="description" content="Browse tool plugins for Akasha — maps, graphs, simulation, and more. Catalog syncs with the Akasha_plugins repository." />
   <meta name="theme-color" content="#8b5cf6" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,45 +21,46 @@
       Akasha
     </a>
     <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="skills.html">Skills</a>
-      <a href="plugins.html" class="active">Plugins</a>
-      <a href="docs.html">Docs</a>
-      <a href="compare.html">Compare</a>
-      <a href="releases.html">Releases</a>
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="skills.html" data-i18n="nav.skills">Skills</a>
+      <a href="plugins.html" data-i18n="nav.plugins" class="active">Plugins</a>
+      <a href="docs.html" data-i18n="nav.docs">Docs</a>
+      <a href="compare.html" data-i18n="nav.compare">Compare</a>
+      <a href="releases.html" data-i18n="nav.releases">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.10.0</span>
-      <a href="releases.html#downloads" class="btn btn-primary btn-sm">
-        ⬇ Download
-      </a>
+      <div class="lang-switcher" role="group" data-i18n-aria="nav.lang" aria-label="Language">
+        <button type="button" class="lang-btn" data-set-lang="fr" aria-pressed="false">FR</button>
+        <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <span class="version-pill" data-i18n-aria="nav.version" aria-label="Current version">v0.10.0</span>
+      <a href="releases.html#downloads" class="btn btn-primary btn-sm"><span data-i18n="nav.download">⬇ Download</span></a>
     </div>
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <button class="hamburger" data-i18n-aria="nav.menu" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 <div class="mobile-menu">
-  <a href="index.html">🏠 Home</a>
-  <a href="skills.html">🧩 Skills</a>
-  <a href="plugins.html" class="active">🔌 Plugins</a>
-  <a href="docs.html">📖 Docs</a>
-  <a href="compare.html">⚖ Compare</a>
-  <a href="releases.html">📋 Releases</a>
-  <a href="releases.html#downloads" class="btn btn-primary">⬇ Download</a>
+  <a href="index.html" data-i18n="nav.mobile.home">🏠 Home</a>
+  <a href="skills.html" data-i18n="nav.mobile.skills">🧩 Skills</a>
+  <a href="plugins.html" data-i18n="nav.mobile.plugins" class="active">🔌 Plugins</a>
+  <a href="docs.html" data-i18n="nav.mobile.docs">📖 Docs</a>
+  <a href="compare.html" data-i18n="nav.mobile.compare">⚖ Compare</a>
+  <a href="releases.html" data-i18n="nav.mobile.releases">📋 Releases</a>
+  <a href="releases.html#downloads" class="btn btn-primary" data-i18n="nav.mobile.download">⬇ Download</a>
 </div>
 
 <!-- ── Page header ── -->
 <div style="padding-top: var(--nav-height); background: var(--bg-secondary); border-bottom: 1px solid var(--border);">
   <div class="container" style="padding-top: 48px; padding-bottom: 48px;">
-    <span class="section-eyebrow animate-fade-up">🔌 Tool plugins</span>
-    <h1 class="animate-fade-up delay-1" style="margin-top: 14px; margin-bottom: 10px;">
+    <span class="section-eyebrow animate-fade-up" data-i18n="plugins.eyebrow">🔌 Tool plugins</span>
+    <h1 class="animate-fade-up delay-1" style="margin-top: 14px; margin-bottom: 10px;" data-i18n-html="plugins.title">
       Akasha <span class="gradient-text">Plugins</span>
     </h1>
-    <p class="animate-fade-up delay-2" style="max-width: 720px;">
-      High-level WASM tool plugins (maps, charts, simulation, …). The list below loads from the
-      <a href="https://github.com/azerothl/Akasha_plugins" target="_blank" rel="noopener">Akasha_plugins</a>
-      repo on every visit — new or updated entries appear automatically after CI rebuilds <code>plugins.json</code> on <code>main</code>.
+    <p class="animate-fade-up delay-2" style="max-width: 720px;" data-i18n="plugins.subtitle">
+      High-level WASM tool plugins (maps, charts, simulation, …). The list loads from the Akasha_plugins repository on every visit.
     </p>
   </div>
 </div>
@@ -147,6 +148,7 @@
   </div>
 </footer>
 
+<script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
 <script src="js/plugins-page.js"></script>
 </body>

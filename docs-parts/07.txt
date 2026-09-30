@@ -1,0 +1,41 @@
+ntegration">
+          <h2>API, observability &amp; plugins</h2>
+          <p>When the daemon is running (default port <strong>3876</strong>), these HTTP surfaces are useful for monitoring, tooling, and automation:</p>
+          <ul>
+            <li><strong>Timeline</strong> — inspect recent events for debugging.</li>
+            <li><strong>Metrics</strong> — operational counters and health-style signals.</li>
+            <li><strong>Agents</strong> — <code>GET /api/agents</code> — loaded agents (exact paths as in your build).</li>
+          </ul>
+          <h3>Plugin HTTP API (overview)</h3>
+          <p>Typical endpoints (v0.7+); mission endpoints (v0.8+):</p>
+          <ul>
+            <li><code>GET /api/plugins</code> — installed plugins, scores, disabled-by-reputation state.</li>
+            <li><code>POST /api/plugins/reload</code> — reload plugin manifests without restarting the daemon.</li>
+            <li><code>POST /api/plugins/reputation/reset</code> — body <code>{"plugin_id":"&lt;id&gt;"}</code> to reset one plugin, or empty body / omit id to reset all.</li>
+            <li><code>GET /api/plugins/routing_rules</code> — optional <code>?message=…</code> — debug dynamic routing rules.</li>
+            <li><code>POST /api/plugins/routing_rules/match</code> — JSON body to test routing match.</li>
+          </ul>
+          <h3>Permission, memory and budget API (v0.8+)</h3>
+          <ul>
+            <li><code>GET/POST /api/permissions/decisions</code> and <code>DELETE /api/permissions/decisions/:id</code> — persist approval rules by tool/scope.</li>
+            <li><code>GET /api/permissions/queue</code>, <code>GET /api/permissions/queue/:id</code>, <code>POST …/approve</code>, <code>POST …/deny</code> — review queue lifecycle (see <a href="#safety-queue">Safety queue</a>).</li>
+            <li><code>GET /api/tasks/:id/report</code> — post-task operator summary.</li>
+            <li><code>GET/POST /api/permissions/mode</code> — global approval mode (<code>ask_me</code> / <code>allow_all</code>).</li>
+            <li><code>GET/POST /api/memory/second-brain/settings</code> — enable/pause memory learning.</li>
+            <li><code>GET /api/memory/second-brain/overview</code>, <code>POST /api/memory/second-brain/clear</code> — inspect and reset memory state.</li>
+            <li><code>GET/POST /api/budget</code>, <code>POST /api/budget/reset-session</code> — manage token budget controls and session usage reset.</li>
+          </ul>
+          <h3>Telegram governance API (v0.8+)</h3>
+          <ul>
+            <li><code>GET /api/channel-access/telegram/users</code> — list approved and pending Telegram users.</li>
+            <li><code>POST /api/channel-access/telegram/request</code> — create pairing request with code.</li>
+            <li><code>POST /api/channel-access/telegram/approve|reject|remove|promote|demote|reset</code> — full access lifecycle.</li>
+          </ul>
+          <h3>Autonomous mission API (v0.8+)</h3>
+          <ul>
+            <li><code>GET</code> / <code>PUT /api/autonomous-mission</code> — read or merge mission state (YAML-backed).</li>
+            <li><code>POST /api/autonomous-mission/pause</code> / <code>POST /api/autonomous-mission/resume</code></li>
+            <li><code>GET /api/autonomous-mission/events</code> — optional query <code>limit</code>, <code>since</code> (RFC3339).</li>
+          </ul>
+          <h3>Project graph API (v0.8+)</h3>
+          <p>Prefix <code>/api/workspace-graph</code> — list/crea

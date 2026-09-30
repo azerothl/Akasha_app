@@ -1,0 +1,35 @@
+ts).</div></div>
+        </article>
+
+        <article class="docs-article" id="hermes-terminal">
+          <h2>Terminal &amp; PTY (operator API)</h2>
+          <p>Beyond one-shot <code>run_command</code>, the daemon exposes <strong>interactive PTY sessions</strong> over HTTP (create, read, write, resize, close). Capabilities: <code>GET /api/terminal/capabilities</code>. CLI: <code>akasha terminal capabilities</code>.</p>
+          <p>Specification: <a href="https://github.com/azerothl/Akasha/blob/main/spec/43_session_terminal.md" target="_blank" rel="noopener"><code>spec/43_session_terminal.md</code></a> · roadmap backends: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/runtime/terminal-backends-roadmap.md" target="_blank" rel="noopener">terminal-backends-roadmap.md</a>.</p>
+        </article>
+
+        <article class="docs-article" id="hermes-webhooks">
+          <h2>Signed webhooks &amp; direct delivery</h2>
+          <p>For <strong>server-to-server</strong> automation without invoking the LLM, the daemon exposes:</p>
+          <ul>
+            <li><code>POST /api/automation/webhook</code> — HMAC-SHA256 body, optional <code>Idempotency-Key</code>, rate limit (see env vars in doc).</li>
+            <li><code>POST /api/automation/webhook/direct</code> — same verification; response body from <code>AKASHA_WEBHOOK_DIRECT_BODY_JSON</code>.</li>
+          </ul>
+          <p>Full operator guide: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/integrations/automation-webhooks.md" target="_blank" rel="noopener">automation-webhooks.md</a>. Optional shared idempotency DB path: <code>AKASHA_WEBHOOK_IDEM_SQLITE</code>. Schedule + gateway shell hooks: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/runtime/gateway-shell-hooks.md" target="_blank" rel="noopener">gateway-shell-hooks.md</a>.</p>
+        </article>
+
+        <article class="docs-article" id="hermes-worktree">
+          <h2>Git worktree (happy path)</h2>
+          <p>Akasha exposes Git worktrees for parallel agent sessions without cloning twice. Typical operator flow:</p>
+          <ol>
+            <li><strong>List</strong> — <code>akasha worktree list</code> shows linked worktrees under your data directory or configured repo.</li>
+            <li><strong>Add</strong> — <code>akasha worktree add &lt;name&gt; [&lt;branch&gt;]</code> creates an isolated checkout for a feature or agent run.</li>
+            <li><strong>Work</strong> — point Code Studio evolutions or chat sessions at the worktree path; keep <code>main</code>/<code>master</code> clean for merges.</li>
+            <li><strong>Doctor</strong> — <code>akasha worktree doctor</code> reports stale paths, missing branches, or dirty state before removal.</li>
+            <li><strong>Remove</strong> — <code>akasha worktree remove &lt;name&gt;</code> after merge or abandon (daemon refuses if worktree is dirty unless forced).</li>
+          </ol>
+          <p>Specification: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/reference-products-parity-matrix.md" target="_blank" rel="noopener">reference-products-parity-matrix.md</a> (Git worktree row). For IDE-style git inside Code Studio projects, use the <strong>Branches</strong> tab on a studio project instead.</p>
+        </article>
+
+        <article class="docs-article" id="hermes-toolsets">
+          <h2>Toolsets &amp; effective tool state</h2>
+          <p>Reference stacks often highlight <strong>toolsets</strong> (prese

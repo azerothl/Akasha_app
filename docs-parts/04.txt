@@ -1,0 +1,30 @@
+til you edit policy.</li>
+            <li><strong>Extensible</strong> — skills, plugins, optional channels.</li>
+            <li><strong>Binary distribution</strong> — official prebuilt releases on this site; engine source is on <a href="https://github.com/azerothl/Akasha" target="_blank" rel="noopener">GitHub</a> under Apache-2.0 (build from source or use these binaries).</li>
+          </ul>
+          <h3 data-i18n="docs.shots.title">Interface screenshots</h3>
+          <p data-i18n-html="docs.shots.intro">Real captures from the web UI (same React bundle as the desktop app), produced by the Akasha Playwright suite. Click any image to enlarge (Esc or overlay to close).</p>
+          <div class="screenshot-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem;">
+            <figure class="screenshot-card" style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <button type="button" class="screenshot-trigger" data-lightbox-src="assets/screenshots/ui-chat.png" data-lightbox-alt="Akasha chat" aria-haspopup="dialog">
+                <img src="assets/screenshots/ui-chat.png" alt="Akasha chat" width="1280" height="720" loading="lazy" class="screenshot-thumb" />
+              </button>
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);" data-i18n="docs.shots.chat">Chat</figcaption>
+            </figure>
+            <figure class="screenshot-card" style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <button type="button" class="screenshot-trigger" data-lightbox-src="assets/screenshots/ui-cookbook-recipes.png" data-lightbox-alt="Akasha Cookbook recipes" aria-haspopup="dialog">
+                <img src="assets/screenshots/ui-cookbook-recipes.png" alt="Akasha Cookbook recipes" width="1280" height="720" loading="lazy" class="screenshot-thumb" />
+              </button>
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);" data-i18n="docs.shots.recipes">Cookbook — recipes</figcaption>
+            </figure>
+            <figure class="screenshot-card" style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <button type="button" class="screenshot-trigger" data-lightbox-src="assets/screenshots/ui-compare.png" data-lightbox-alt="Akasha Compare" aria-haspopup="dialog">
+                <img src="assets/screenshots/ui-compare.png" alt="Akasha Compare" width="1280" height="720" loading="lazy" class="screenshot-thumb" />
+              </button>
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);" data-i18n="docs.shots.compare">Compare models</figcaption>
+            </figure>
+            <figure class="screenshot-card" style="margin: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;">
+              <button type="button" class="screenshot-trigger" data-lightbox-src="assets/screenshots/ui-cookbook-models.png" data-lightbox-alt="Akasha Cookbook models" aria-haspopup="dialog">
+                <img src="assets/screenshots/ui-cookbook-models.png" alt="Akasha Cookbook models" width="1280" height="720" loading="lazy" class="screenshot-thumb" />
+              </button>
+              <figcaption style="padding: 8px 12px; font-size: 0.85rem; color: var(--text-muted);" data-i18n="docs.shots.models">Cook
