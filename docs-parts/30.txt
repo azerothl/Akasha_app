@@ -1,0 +1,75 @@
+e>GET https://azerothl.github.io/Akasha_app/api/latest.json</code></pre>
+          <h3>Response format</h3>
+          <pre><code>{
+  "version": "v0.10.0",
+  "release_date": "2026-09-25",
+  "release_notes_url": "https://azerothl.github.io/Akasha_app/releases.html",
+  "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.10.0",
+  "changelog": "…",
+  "min_supported_version": "0.5.0"
+}</code></pre>
+          <h3>Version comparison</h3>
+          <p>Akasha uses semantic versioning (<a href="https://semver.org" target="_blank" rel="noopener">semver</a>). An update is triggered when <code>version</code> in the response is greater than the installed version.</p>
+          <p>Run <code>akasha update check</code> to see if a newer version is available; the command prints the download link.</p>
+        </article>
+
+        <!-- Contributing -->
+        <article class="docs-article" id="contributing">
+          <h2>Community</h2>
+          <p>This showcase site and its releases are hosted in the <strong>Akasha_app</strong> repository. You can report issues, suggest improvements, or contribute to the site there.</p>
+          <ul>
+            <li><a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">Report an issue</a></li>
+            <li><a href="https://github.com/azerothl/Akasha_app/discussions" target="_blank" rel="noopener">Discussions</a></li>
+          </ul>
+        </article>
+
+      </main>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="nav-logo-icon" aria-hidden="true">✦</div>
+          Akasha
+        </div>
+        <p>A privacy-first personal assistant. Official binaries on this site; engine source on GitHub (Apache-2.0).</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="compare.html">Compare</a></li>
+          <li><a href="skills.html">Skills Library</a></li>
+          <li><a href="plugins.html">Plugins</a></li>
+          <li><a href="releases.html">Releases</a></li>
+          <li><a href="releases.html#downloads">Download</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Docs</h4>
+        <ul>
+          <li><a href="docs.html#getting-started">Getting Started</a></li>
+          <li><a href="compare.html">Compare</a></li>
+          <li><a href="plugins.html">Plugins catalog</a></li>
+          <li><a href="docs.html#skills-api">Skills API</a></li>
+          <li><a href="docs.html#configuration">Configuration</a></li>
+          <li><a href="docs.html#contributing">Contributing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">Report Issue</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/discussions" target="_blank" rel="noopener">Discussions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support development</h4>
+        <p class="footer-contribute">Contributions welcome via the <strong>AKAS</strong> token:</p>
+        <code class="footer-token" id="akas-address" title="Copy
