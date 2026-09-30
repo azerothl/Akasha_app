@@ -1,6 +1,9 @@
 /* Akasha base styles — local @imports only (Pages-safe) */
-@import url('style-base-1.css');
+@import url('style-base-1a.css');
+@import url('style-base-1b.css');
 @import url('style-base-2.css');
-@import url('style-base-3.css');
-@import url('style-base-4.css');
+@import url('style-base-3a.css');
+@import url('style-base-3b.css');
+@import url('style-base-4a.css');
+@import url('style-base-4b.css');
 @import url('style-base-5.css');
