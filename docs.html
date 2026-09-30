@@ -11,7 +11,7 @@
   <p id="docs-boot" style="font-family:system-ui,sans-serif;padding:2rem;color:#a1a1aa">Loading documentation…</p>
   <script>
   (async function () {
-    const n = 15;
+    const n = 31;
     const texts = await Promise.all(
       Array.from({ length: n }, (_, i) =>
         fetch("docs-parts/" + String(i + 1).padStart(2, "0") + ".txt", { cache: "no-cache" })
