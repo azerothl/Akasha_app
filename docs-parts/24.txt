@@ -1,0 +1,35 @@
+og full LLM text at info level.</li>
+            <li><code>AKASHA_TOOLS_JOURNAL_PATH</code> — Append-only log path for file write tool calls.</li>
+            <li><code>AKASHA_PLAYWRIGHT_RUNNER</code> — Path to Playwright runner for browser automation.</li>
+            <li><code>AKASHA_PLAYWRIGHT_AUTO_INSTALL=0</code> — Disable auto <code>npm install</code> / browser download.</li>
+            <li><code>AKASHA_GRAPH_EXPAND=1</code> — Memory graph expansion (when supported).</li>
+            <li><code>AKASHA_VAULT_MASTER_KEY</code> — Master key for file-based vault (if used).</li>
+          </ul>
+          <div class="callout callout-tip">
+            <span class="callout-icon">💡</span>
+            <div class="callout-body"><strong>Windows PowerShell:</strong> <code>$env:AKASHA_TELEGRAM_ENABLED="1"</code> · <strong>CMD:</strong> <code>set AKASHA_TELEGRAM_ENABLED=1</code></div>
+          </div>
+        </article>
+
+        <!-- Troubleshooting -->
+        <article class="docs-article" id="troubleshooting">
+          <h2>Troubleshooting</h2>
+          <ul>
+            <li><strong>Doc tab is empty</strong> — Start the daemon from the folder where you extracted the archive (the one that contains the <code>docs</code> folder).</li>
+            <li><strong>Empty responses with a “thinking” model</strong> — Some cloud models return empty content for system tasks. Increase <code>AKASHA_SYSTEM_TASK_MAX_TOKENS</code> (e.g. <code>akasha config env set AKASHA_SYSTEM_TASK_MAX_TOKENS 8192</code>) and restart the daemon.</li>
+            <li><strong>Daemon won’t start</strong> — Run <code>akasha doctor</code> and <code>akasha doctor --fix</code> to create missing data_dir and config files.</li>
+            <li><strong>No responses or timeouts</strong> — First load of the embedded model can take several minutes (download + CPU). Increase <code>AKASHA_LLM_TIMEOUT_SECS</code> / <code>AKASHA_LLM_FIRST_CHUNK_SECS</code> if needed. Check <code>akasha doctor</code> or <code>/embedded</code>. Point <code>HF_HOME</code> to a disk with enough space for model cache.</li>
+            <li><strong>Ollama / cloud</strong> — Ensure Ollama is running or API keys are in the vault; <code>akasha config models routes</code> and the Router tab show active models.</li>
+            <li><strong>Download link 404 on GitHub</strong> — Binaries are mirrored to <strong>Akasha_app</strong> releases after each upstream release. If a version has notes but no zip files yet, wait for the <code>Update Release Notes</code> workflow to finish or open an <a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">issue</a>.</li>
+          </ul>
+        </article>
+
+        <!-- Skills usage -->
+        <article class="docs-article" id="skills-usage">
+          <h2>Using Skills</h2>
+          <p>Ask the agent in chat to install a skill from a URL, e.g. « Install the calculator skill from https://github.com/azerothl/Akasha_skills/tree/main/skills/calculator ». The agent will download it and reload skills.</p>
+          <p>To allow other hosts (GitLab, custom HTTPS), edit <code>tools_policy.yaml</code> in the data_dir and set <code>allowed_skill_install_hosts</code> (e.g. <code>["*"]</code> for any HTTPS).</p>
+          <p>If you add or change skill files manually in the data_dir, type <code>/skills reload</code> in the chat to reload without restarting the daemon.</p>
+          <div class="callout callout-tip">
+            <span class="callout-icon">💡</span>
+        
