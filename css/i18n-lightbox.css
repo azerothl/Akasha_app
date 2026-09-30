@@ -1,4 +1,4 @@
-/* Language switcher + screenshot lightbox (loaded after base style.css) */
+/* ── Language switcher ──────────────────────────────────────────── */
 .lang-switcher {
   display: inline-flex;
   align-items: center;
@@ -39,6 +39,7 @@
   .lang-btn { padding: 4px 7px; }
 }
 
+/* ── Screenshot zoom / lightbox ─────────────────────────────────── */
 .screenshot-trigger {
   display: block;
   width: 100%;

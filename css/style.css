@@ -1,4 +1,3 @@
-/* Base site CSS from last complete commit on this branch before CSS push issues;
-   i18n/lightbox rules live in css/i18n-lightbox.css (also imported below). */
-@import url('https://raw.githubusercontent.com/azerothl/Akasha_app/90f50cd700397c423963b888a521837873e70c9b/css/style.css');
+/* Akasha site styles */
+@import url('style-base.css');
 @import url('i18n-lightbox.css');
