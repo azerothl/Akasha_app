@@ -1,0 +1,23 @@
+<strong>Calendar</strong>, <strong>Memory</strong>. Use Tab to switch; R to refresh Router, Scheduled, or task list; F2 to cycle themes. <strong>Mission</strong> and full <strong>Settings</strong> are desktop/web only; you can still edit <code>autonomous_mission.yaml</code> or call the HTTP API from the CLI.</p>
+          <p>The <strong>desktop app</strong> (Akasha UI, if installed) connects to the same daemon on port 3876 and adds: <strong>Settings</strong> with <strong>Agent profile</strong> (including <strong>formality</strong> — formal / informal / default), <strong>Data</strong> with <strong>User RAG</strong> and <strong>Project graph</strong> (multiple indexed folders, HTML report per workspace), <strong>Mission</strong> tab for autonomous goals, and <strong>attachments</strong> in Chat (images, PDFs, text). Use keys <strong>1–9</strong> to switch tabs when focus is not in an input field (<strong>Mission</strong> = <strong>8</strong>, <strong>Settings</strong> = <strong>9</strong>).</p>
+        </article>
+
+        <!-- Tools policy -->
+        <article class="docs-article" id="tools-policy">
+          <h2>Tools policy (<code>tools_policy.yaml</code>)</h2>
+          <p><strong>Location:</strong> <code>data_dir/tools_policy.yaml</code>. <strong>Semantics:</strong> if the file is missing or empty, tool access is <strong>deny-by-default</strong> (paths and commands blocked until you allow them). <code>akasha doctor --fix</code> creates a starter file.</p>
+
+          <h3>All keys (reference)</h3>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col">Key</th><th scope="col">Type</th><th scope="col">Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>allowed_read_paths</code></td><td>string[]</td><td>Path prefixes allowed for <code>read_file</code>, search, etc. Use <code>"."</code> for daemon CWD or absolute paths. Empty = no reads.</td></tr>
+                <tr><td><code>allowed_write_paths</code></td><td>string[]</td><td>Path prefixes allowed for writes. Empty = no writes.</td></tr>
+                <tr><td><code>allowed_commands</code></td><td>string[]</td><td>Executable names allowed for <code>run_command</code>. Use <code>["*"]</code> to allow all, combined with <code>blocked_commands</code> for safety.</td></tr>
+                <tr><td><code>blocked_commands</code></td><td>string[]</td><td>Deny list; wins over <code>allowed_commands</code> (e.g. block <code>rm</code> when using <code>["*"]</code>).</td></tr>
+                <tr><td><code>command_timeout_secs</code></td><td>integer</td><td>Timeout in seconds for each command (e.g. <code>60</code>).</td></tr>
+                <tr><td><code>run_command_default_cwd_workspace</code></td><td>bool</td><td>If true, <code>run_command</code> uses the task workspace as cwd when no <code>--cwd</code> is set.</td></tr>
+                <tr><td><code>allowed_web_domains</code></td><td>string[]</td><td>Domains allowed for <code>web_fetch</code>. <code>["*"]</code> allows any (minus blocked).</td></tr>
+                <tr><td><code>blocked_web_domains</code></td><td>string[]</td><td>Blocked domains for <code>web_fetch</code>; takes precedence.</td></tr>
+                <tr><td><code>web_search_enabled</code></td><td>bool</td><td>Enable Brave Search (<code>web_search</code>). Requires vault <code>brave_api_key</code> or <code
