@@ -3,37 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Official documentation for Akasha — your privacy-first personal assistant." />
   <title>Documentation — Akasha</title>
-  <script>
-  (async function () {
-    function b64ToBytes(b64) {
-      const bin = atob(b64);
-      const bytes = new Uint8Array(bin.length);
-      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-      return bytes;
-    }
-    const n = 5;
-    const parts = await Promise.all(
-      Array.from({ length: n }, (_, idx) =>
-        fetch("docs.gz.p" + (idx + 1) + ".txt", { cache: "no-cache" }).then((r) => {
-          if (!r.ok) throw new Error("Failed to load docs.gz.p" + (idx + 1) + ".txt");
-          return r.text();
-        })
-      )
-    );
-    const bytes = b64ToBytes(parts.join("").trim());
-    const ds = new DecompressionStream("gzip");
-    const stream = new Blob([bytes]).stream().pipeThrough(ds);
-    const html = await new Response(stream).text();
-    document.open();
-    document.write(html);
-    document.close();
-  })().catch(function (err) {
-    document.body.textContent = "Failed to load documentation: " + err;
-  });
-  </script>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <p>Loading documentation…</p>
+  <p id="docs-boot" style="font-family:system-ui,sans-serif;padding:2rem;color:#a1a1aa">Loading documentation…</p>
+  <script>
+  (async function () {
+    const n = 5;
+    const texts = await Promise.all(
+      Array.from({ length: n }, (_, i) =>
+        fetch("docs-parts/" + String(i + 1).padStart(2, "0") + ".txt", { cache: "no-cache" })
+          .then((r) => { if (!r.ok) throw new Error("part " + (i + 1)); return r.text(); })
+      )
+    );
+    document.open();
+    document.write(texts.join(""));
+    document.close();
+  })().catch((err) => {
+    const el = document.getElementById("docs-boot");
+    if (el) el.textContent = "Failed to load documentation: " + err;
+  });
+  </script>
+  <noscript>
+    <p style="padding:2rem;font-family:system-ui">JavaScript is required to load the documentation page. Enable JS or open the Akasha repository docs.</p>
+  </noscript>
 </body>
 </html>
