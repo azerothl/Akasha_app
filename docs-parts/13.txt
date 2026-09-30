@@ -1,1 +1,36 @@
-$file:/workspace/Akasha_app/docs-parts/13.txt
+sha.env</code> — Persistent env vars (also editable via <code>akasha config env set</code>).</li>
+            <li><code>connectors.env</code> — Telegram, Slack, Discord activation (see <a href="#channels">Channels</a>).</li>
+            <li><code>agent_profile.json</code> — Agent profile: name, role, personality, rules, optional <strong>formality</strong> (formal / informal). Editable in Settings → Agent profile (web UI) or by editing the file and restarting the daemon.</li>
+            <li><code>autonomous_mission.yaml</code> — Optional <strong>autonomous mission</strong> (objective, heartbeat, report directory). Editable in the Mission tab or via <code>/api/autonomous-mission</code>.</li>
+            <li><code>voice_router.yaml</code> — Optional TTS/STT URLs (voice button in the web UI when STT is configured).</li>
+          </ul>
+          <h3>LLM router &amp; orchestrator</h3>
+          <p>In <code>llm_router.yaml</code>, <strong>task types</strong> map categories to provider/model. See <a href="#llm-router-yaml">LLM router (YAML)</a> for every key and examples. <strong>v0.7.0+</strong>: optional <code>task_types.orchestrator</code> — when present, the orchestrator uses it for decomposition instead of <code>system</code>.</p>
+          <h3>Quick YAML / env examples</h3>
+          <p><strong><code>akasha.env</code></strong> (one variable per line; loaded when the daemon starts):</p>
+          <pre><code>AKASHA_PORT=3876
+AKASHA_LOG=info
+AKASHA_MAX_RESPONSE_TOKENS=4096</code></pre>
+          <p><strong><code>connectors.env</code></strong> — optional flags for bots (same line format; often created by <code>akasha init</code>):</p>
+          <pre><code>AKASHA_TELEGRAM_ENABLED=1
+AKASHA_SLACK_ENABLED=1
+AKASHA_DISCORD_ENABLED=1
+AKASHA_TELEGRAM_NOTIFY_CHAT_ID=123456789</code></pre>
+          <p>Tokens themselves stay in the <a href="#vault-cli">vault</a>, not in these files. More keys: <a href="#env-vars">Environment variables</a> and <a href="#env-examples">Env files (.env)</a>.</p>
+          <p><code>akasha init</code> or <code>akasha doctor --fix</code> creates the data_dir and minimal config files if missing.</p>
+        </article>
+
+        <!-- LLM router YAML reference -->
+        <article class="docs-article" id="llm-router-yaml">
+          <h2>LLM router (<code>llm_router.yaml</code>)</h2>
+          <p><strong>Location:</strong> <code>data_dir/llm_router.yaml</code> (or project root if missing from data_dir). <strong>Used by:</strong> daemon, <code>akasha config models …</code>. API keys can be <code>vault://key_name</code> or standard env vars (e.g. <code>OPENAI_API_KEY</code>).</p>
+
+          <div class="callout callout-tip" style="margin: 1.25rem 0;">
+            <span class="callout-icon">📌</span>
+            <div class="callout-body">
+              <strong><code>task_types</code></strong> is the main knob: each entry is <code>task_types.&lt;name&gt;: { primary, fallback, constraints? }</code>. The router picks a <strong>task type name</strong> from classification, system prompts, orchestration, or tool context, then loads the matching route. Define a <strong>primary</strong> (<code>provider</code> + <code>model</code>) and optional <strong>fallback</strong> chain for every behaviour you care about.
+            </div>
+          </div>
+
+          <h3><code>task_types</code> — keys you can use</h3>
+          <p>YAML accepts any string as a key; the table below lists the <strong>names the engine actually resolves</strong>. If a name
