@@ -1,4 +1,21 @@
-/* Base styles from last good commit; i18n/lightbox in companion sheet.
-   Inline merge of style.css is preferred for a follow-up; this restores the site. */
-@import url('https://raw.githubusercontent.com/azerothl/Akasha_app/90f50cd700397c423963b888a521837873e70c9b/css/style.css');
+/* ================================================================
+   Akasha – Global Stylesheet
+   Modern dark theme with purple / cyan accent palette
+   ================================================================ */
+
+@import url('akasha-design-system.css');
 @import url('i18n-lightbox.css');
+
+/* ── Custom properties (marketing-specific) ─────────────────────── */
+:root {
+  --border-hover: rgba(139,92,246,.6);
+  --gradient: linear-gradient(135deg, var(--purple), var(--cyan));
+  --gradient-text: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
+  --shadow: none;
+  --shadow-lg: none;
+  --shadow-glow: none;
+  --transition: .2s ease;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --nav-height: 70px;
+}
