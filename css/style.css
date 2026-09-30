@@ -1,1 +1,4 @@
-file:///workspace/Akasha_app/css/style.css
+/* Base styles from last good commit; i18n/lightbox in companion sheet.
+   Inline merge of style.css is preferred for a follow-up; this restores the site. */
+@import url('https://raw.githubusercontent.com/azerothl/Akasha_app/90f50cd700397c423963b888a521837873e70c9b/css/style.css');
+@import url('i18n-lightbox.css');
