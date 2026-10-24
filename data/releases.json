@@ -1,5 +1,15 @@
 [
   {
+    "version": "v0.12.1",
+    "date": "2026-10-24",
+    "type": "patch",
+    "title": "v0.12.1",
+    "description": "<!-- Release notes generated using configuration in .github/release.yml at v0.12.1 -->\n\n## What's Changed\n### Other\n* fix(release): restore Linux WebKit subprocess permissions by @azerothl in https://github.com/azerothl/Akasha/pull/261\n* fix(release): verify Linux desktop rendering in smoke test by @azerothl in https://github.com/azerothl/Akasha/pull/262\n* fix(release): repair Linux UI smoke quoting by @azerothl in https://github.com/azerothl/Akasha/pull/264\n* build(tauri): upgrade CLI for actionable DMG errors by @azerothl in https://github.com/azerothl/Akasha/pull/265\n* Add Akasha application module hub by @azerothl in https://github.com/azerothl/Akasha/pull/267\n* Fix Ollama context discovery and chunk oversized sources by @azerothl in https://github.com/azerothl/Akasha/pull/268\n* Fix stale human-input dialogs and silent reply failures by @azerothl in https://github.com/azerothl/Akasha/pull/269\n* feat(update): mises à jour Windows sélectives avec confirmation by @azerothl in https://github.com/azerothl/Akasha/pull/266\n* Add strict free-model routing with automatic catalog refresh by @azerothl in https://github.com/azerothl/Akasha/pull/270\n* chore(release): prepare Akasha v0.12.1 by @azerothl in https://github.com/azerothl/Akasha/pull/271\n\n\n**Full Changelog**: https://github.com/azerothl/Akasha/compare/v0.12.0...v0.12.1",
+    "changes": [],
+    "download_url": "https://github.com/azerothl/Akasha_app/releases/tag/v0.12.1",
+    "assets": []
+  },
+  {
     "version": "v0.12.0",
     "date": "2026-10-23",
     "type": "minor",
