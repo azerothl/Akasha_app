@@ -1,0 +1,67 @@
+name: Installer bootstrap smoke test
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/get-akasha*'
+      - 'data/releases.json'
+      - '.github/workflows/installer-smoke.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the Unix installer with a local archive
+        shell: bash
+        run: |
+          bash -n scripts/get-akasha.sh
+          fixture=$(mktemp -d)
+          export fixture
+          mkdir -p "$fixture/bin" "$fixture/package/scripts"
+          touch "$fixture/package/akasha"
+          cat > "$fixture/package/scripts/setup.sh" <<'SETUP'
+          #!/usr/bin/env bash
+          test "$1" = --auto-start
+          touch "$fixture/setup-ran"
+          SETUP
+          (cd "$fixture/package" && zip -qr "$fixture/installer.zip" .)
+          cat > "$fixture/bin/curl" <<'CURL'
+          #!/usr/bin/env bash
+          set -e
+          test "$2" = -o
+          case "$4" in
+            */akasha-full-linux-x86_64.zip) ;;
+            *) exit 1 ;;
+          esac
+          cp "$fixture/installer.zip" "$3"
+          touch "$fixture/downloaded"
+          CURL
+          cat > "$fixture/bin/uname" <<'UNAME'
+          #!/usr/bin/env bash
+          case "$1" in
+            -s) echo Linux ;;
+            -m) echo "$TEST_ARCH" ;;
+            *) exit 1 ;;
+          esac
+          UNAME
+          chmod +x "$fixture/bin/"*
+          export PATH="$fixture/bin:$PATH"
+          export HOME="$fixture"
+          export TEST_ARCH=x86_64
+          cat scripts/get-akasha.sh | bash | tee "$fixture/install.log"
+          test -f "$fixture/setup-ran"
+          grep -F 'Installation complete.' "$fixture/install.log"
+          rm "$fixture/downloaded"
+          export TEST_ARCH=aarch64
+          if cat scripts/get-akasha.sh | bash > "$fixture/unsupported.log" 2>&1; then
+            echo 'The unsupported architecture unexpectedly succeeded' >&2
+            exit 1
+          fi
+          grep -F 'No prebuilt Akasha package is available for Linux aarch64' "$fixture/unsupported.log"
+          test ! -e "$fixture/downloaded"
+      - name: Check the release index
+        run: jq -e '([.[].version] | index("v0.1.0") != null) and ([.[].version] | all(. != "1.0.0" and . != "v1.0.0"))' data/releases.json
