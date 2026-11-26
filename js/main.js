@@ -338,6 +338,11 @@ function initDocs() {
   const articles = $$('.docs-article');
   if (!links.length) return;
 
+  window.addEventListener('hashchange', () => {
+    const id = window.location.hash.slice(1);
+    if (articles.some(article => article.id === id)) showArticle(id);
+  });
+
   function showArticle(id) {
     articles.forEach(a => a.classList.toggle('active', a.id === id));
     links.forEach(l => l.classList.toggle('active', l.dataset.target === id));
