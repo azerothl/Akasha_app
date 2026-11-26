@@ -185,7 +185,7 @@
         <article class="docs-article" id="whats-new">
           <h2>What's new in v0.10.0</h2>
           <p>Your assistant can live on the machine — and talk to a small companion on the LAN.</p>
-          <p>Bind the daemon so an ESP32 Companion can find it, pair, and use voice without leaving your network (<code>AKASHA_BIND</code>, <code>/api/companion/*</code>).</p>
+          <p>For ESP32 pairing and local voice, follow the <a href="#companion">Companion network and firmware setup</a>.</p>
           <p>First use can download and set up a local model: wizard, calibration, then you stay embedded when you want. On mid-size Ollama models, prompts stay compact and context defaults to 8k.</p>
           <p>Product references: <a href="https://github.com/azerothl/Akasha/pull/122" target="_blank" rel="noopener">#122</a> (Companion), <a href="https://github.com/azerothl/Akasha/pull/123" target="_blank" rel="noopener">#123</a> (Ollama), <a href="https://github.com/azerothl/Akasha/pull/125" target="_blank" rel="noopener">#125</a> (v0.10.0 merge).</p>
           <h3>First-use embedded</h3>
@@ -269,7 +269,7 @@
           </ul>
           <h3>Project graph API (v0.8+)</h3>
           <p>Prefix <code>/api/workspace-graph</code> — list/create/delete workspaces, rebuild, export JSON, Markdown report, HTML view. See the engine docs for paths.</p>
-          <p>These listen on <code>127.0.0.1</code> by default — not exposed to the internet unless you deliberately reverse-proxy. For day-to-day use, the TUI <strong>Router</strong> tab and <code>akasha router metrics</code> cover most needs; use <a href="plugins.html">Plugins</a> to browse the public catalog.</p>
+          <p>These listen on <code>127.0.0.1</code> by default. Changing the daemon bind address exposes its HTTP API on the chosen interface. For day-to-day use, the TUI <strong>Router</strong> tab and <code>akasha router metrics</code> cover most needs; use <a href="plugins.html">Plugins</a> to browse the public catalog.</p>
           <div class="callout callout-tip">
             <span class="callout-icon">💡</span>
             <div class="callout-body">Authentication and exact OpenAPI docs may vary by build; treat this section as a capability overview. If you need a formal API spec for integration, request it via <a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">GitHub Issues</a>.</div>
@@ -879,6 +879,9 @@ browser_allowed_domains: ["*"]</code></pre>
           <h3>Daemon &amp; UI</h3>
           <ul>
             <li><code>AKASHA_PORT</code> — HTTP port (default <strong>3876</strong>).</li>
+            <li><code>AKASHA_BIND</code> — daemon listen address (default <code>127.0.0.1</code>).</li>
+            <li><code>AKASHA_API_TOKEN</code> — bearer token for the daemon API when authentication is configured.</li>
+            <li><code>AKASHA_COMPANION_PAIR_SECRET</code> — separate secret for device pairing.</li>
             <li><code>AKASHA_DATA_DIR</code> — Config, vault, skills, DB (default <code>%USERPROFILE%\akasha</code> / <code>~/akasha</code>).</li>
             <li><code>AKASHA_LOG</code> — <code>trace</code> | <code>debug</code> | <code>info</code> | <code>warn</code> | <code>error</code> (default <code>info</code>).</li>
             <li><code>AKASHA_LANG</code> — TUI language: value starting with <code>en</code> → English; else French. Overrides <code>LANG</code> / <code>LC_ALL</code>.</li>
