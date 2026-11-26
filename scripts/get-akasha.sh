@@ -22,8 +22,11 @@ case "$(uname -m)" in
     *)      echo "Unsupported arch: $(uname -m)" >&2; exit 1 ;;
 esac
 
-# macOS aarch64 is the only aarch64 we build
 if [[ "$OS" == "linux" ]]; then
+    if [[ "$ARCH" != "x86_64" ]]; then
+        echo "No prebuilt Akasha package is available for Linux $ARCH." >&2
+        exit 1
+    fi
     SUFFIX="linux-x86_64"
 elif [[ "$OS" == "macos" && "$ARCH" == "aarch64" ]]; then
     SUFFIX="macos-aarch64"
@@ -38,12 +41,20 @@ trap 'rm -rf "$TMPDIR"' EXIT
 echo "=== Akasha installation (one-liner) ==="
 echo "This script will download Akasha from ${REPO} and run the installer."
 echo "URL: $ZIP_URL"
-read -r -p "Continue? [Y/n] " r
-[[ "$r" =~ ^[nN] ]] && { echo "Aborted."; exit 0; }
+# stdin may be the installer source when Bash is reading from a pipe.
+if { : </dev/tty; } 2>/dev/null; then
+    exec 3</dev/tty
+    if ! read -r -p "Continue? [Y/n] " r <&3 || [[ "$r" =~ ^[nN] ]]; then
+        echo "Aborted."
+        exit 0
+    fi
+else
+    exec 3</dev/null
+fi
 
 echo "Downloading..."
 if command -v curl &>/dev/null; then
-    curl -sSL -o "$TMPDIR/akasha-full.zip" "$ZIP_URL"
+    curl -fsSL -o "$TMPDIR/akasha-full.zip" "$ZIP_URL"
 else
     wget -q -O "$TMPDIR/akasha-full.zip" "$ZIP_URL"
 fi
@@ -70,7 +81,7 @@ if [[ -f "$EXTRACTED_ROOT/scripts/install.sh" ]]; then
 fi
 
 echo "Running installer..."
-(cd "$EXTRACTED_ROOT" && ./scripts/setup.sh --auto-start)
+(cd "$EXTRACTED_ROOT" && ./scripts/setup.sh --auto-start <&3)
 
 AKASHA_CMD=""
 for d in /usr/local/bin "$HOME/.local/bin"; do
@@ -80,9 +91,10 @@ for d in /usr/local/bin "$HOME/.local/bin"; do
         break
     fi
 done
-read -r -p "Lancer l'assistant de configuration maintenant ? [Y/n] " r
-if [[ "$r" != "n" && "$r" != "N" && -n "$AKASHA_CMD" ]]; then
-    "$AKASHA_CMD" init || true
+if [[ -n "$AKASHA_CMD" ]] &&
+    read -r -p "Lancer l'assistant de configuration maintenant ? [Y/n] " r <&3 &&
+    [[ ! "$r" =~ ^[nN] ]]; then
+    "$AKASHA_CMD" init <&3 || true
     echo "You can also run: akasha tui   (terminal UI)"
 fi
 
