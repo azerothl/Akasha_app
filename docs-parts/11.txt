@@ -1,0 +1,48 @@
+ng> — no decision in the allowed window.</li>
+          </ul>
+          <h3>HTTP API</h3>
+          <ul>
+            <li><code>GET /api/permissions/queue</code> — optional <code>status</code>, <code>limit</code>, <code>cursor</code></li>
+            <li><code>GET /api/permissions/queue/:id</code></li>
+            <li><code>POST /api/permissions/queue/:id/approve</code>, <code>POST /api/permissions/queue/:id/deny</code>, <code>POST /api/permissions/queue/:id/expire</code> — optional body <code>{ "note": "..." }</code></li>
+            <li><code>GET /api/tasks/:id/report</code> — compact post-task operator summary (<code>done</code>, <code>needs_review</code>, <code>failed</code>, <code>next_steps</code>).</li>
+          </ul>
+          <h3>CLI</h3>
+          <pre><code>akasha permissions queue list [--status pending]
+akasha permissions queue approve &lt;id&gt; [--note "..."]
+akasha permissions queue deny &lt;id&gt; [--note "..."]</code></pre>
+          <h3>UI surfaces</h3>
+          <ul>
+            <li><strong>Desktop (Tauri)</strong> — <code>PermissionsBell</code> in the header; permission center for pending items.</li>
+            <li><strong>Code Studio</strong> — operator cockpit sections for task runs, swarm workers, and permission context.</li>
+            <li><strong>TUI</strong> — permission review integrated with task workflows.</li>
+          </ul>
+          <h3>Report schema</h3>
+          <p>Reports are generated on task completion, long autonomous cycles, and Code Studio run completion. Minimum fields: <code>done[]</code>, <code>needs_review[]</code>, <code>failed[]</code>, <code>next_steps[]</code>.</p>
+          <p>This complements existing decision endpoints (<code>/api/permissions/decisions</code>) for persistent allow/deny rules and supports governance in Code Studio, the desktop permission center, and mission workflows.</p>
+        </article>
+
+        <article class="docs-article" id="steering-follow-up">
+          <h2>Steering &amp; follow-up during long tasks</h2>
+          <p>While a task runs tools or orchestration, you can queue user messages instead of starting a conflicting root task. Two delivery modes mirror Pi-style <em>steer</em> vs <em>follow-up</em>.</p>
+          <h3>Delivery modes</h3>
+          <ul>
+            <li><strong>steering</strong> — inject after the current LLM turn (priority mid-task guidance).</li>
+            <li><strong>follow_up</strong> — run after the current work unit completes.</li>
+          </ul>
+          <p>Set <code>message_delivery_mode</code> on <code>POST /api/message</code> (or use the client selector in Tauri / Code Studio).</p>
+          <h3>Task message queue API</h3>
+          <ul>
+            <li><code>GET /api/tasks/:id/queue</code> — snapshot <code>steering[]</code> and <code>follow_up[]</code></li>
+            <li><code>DELETE /api/tasks/:id/queue</code> — flush both queues</li>
+          </ul>
+          <h3>CLI</h3>
+          <pre><code>akasha task queue list &lt;task_id&gt;
+akasha task queue clear &lt;task_id&gt;</code></pre>
+          <h3>Events (SSE)</h3>
+          <p><code>user_steering_queued</code>, <code>user_follow_up_queued</code>, <code>user_steering_applied</code>, <code>user_follow_up_applied</code> — see daemon event stream on <code>GET /api/events</code>.</p>
+        </article>
+
+        <article class="docs-article" id="code-studio">
+          <h2>Code Studio &amp; swarm MVP</h2>
+          <p><strong>Install (v0.10+):</strong> <code>npx akasha-code-stu

@@ -5,7 +5,13 @@ Le fichier [docs.html](../docs.html) est une **page HTML statique** (anglais) su
 ## Politique de contenu
 
 - **Akasha (dépôt moteur)** : guides utilisateur en **français** par défaut pour l’in-app Doc et la plupart des specs ; audit technique dans `spec/51_doc_vs_code_audit.md`.
-- **Akasha_app (ce dépôt)** : pages marketing et **docs.html** en **anglais** pour le site public. Les faits techniques (CLI, ports, onglets TUI) doivent rester alignés sur le code et sur `user_guide_final.md`, pas l’inverse.
+- **Akasha_app (ce dépôt)** : pages marketing et **docs.html** en **anglais** pour le site public (contenu technique). Le chrome du site (nav, hero, en-têtes, légendes de captures) est bilingue **FR/EN** via `js/i18n.js` (`?lang=` + `localStorage`). Les articles techniques détaillés de `docs.html` restent en anglais tant qu’ils ne sont pas traduits. Les faits techniques (CLI, ports, onglets TUI) doivent rester alignés sur le code et sur `user_guide_final.md`, pas l’inverse.
+
+## Captures d’écran
+
+- Source canonique : `Akasha/docs/screenshots/ui-*.png` (Playwright E2E).
+- Miroir site : `assets/screenshots/` (voir `assets/screenshots/README.md`).
+- UX : clic / clavier sur `.screenshot-trigger` ouvre une lightbox (Échap ou clic overlay pour fermer).
 
 ## Checklist lors d’une release produit (ou mise à jour majeure de docs.html)
 

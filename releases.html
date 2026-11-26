@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Release Notes — Akasha</title>
+  <title data-i18n-title="meta.title.releases">Release Notes — Akasha</title>
   <meta name="description" content="Full release history and changelogs for Akasha — your privacy-first personal assistant." />
   <meta name="theme-color" content="#8b5cf6" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,42 +21,45 @@
       Akasha
     </a>
     <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="skills.html">Skills</a>
-      <a href="plugins.html">Plugins</a>
-      <a href="docs.html">Docs</a>
-      <a href="compare.html">Compare</a>
-      <a href="releases.html" class="active">Releases</a>
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="skills.html" data-i18n="nav.skills">Skills</a>
+      <a href="plugins.html" data-i18n="nav.plugins">Plugins</a>
+      <a href="docs.html" data-i18n="nav.docs">Docs</a>
+      <a href="compare.html" data-i18n="nav.compare">Compare</a>
+      <a href="releases.html" data-i18n="nav.releases" class="active">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.10.0</span>
-      <a href="releases.html#downloads" class="btn btn-primary btn-sm">
-        ⬇ Download
-      </a>
+      <div class="lang-switcher" role="group" data-i18n-aria="nav.lang" aria-label="Language">
+        <button type="button" class="lang-btn" data-set-lang="fr" aria-pressed="false">FR</button>
+        <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <span class="version-pill" data-i18n-aria="nav.version" aria-label="Current version">v0.10.0</span>
+      <a href="releases.html#downloads" class="btn btn-primary btn-sm"><span data-i18n="nav.download">⬇ Download</span></a>
     </div>
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <button class="hamburger" data-i18n-aria="nav.menu" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 <div class="mobile-menu">
-  <a href="index.html">🏠 Home</a>
-  <a href="skills.html">🧩 Skills</a>
-  <a href="plugins.html">🔌 Plugins</a>
-  <a href="docs.html">📖 Docs</a>
-  <a href="compare.html">⚖ Compare</a>
-  <a href="releases.html" class="active">📋 Releases</a>
-  <a href="releases.html#downloads" class="btn btn-primary">⬇ Download</a>
+  <a href="index.html" data-i18n="nav.mobile.home">🏠 Home</a>
+  <a href="skills.html" data-i18n="nav.mobile.skills">🧩 Skills</a>
+  <a href="plugins.html" data-i18n="nav.mobile.plugins">🔌 Plugins</a>
+  <a href="docs.html" data-i18n="nav.mobile.docs">📖 Docs</a>
+  <a href="compare.html" data-i18n="nav.mobile.compare">⚖ Compare</a>
+  <a href="releases.html" data-i18n="nav.mobile.releases" class="active">📋 Releases</a>
+  <a href="releases.html#downloads" class="btn btn-primary" data-i18n="nav.mobile.download">⬇ Download</a>
 </div>
 
 <!-- ── Page header ── -->
 <div style="padding-top: var(--nav-height); background: var(--bg-secondary); border-bottom: 1px solid var(--border);">
   <div class="container" style="padding-top: 48px; padding-bottom: 48px;">
-    <span class="section-eyebrow animate-fade-up">📋 Release Notes</span>
-    <h1 class="animate-fade-up delay-1" style="margin-top: 14px; margin-bottom: 10px;">
+    <span class="section-eyebrow animate-fade-up" data-i18n="releases.eyebrow">📋 Release Notes</span>
+    <h1 class="animate-fade-up delay-1" style="margin-top: 14px; margin-bottom: 10px;" data-i18n-html="releases.title">
       What's <span class="gradient-text">New</span>
     </h1>
-    <p class="animate-fade-up delay-2">Full changelog and release history for every version of Akasha.</p>
+    <p class="animate-fade-up delay-2" data-i18n="releases.subtitle">Full changelog and release history for every version of Akasha.</p>
   </div>
 </div>
 
@@ -68,7 +71,7 @@
       <!-- Sidebar version nav -->
       <aside aria-label="Version navigation">
         <div class="docs-nav-section">
-          <div class="docs-nav-title">Versions</div>
+          <div class="docs-nav-title" data-i18n="releases.versions">Versions</div>
           <div id="releases-sidebar">
             <!-- Populated by JS -->
             <div class="skeleton" style="height:32px;margin-bottom:8px;border-radius:var(--radius-sm)"></div>
@@ -175,6 +178,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js" crossorigin="anonymous"></script>
+<script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

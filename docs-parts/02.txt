@@ -1,0 +1,32 @@
+ocumentation navigation">
+        <div class="docs-nav-section">
+          <div class="docs-nav-title" data-i18n="docs.nav.getting_started">Getting Started</div>
+          <a href="#getting-started" class="docs-nav-link" data-target="getting-started" data-i18n="docs.nav.introduction">Introduction</a>
+          <a href="#whats-new" class="docs-nav-link" data-target="whats-new" data-i18n="docs.nav.whats_new">What's new (v0.11.0)</a>
+          <a href="#api-integration" class="docs-nav-link" data-target="api-integration" data-i18n="docs.nav.api">API &amp; plugins</a>
+          <a href="#installation" class="docs-nav-link" data-target="installation" data-i18n="docs.nav.installation">Installation</a>
+          <a href="#first-run" class="docs-nav-link" data-target="first-run" data-i18n="docs.nav.first_run">First Run</a>
+        </div>
+        <div class="docs-nav-section">
+          <div class="docs-nav-title" data-i18n="docs.nav.using">Using Akasha</div>
+          <a href="#commands" class="docs-nav-link" data-target="commands" data-i18n="docs.nav.commands">Commands</a>
+          <a href="#safety-queue" class="docs-nav-link" data-target="safety-queue" data-i18n="docs.nav.safety">Safety queue &amp; reports</a>
+          <a href="#steering-follow-up" class="docs-nav-link" data-target="steering-follow-up" data-i18n="docs.nav.steering">Steering &amp; follow-up</a>
+          <a href="#code-studio" class="docs-nav-link" data-target="code-studio" data-i18n="docs.nav.code_studio">Code Studio &amp; swarm</a>
+          <a href="#companion" class="docs-nav-link" data-target="companion" data-i18n="docs.nav.companion">Companion (ESP32)</a>
+          <a href="#configuration" class="docs-nav-link" data-target="configuration" data-i18n="docs.nav.configuration">Configuration</a>
+          <a href="#llm-router-yaml" class="docs-nav-link" data-target="llm-router-yaml" data-i18n="docs.nav.llm_router">LLM router (YAML)</a>
+          <a href="#tools-policy" class="docs-nav-link" data-target="tools-policy" data-i18n="docs.nav.tools_policy">Tools policy (YAML)</a>
+          <a href="#vault-cli" class="docs-nav-link" data-target="vault-cli" data-i18n="docs.nav.vault">Vault CLI</a>
+          <a href="#env-examples" class="docs-nav-link" data-target="env-examples" data-i18n="docs.nav.env_examples">Env files (.env)</a>
+          <a href="#docker-services" class="docs-nav-link" data-target="docker-services" data-i18n="docs.nav.docker">Docker services</a>
+          <a href="#themes" class="docs-nav-link" data-target="themes" data-i18n="docs.nav.themes">Interfaces</a>
+          <a href="#channels" class="docs-nav-link" data-target="channels" data-i18n="docs.nav.channels">Channels</a>
+          <a href="#env-vars" class="docs-nav-link" data-target="env-vars" data-i18n="docs.nav.env_vars">Environment variables</a>
+          <a href="#troubleshooting" class="docs-nav-link" data-target="troubleshooting" data-i18n="docs.nav.troubleshooting">Troubleshooting</a>
+        </div>
+        <div class="docs-nav-section">
+          <div class="docs-nav-title" data-i18n="docs.nav.skills">Skills</div>
+          <a href="#skills-usage" class="docs-nav-link" data-target="skills-usage" data-i18n="docs.nav.skills_usage">Using Skills</a>
+          <a href="#skills-format" class="docs-nav-link" data-target="skills-format" data-i18n="docs.nav.skills_format">Creating your own skill</a>
+          <a href="#skills-api" class="docs-nav-link" data-target="skills-api" data-i18n="docs.nav.skills_api"

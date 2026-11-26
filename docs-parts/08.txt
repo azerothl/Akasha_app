@@ -1,0 +1,28 @@
+te/delete workspaces, rebuild, export JSON, Markdown report, HTML view. See the engine docs for paths.</p>
+          <p>These listen on <code>127.0.0.1</code> by default — not exposed to the internet unless you deliberately reverse-proxy. For day-to-day use, the TUI <strong>Router</strong> tab and <code>akasha router metrics</code> cover most needs; use <a href="plugins.html">Plugins</a> to browse the public catalog.</p>
+          <div class="callout callout-tip">
+            <span class="callout-icon">💡</span>
+            <div class="callout-body">Authentication and exact OpenAPI docs may vary by build; treat this section as a capability overview. If you need a formal API spec for integration, request it via <a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">GitHub Issues</a>.</div>
+          </div>
+        </article>
+
+        <!-- Installation -->
+        <article class="docs-article" id="installation">
+          <h2>Installation</h2>
+          <h3>Requirements</h3>
+          <ul>
+            <li>OS: Windows 10+, macOS 11+, or Ubuntu 20.04+</li>
+            <li><strong>Embedded model by default</strong> — no external installation required for core use. Ollama and cloud providers (OpenRouter, OpenAI) are optional; configure them during <code>akasha init</code> if you want to use them.</li>
+          </ul>
+          <h3>One-line install</h3>
+          <p>Paste one of these commands in your terminal to download, install, and configure Akasha (daemon auto-start and optional config wizard).</p>
+          <p><strong>Windows</strong> (PowerShell):</p>
+          <pre><code>powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/azerothl/Akasha_app/main/scripts/get-akasha.ps1 | iex"</code></pre>
+          <p><strong>Linux / macOS</strong>:</p>
+          <pre><code>curl -sSL https://raw.githubusercontent.com/azerothl/Akasha_app/main/scripts/get-akasha.sh | bash</code></pre>
+          <h3>Download (manual)</h3>
+          <p>Go to the <a href="releases.html">Releases</a> page on this site or <a href="https://github.com/azerothl/Akasha_app/releases" target="_blank" rel="noopener">GitHub Releases (Akasha_app)</a> — <strong>binaries are published here</strong> (public mirror). For a complete install, download <strong>akasha-full-&lt;os&gt;</strong> (CLI + daemon + TUI + desktop bundle + scripts). Extract to e.g. <code>C:\Akasha</code> or <code>~/Akasha</code>.</p>
+          <p><strong>Windows:</strong> double-click <code>INSTALL.cmd</code> at the root of the extracted folder to run the installer (no PowerShell execution policy prompt), or run <code>.\scripts\setup.ps1</code>. <strong>Linux / macOS:</strong> run <code>chmod +x scripts/setup.sh &amp;&amp; ./scripts/setup.sh</code>.</p>
+          <p>You get the <code>akasha</code> (or <code>akasha.exe</code>), <code>akasha-daemon</code>, <code>akasha-tui</code> executables, a <code>docs</code> folder with the user guide, and in the full zip a <code>ui</code> subfolder with the desktop app installer.</p>
+          <h3 id="installation-cuda">Windows with NVIDIA GPU (CUDA build)</h3>
+          <p>For fast local inference on an <strong>NVIDIA GPU</strong>, download <strong>akasha-windows-x86_64-cuda.zip</strong> (CLI) or <strong>akasha-full-windows-x86_64-cuda.zip</strong> (CLI + desktop UI + scripts) from <a href="releases.html#downloads">Releases</a>. Requires recent NVIDIA drivers (<code>nvcuda.dll</code>); the archive includes CUDA runtime DLLs —

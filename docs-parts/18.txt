@@ -1,0 +1,49 @@
+</code>, <code>discord_bot_token</code>.</li>
+          </ul>
+          <p>In <code>llm_router.yaml</code>, reference a vault key as <code>api_key_ref: "vault://openai_api_key"</code>. Environment variables such as <code>OPENAI_API_KEY</code> still work if you do not use the vault.</p>
+        </article>
+
+        <!-- Env files detail -->
+        <article class="docs-article" id="env-examples">
+          <h2>Env files (<code>akasha.env</code> &amp; <code>connectors.env</code>)</h2>
+          <p>Both are plain text: <code>KEY=value</code> per line (spaces around <code>=</code> are tolerated). The daemon loads them when it starts.</p>
+
+          <h3><code>data_dir/akasha.env</code></h3>
+          <p>General daemon and behaviour flags. Edit with <code>akasha config env list</code>, <code>akasha config env get KEY</code>, <code>akasha config env set KEY value</code>, or manually. Examples:</p>
+          <pre><code>AKASHA_PORT=3876
+AKASHA_LOG=info
+AKASHA_DATA_DIR=C:\Users\You\akasha
+AKASHA_MAX_RESPONSE_TOKENS=4096
+AKASHA_SYSTEM_TASK_MAX_TOKENS=8192
+AKASHA_LLM_TIMEOUT_SECS=600
+AKASHA_DEGRADED_MODE=1
+AKASHA_CLUSTER_ENABLED=1
+AKASHA_NODE_ID=my-node
+AKASHA_EMBEDDED_MODEL=qwen3_0_6b
+AKASHA_SPEC_DIR=C:\path\to\spec</code></pre>
+          <p>See <a href="#env-vars">Environment variables</a> for the full list of supported keys.</p>
+
+          <h3><code>data_dir/connectors.env</code></h3>
+          <p>Typically used for <strong>channel toggles</strong> so Telegram/Slack/Discord can be enabled without mixing them into every <code>akasha.env</code> deploy. Pair with vault secrets:</p>
+          <pre><code>AKASHA_TELEGRAM_ENABLED=1
+AKASHA_TELEGRAM_NOTIFY_CHAT_ID=123456789
+AKASHA_SLACK_ENABLED=1
+AKASHA_DISCORD_ENABLED=1</code></pre>
+          <p>After changing env files, restart the daemon (<code>akasha stop</code> &amp;&amp; <code>akasha start</code>).</p>
+        </article>
+
+        <!-- Docker optional services -->
+        <article class="docs-article" id="docker-services">
+          <h2>Optional services (Docker)</h2>
+          <p>Akasha can drive <strong>Ollama</strong>, <strong>BitNet</strong> (OpenAI-compatible local server), and <strong>voice</strong> (TTS + STT) via Docker Compose profiles shipped in the <strong>akasha-models</strong> layout (same tree as the engine’s <code>akasha-models/docker-compose.yml</code>). The CLI updates <code>llm_router.yaml</code> and <code>voice_router.yaml</code> in your data directory to point at <code>localhost</code> after install.</p>
+
+          <h3>Requirements</h3>
+          <ul>
+            <li><strong>Docker Engine</strong> with <strong>Docker Compose V2</strong> (<code>docker compose</code> subcommand).</li>
+            <li>Enough <strong>disk space</strong> for images and model weights (Ollama pulls; BitNet needs a GGUF in a volume; voice images build Python stacks).</li>
+            <li><strong>RAM / GPU</strong> — Ollama and BitNet benefit from GPU on Linux (optional <code>deploy.resources</code> in compose for NVIDIA); CPU-only works but is slower.</li>
+            <li>A directory containing <code>docker-compose.yml</code> — set <code>AKASHA_MODELS_DIR</code> to that path, or pass <code>--compose-dir</code> to every <code>akasha services</code> command.</li>
+          </ul>
+
+          <h3>If <code>docker-compose.yml</code> is missing</h3>
+          <p>If the file was deleted or your install did not ship the <strong>akasha-models</strong> tree, download the same Compose file from this site and save it a

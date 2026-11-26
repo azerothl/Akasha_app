@@ -1,0 +1,49 @@
+dio@0.10.0</code> — serves the cockpit on <code>http://127.0.0.1:5178</code> and proxies <code>/api</code> to the daemon (default port <strong>3876</strong>). Override with <code>VITE_DAEMON_URL</code> or <code>AKASHA_STUDIO_PORT</code>.</p>
+          <p>Source repository: <a href="https://github.com/azerothl/akasha-code-studio">akasha-code-studio</a>. Swarm mode adds a coordinator plus bounded workers.</p>
+          <h3>Roles</h3>
+          <ul>
+            <li><code>studio_project_manager</code> — coordinator only; assigns subtasks.</li>
+            <li><code>studio_worker_*</code> — bounded parallel workers by specialization.</li>
+          </ul>
+          <h3>Worker states</h3>
+          <p><code>spawned</code> → <code>ready</code> → <code>running</code> → <code>blocked</code> | <code>completed</code> | <code>failed</code> | <code>stopped</code></p>
+          <h3>Events</h3>
+          <p>Structured events on <code>GET /api/tasks/:id/events</code>: <code>studio_worker_state_changed</code>, <code>studio_subtask_assigned</code>, <code>studio_subtask_completed</code>, <code>studio_subtask_failed</code>, <code>studio_conflict_notice</code>.</p>
+          <h3>Limits</h3>
+          <p>Respect <code>AKASHA_STUDIO_MAX_PARALLEL_OPS</code>; swarm is opt-in via task context. All writes stay inside the project disk root.</p>
+        </article>
+
+        <article class="docs-article" id="companion">
+          <h2>Companion (ESP32)</h2>
+          <p>
+            <strong>Akasha Companion</strong> is a voice-first Freenove FNK0104B thin client: avatar on the TFT, MEMS mic → daemon STT, reply → TTS on the speaker.
+            Text and image are secondary surfaces. Conversational STT/TTS stay on the daemon (<code>/api/voice/*</code>).
+          </p>
+          <ul>
+            <li>Daemon must listen on the LAN: <code>AKASHA_BIND=0.0.0.0</code>.</li>
+            <li>Configure STT/TTS in <code>voice_router.yaml</code>.</li>
+            <li>Optional pairing / snapshot / hands-free VAD via <code>/api/companion/*</code>.</li>
+          </ul>
+          <p>
+            Full guide (flash, secrets, gestures, VAD):
+            <a href="https://github.com/azerothl/Akasha_companion/blob/main/docs/user/getting-started.md" target="_blank" rel="noopener">Getting started</a>
+            ·
+            <a href="https://github.com/azerothl/Akasha_companion" target="_blank" rel="noopener">Akasha_companion repo</a>
+          </p>
+          <div class="callout callout-tip">
+            <span class="callout-icon">💡</span>
+            <div class="callout-body">
+              Supported product SKU is <strong>FNK0104B</strong>. Flash with the repo scripts: <code>scripts/flash.ps1</code> / <code>scripts/flash.sh</code>.
+            </div>
+          </div>
+        </article>
+
+        <!-- Configuration -->
+        <article class="docs-article" id="configuration">
+          <h2>Configuration</h2>
+          <p>All config files live in the <strong>data directory</strong>. Run <code>akasha paths</code> to see its path (e.g. <code>C:\Users\…\akasha</code> on Windows, <code>~/akasha</code> on Linux/macOS).</p>
+          <h3>Main files</h3>
+          <ul>
+            <li><code>llm_router.yaml</code> — LLM providers (Ollama, OpenAI, OpenRouter, embedded) and models per task type.</li>
+            <li><code>tools_policy.yaml</code> — Tool permissions: file paths, allowed commands, web search, skill-install hosts (see <a href="#tools-policy">Tools policy</a>).</li>
+            <li><code>aka

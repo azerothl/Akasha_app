@@ -1,0 +1,34 @@
+    <div class="callout-body">Browse the <a href="skills.html">Skills Library</a> for install URLs and descriptions.</div>
+          </div>
+        </article>
+
+        <!-- Skill format (creating your own) -->
+        <article class="docs-article" id="skills-format">
+          <h2>Creating your own skill</h2>
+          <p>If you want to create a skill for your own use (e.g. hosted elsewhere or only in your data_dir), the daemon only needs a valid <strong>SKILL.md</strong>. The format below is what Akasha expects so the agent can discover and use your skill.</p>
+          <h3>Required file: SKILL.md</h3>
+          <ul>
+            <li><strong>Filename:</strong> <code>SKILL.md</code> (uppercase).</li>
+            <li><strong>Frontmatter (YAML between <code>---</code>):</strong> Required: <code>name</code> (identifier, e.g. <code>my-skill</code>), <code>description</code> (short text: when the agent should use this skill; used for routing). Optional: <code>license</code>, <code>compatibility</code>, <code>metadata</code> (e.g. <code>version: "1.0"</code>).</li>
+            <li><strong>Body:</strong> Markdown with instructions for the agent (when to use the skill, which tools to call, guidelines, examples). See the <a href="https://agentskills.io/specification" target="_blank" rel="noopener">Agent Skills specification</a>.</li>
+          </ul>
+          <h3>skill.json (for the gallery / catalog)</h3>
+          <p>If you publish the skill in the <a href="skills.html">Skills Library</a> or another tool that reads the catalog, add a <code>skill.json</code> with: <code>id</code>, <code>name</code>, <code>version</code>, <code>description</code>, <code>author</code>, <code>category</code>, <code>tags</code>, <code>icon</code> (e.g. <a href="https://lucide.dev" target="_blank" rel="noopener">Lucide</a> name), <code>featured</code>, <code>install_url</code>, <code>install_command</code>, and optional trust metadata (<code>trust_level</code>, <code>compat_status</code>).</p>
+          <p>For a <strong>user-only</strong> skill (files in <code>data_dir/skills/</code> or install via URL without listing in the gallery), <strong>only SKILL.md is required</strong>; the daemon does not need <code>skill.json</code>.</p>
+          <h3>Optional directory structure</h3>
+          <p><code>references/</code> (extra docs), <code>scripts/</code>, <code>assets/</code> — see <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noopener">What are skills?</a>. When installing from GitHub, the daemon can fetch the repo tree; for other hosts, only the file at the install URL (usually <code>SKILL.md</code>) is downloaded.</p>
+          <h3>Installing your skill</h3>
+          <p><strong>Via agent:</strong> Ask in chat, e.g. “Install the skill from https://…” The URL must point to a raw <code>SKILL.md</code> or a path where <code>SKILL.md</code> is available.</p>
+          <p><strong>Manual:</strong> Copy your skill folder into <code>data_dir/skills/&lt;name&gt;/</code>, then type <code>/skills reload</code> in chat. For non-GitHub hosts, set <code>allowed_skill_install_hosts</code> in <code>tools_policy.yaml</code> (see <a href="#configuration">Configuration</a>).</p>
+          <h3>Minimal SKILL.md example</h3>
+          <pre><code>---
+name: my-skill
+description: Use when the user wants to do X. Do Y and Z.
+---
+
+# My Skill
+
+When the user asks for X, use the tools A and B. Return the result in format …</code></pre>
+        </article>
+
+        <!-- Skill

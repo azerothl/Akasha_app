@@ -1,0 +1,42 @@
+s <code>docker-compose.yml</code> in an empty folder, then point <code>AKASHA_MODELS_DIR</code> (or <code>--compose-dir</code>) at that folder:</p>
+          <ul>
+            <li><a href="https://raw.githubusercontent.com/azerothl/Akasha_app/main/scripts/akasha-models-docker-compose.yml" target="_blank" rel="noopener">Download <code>akasha-models-docker-compose.yml</code> (raw)</a> — right-click → Save as… → rename to <code>docker-compose.yml</code> if needed.</li>
+            <li><strong>Ollama profile only</strong> (<code>--profile ollama</code>): this file is enough; the image is pulled from Docker Hub.</li>
+            <li><strong>Voice or BitNet</strong>: the compose file references <code>./tts</code>, <code>./stt</code>, and <code>./bitnet</code> build contexts. You need the full <strong>akasha-models</strong> directory from your engine bundle / release (or equivalent) beside the compose file, or those profiles will fail to build.</li>
+          </ul>
+
+          <h3>Services and ports</h3>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col">Profile</th><th scope="col">Containers</th><th scope="col">Ports (host)</th><th scope="col">Akasha config</th></tr></thead>
+              <tbody>
+                <tr><td><code>ollama</code></td><td>Ollama LLM</td><td><code>11434</code></td><td><code>providers.ollama.base_url</code> → <code>http://localhost:11434</code></td></tr>
+                <tr><td><code>bitnet</code></td><td>BitNet server</td><td><code>8080</code></td><td><code>providers.bitnet.base_url</code> → <code>http://localhost:8080</code> (populate <code>/models</code> volume with a GGUF)</td></tr>
+                <tr><td><code>voice</code></td><td>TTS + STT</td><td><code>8765</code> (TTS), <code>8766</code> (STT)</td><td><code>voice_router.yaml</code>: <code>tts.base_url</code>, <code>stt.base_url</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>CLI workflow</h3>
+          <pre><code># Set once: folder that contains docker-compose.yml (akasha-models checkout or copy)
+set AKASHA_MODELS_DIR=C:\path\to\akasha-models
+# Linux/macOS: export AKASHA_MODELS_DIR=~/src/akasha-models
+
+akasha services install --ollama
+akasha services install --voice
+akasha services install --bitnet
+akasha services install --all
+# Or: akasha services install --voice --compose-dir C:\path\to\akasha-models
+
+akasha services status
+akasha services stop
+
+# Restart Akasha so it reloads YAML
+akasha stop &amp;&amp; akasha start</code></pre>
+          <p>Manual Compose (without the CLI): from that directory, <code>docker compose --profile ollama up -d</code>, <code>--profile voice up -d</code>, <code>--profile bitnet up -d</code>, or combine profiles. See the engine’s <code>akasha-models/README.md</code> for BitNet model download and TTS/STT environment variables (<code>TTS_VOICE</code>, <code>WHISPER_MODEL</code>, etc.).</p>
+        </article>
+
+        <!-- Themes -->
+        <article class="docs-article" id="themes">
+          <h2>Interfaces</h2>
+          <p>The <strong>TUI</strong> (<code>akasha tui</code>) has <strong>7 tabs</strong>: <strong>Chat</strong>, <strong>Scheduled</strong> (planned returns — agent responses for recurring/scheduled tasks, separate from the main chat), <strong>Router</strong> (LLM metrics), <strong>Doc</strong> (user guide), <strong>Tasks</strong>, 

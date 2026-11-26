@@ -1,0 +1,48 @@
+0</strong>). First load of the embedded model can be slow—increase if needed.</li>
+            <li><code>AKASHA_LLM_STREAM_IDLE_SECS</code> — Max gap between stream chunks (default <strong>60</strong>).</li>
+            <li><code>AKASHA_LLM_FIRST_CHUNK_SECS</code> — Max wait for the <em>first</em> chunk (embedded model load); defaults to <code>min(300, AKASHA_LLM_TIMEOUT_SECS)</code>.</li>
+            <li><code>AKASHA_MAX_TOOL_ROUNDS</code> — Agent tool loop iterations per reply (default <strong>10</strong>).</li>
+            <li><code>AKASHA_EMBEDDED_MODEL</code> — Embedded backend id (e.g. <code>qwen3_0_6b</code>; build-dependent).</li>
+            <li><code>OLLAMA_HOST</code> — Ollama base URL (default <code>http://localhost:11434</code>) if not in <code>llm_router.yaml</code>.</li>
+          </ul>
+
+          <h3>Orchestration &amp; session limits</h3>
+          <ul>
+            <li><code>AKASHA_MAX_CONCURRENT_DELEGATIONS</code> — Parallel sub-tasks (default <strong>15</strong>).</li>
+            <li><code>AKASHA_MAX_PARALLEL_SUBTASKS</code> — Parallel LLM subtask workers (default <strong>4</strong>).</li>
+            <li><code>AKASHA_MAX_COST_PER_SESSION_USD</code> — Stop chat session when estimated LLM cost exceeds this (optional).</li>
+            <li><code>AKASHA_MAX_TOKENS_PER_SESSION</code> — Stop session when token usage exceeds this (optional).</li>
+            <li><code>AKASHA_DEGRADED_MODE=1</code> — Router uses only local providers (e.g. Ollama + embedded).</li>
+          </ul>
+
+          <h3>Channels (also <code>connectors.env</code>)</h3>
+          <ul>
+            <li><code>AKASHA_TELEGRAM_ENABLED=1</code>, <code>AKASHA_SLACK_ENABLED=1</code>, <code>AKASHA_DISCORD_ENABLED=1</code>, <code>AKASHA_TEAMS_ENABLED=1</code></li>
+            <li><code>AKASHA_TELEGRAM_NOTIFY_CHAT_ID</code> — Chat id for startup notification.</li>
+          </ul>
+
+          <h3>Cluster (advanced)</h3>
+          <ul>
+            <li><code>AKASHA_CLUSTER_ENABLED=1</code> — Multi-node mode (NATS, leader election).</li>
+            <li><code>AKASHA_NODE_ID</code> — Node id (defaults to hostname).</li>
+            <li><code>AKASHA_NATS_TLS_CA</code>, <code>AKASHA_NATS_CLIENT_CERT</code>, <code>AKASHA_NATS_CLIENT_KEY</code> — mTLS paths for NATS.</li>
+          </ul>
+
+          <h3>Services &amp; models on disk</h3>
+          <ul>
+            <li><code>AKASHA_MODELS_DIR</code> — Directory containing <code>docker-compose.yml</code> for <code>akasha services install</code> (Ollama, voice, BitNet).</li>
+            <li><code>HF_HOME</code> — Hugging Face cache for embedded weights (default user cache). Point into data_dir to keep everything in one place.</li>
+          </ul>
+
+          <h3>API keys &amp; integrations (common)</h3>
+          <ul>
+            <li><code>BRAVE_API_KEY</code> or vault <code>brave_api_key</code> — Web search (with <code>web_search_enabled</code> in tools policy).</li>
+            <li><code>OPENAI_API_KEY</code>, <code>OPENROUTER_API_KEY</code> — Cloud LLM (also storable in vault).</li>
+            <li><code>OPENROUTER_SITE_URL</code>, <code>OPENROUTER_APP_TITLE</code> — OpenRouter dashboard metadata.</li>
+            <li><code>AKASHA_MESSAGE_WEBHOOK_URL</code> — Outbound webhook for the <code>message</code> tool.</li>
+          </ul>
+
+          <h3>Debug &amp; power users</h3>
+          <ul>
+            <li><code>AKASHA_AGENT_DEBUG=1</code> — Verbose agent logging.</li>
+            <li><code>AKASHA_LOG_LLM_RESPONSE=1</code> — L

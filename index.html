@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Akasha — Your Privacy-First Personal Assistant</title>
+  <title data-i18n-title="meta.title.home">Akasha — Your Privacy-First Personal Assistant</title>
   <meta name="description" content="Akasha — local-first AI assistant: daemon 24/7, embedded model by default, skills, policy-controlled tools, TUI & desktop." />
   <meta name="theme-color" content="#8b5cf6" />
   <meta property="og:title" content="Akasha — Privacy-First Personal Assistant" />
@@ -24,32 +24,35 @@
       Akasha
     </a>
     <div class="nav-links">
-      <a href="index.html" class="active">Home</a>
-      <a href="skills.html">Skills</a>
-      <a href="plugins.html">Plugins</a>
-      <a href="docs.html">Docs</a>
-      <a href="compare.html">Compare</a>
-      <a href="releases.html">Releases</a>
+      <a href="index.html" data-i18n="nav.home" class="active">Home</a>
+      <a href="skills.html" data-i18n="nav.skills">Skills</a>
+      <a href="plugins.html" data-i18n="nav.plugins">Plugins</a>
+      <a href="docs.html" data-i18n="nav.docs">Docs</a>
+      <a href="compare.html" data-i18n="nav.compare">Compare</a>
+      <a href="releases.html" data-i18n="nav.releases">Releases</a>
     </div>
     <div class="nav-actions">
-      <span class="version-pill" aria-label="Current version">v0.10.0</span>
-      <a href="releases.html#downloads" class="btn btn-primary btn-sm">
-        ⬇ Download
-      </a>
+      <div class="lang-switcher" role="group" data-i18n-aria="nav.lang" aria-label="Language">
+        <button type="button" class="lang-btn" data-set-lang="fr" aria-pressed="false">FR</button>
+        <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <span class="version-pill" data-i18n-aria="nav.version" aria-label="Current version">v0.10.0</span>
+      <a href="releases.html#downloads" class="btn btn-primary btn-sm"><span data-i18n="nav.download">⬇ Download</span></a>
     </div>
-    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <button class="hamburger" data-i18n-aria="nav.menu" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 <div class="mobile-menu">
-  <a href="index.html">🏠 Home</a>
-  <a href="skills.html">🧩 Skills</a>
-  <a href="plugins.html">🔌 Plugins</a>
-  <a href="docs.html">📖 Docs</a>
-  <a href="compare.html">⚖ Compare</a>
-  <a href="releases.html">📋 Releases</a>
-  <a href="releases.html#downloads" class="btn btn-primary">⬇ Download</a>
+  <a href="index.html" data-i18n="nav.mobile.home">🏠 Home</a>
+  <a href="skills.html" data-i18n="nav.mobile.skills">🧩 Skills</a>
+  <a href="plugins.html" data-i18n="nav.mobile.plugins">🔌 Plugins</a>
+  <a href="docs.html" data-i18n="nav.mobile.docs">📖 Docs</a>
+  <a href="compare.html" data-i18n="nav.mobile.compare">⚖ Compare</a>
+  <a href="releases.html" data-i18n="nav.mobile.releases">📋 Releases</a>
+  <a href="releases.html#downloads" class="btn btn-primary" data-i18n="nav.mobile.download">⬇ Download</a>
 </div>
 
 <!-- ── Hero ── -->
@@ -59,37 +62,37 @@
     <div class="hero-grid">
       <!-- Left column -->
       <div>
-        <div class="hero-eyebrow animate-fade-up">
+        <div class="hero-eyebrow animate-fade-up" data-i18n-html="home.eyebrow">
           <span>✦</span> Local-first · Daemon 24/7
         </div>
-        <h1 class="hero-title animate-fade-up delay-1">
+        <h1 class="hero-title animate-fade-up delay-1" data-i18n-html="home.title">
           Meet <span class="gradient-text">Akasha</span><br />
           Your AI<br />Assistant Stack
         </h1>
-        <p class="hero-desc animate-fade-up delay-2">
+        <p class="hero-desc animate-fade-up delay-2" data-i18n-html="home.desc">
           A <strong>daemon-backed</strong> assistant with TUI, desktop app, and optional chat channels.
           <strong>Embedded model</strong> works out of the box — add <strong>Ollama</strong> or <strong>cloud APIs</strong> when you want heavier models. Data stays on your machine; <strong>tools are deny-by-default</strong> until you allow paths in policy.
         </p>
         <div class="hero-actions animate-fade-up delay-3">
-          <a href="releases.html#downloads" class="btn btn-primary btn-lg">
+          <a href="releases.html#downloads" class="btn btn-primary btn-lg" data-i18n="home.cta.download">
             ⬇ Download Free
           </a>
-          <a href="docs.html" class="btn btn-outline btn-lg">
+          <a href="docs.html" class="btn btn-outline btn-lg" data-i18n="home.cta.docs">
             📖 Read Docs
           </a>
         </div>
         <div class="hero-stats animate-fade-up delay-4">
           <div class="stat-item">
-            <div class="stat-value">Tools +</div>
-            <div class="stat-label">Skills installable</div>
+            <div class="stat-value" data-i18n="home.stat.tools">Tools +</div>
+            <div class="stat-label" data-i18n="home.stat.tools_label">Skills installable</div>
           </div>
           <div class="stat-item">
             <div class="stat-value"><span data-count="100">100</span>%</div>
-            <div class="stat-label">Local by default</div>
+            <div class="stat-label" data-i18n="home.stat.local_label">Local by default</div>
           </div>
           <div class="stat-item">
-            <div class="stat-value">24/7</div>
-            <div class="stat-label">Daemon &amp; auto-restart</div>
+            <div class="stat-value" data-i18n="home.stat.daemon">24/7</div>
+            <div class="stat-label" data-i18n-html="home.stat.daemon_label">Daemon &amp; auto-restart</div>
           </div>
         </div>
       </div>
@@ -114,8 +117,8 @@
 <section class="section" id="features">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-eyebrow">✦ Core Features</span>
-      <h2 class="section-title">Everything you need, <span class="gradient-text">nothing you don't</span></h2>
+      <span class="section-eyebrow" data-i18n="home.features.eyebrow">✦ Core Features</span>
+      <h2 class="section-title" data-i18n-html="home.features.title">Everything you need, <span class="gradient-text">nothing you don't</span></h2>
       <p class="section-desc"><strong>v0.10.0</strong> — your assistant on the machine, and a small companion on the LAN: bind the daemon (<code>AKASHA_BIND</code>, <code>/api/companion/*</code>) so an ESP32 can discover, pair, and use voice locally. <strong>First-use embedded</strong>: wizard download + multi-model picker, <strong>full CUDA zip</strong>, <strong>service discovery</strong> (Ollama, Home Assistant), HA connector + plugin; mid-size Ollama keeps prompts compact with 8k context. <code>npx akasha-code-studio@0.10.0</code>. <a href="docs.html#whats-new">What's new</a></p>
     </div>
     <div class="features-grid">
@@ -188,18 +191,23 @@
 <section class="section" id="product-screenshots">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-eyebrow">✦ Interface</span>
-      <h2 class="section-title">Desktop <span class="gradient-text">UI</span></h2>
-      <p class="section-desc">Web UI (same bundle as the Tauri app): chat and in-app documentation when <code>akasha start</code> is running.</p>
+      <span class="section-eyebrow" data-i18n="home.shots.eyebrow">✦ Interface</span>
+      <h2 class="section-title" data-i18n-html="home.shots.title">Desktop <span class="gradient-text">UI</span></h2>
+      <p class="section-desc" data-i18n-html="home.shots.desc">Web UI (same bundle as the Tauri app): chat and in-app documentation when <code>akasha start</code> is running.</p>
+      <p class="section-desc" style="margin-top: 0.5rem; font-size: 0.9rem;" data-i18n="home.shots.hint">Click a screenshot to enlarge</p>
     </div>
-    <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-      <figure class="card reveal" style="padding: 0; overflow: hidden; margin: 0;">
-        <img src="assets/screenshots/ui-chat.png" alt="Akasha chat interface" width="960" height="540" loading="lazy" style="width:100%; height:auto; display:block;" />
-        <figcaption style="padding: 12px 16px; font-size: 0.9rem; color: var(--text-muted);">Chat</figcaption>
+    <div class="features-grid screenshot-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+      <figure class="card reveal screenshot-card" style="padding: 0; overflow: hidden; margin: 0;">
+        <button type="button" class="screenshot-trigger" data-lightbox-src="assets/screenshots/ui-chat.png" data-lightbox-alt="Akasha chat interface" aria-haspopup="dialog">
+          <img src="assets/screenshots/ui-chat.png" alt="Akasha chat interface" width="1280" height="720" loading="lazy" class="screenshot-thumb" />
+        </button>
+        <figcaption style="padding: 12px 16px; font-size: 0.9rem; color: var(--text-muted);" data-i18n="home.shots.chat">Chat</figcaption>
       </figure>
-      <figure class="card reveal" style="padding: 0; overflow: hidden; margin: 0;">
-        <img src="assets/screenshots/ui-docs.png" alt="Akasha documentation tab" width="960" height="540" loading="lazy" style="width:100%; height:auto; display:block;" />
-        <figcaption style="padding: 12px 16px; font-size: 0.9rem; color: var(--text-muted);">Documentation tab</figcaption>
+      <figure class="card reveal screenshot-card" style="padding: 0; overflow: hidden; margin: 0;">
+        <button type="button" class="screenshot-trigger" data-lightbox-src="assets/screenshots/ui-docs.png" data-lightbox-alt="Akasha documentation tab" aria-haspopup="dialog">
+          <img src="assets/screenshots/ui-docs.png" alt="Akasha documentation tab" width="1280" height="720" loading="lazy" class="screenshot-thumb" />
+        </button>
+        <figcaption style="padding: 12px 16px; font-size: 0.9rem; color: var(--text-muted);" data-i18n="home.shots.docs">Documentation tab</figcaption>
       </figure>
     </div>
   </div>
@@ -209,15 +217,15 @@
 <section class="section" id="how-it-works" style="background: var(--bg-secondary);">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-eyebrow">⚙ How it works</span>
-      <h2 class="section-title">Get started in <span class="gradient-text">3 steps</span></h2>
-      <p class="section-desc">From download to fully configured in under 2 minutes.</p>
+      <span class="section-eyebrow" data-i18n="home.how.eyebrow">⚙ How it works</span>
+      <h2 class="section-title" data-i18n-html="home.how.title">Get started in <span class="gradient-text">3 steps</span></h2>
+      <p class="section-desc" data-i18n="home.how.desc">From download to fully configured in under 2 minutes.</p>
     </div>
     <div class="features-grid">
 
       <div class="card reveal">
         <div class="feature-icon" style="background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:var(--cyan-light)">①</div>
-        <h4 class="feature-title">Download &amp; extract</h4>
+        <h4 class="feature-title" data-i18n-html="home.how.1.title">Download &amp; extract</h4>
         <p class="feature-desc">Download the <strong>akasha-full-&lt;os&gt;</strong> archive from the Releases page and extract it. <strong>Windows:</strong> double-click <code>INSTALL.cmd</code> or run <code>.\scripts\setup.ps1</code>. <strong>Linux / macOS:</strong> run <code>chmod +x scripts/setup.sh &amp;&amp; ./scripts/setup.sh</code>. Then <code>akasha init</code> and <code>akasha start</code>.</p>
         <div style="margin-top:16px">
           <code>akasha init</code> then <code>akasha start</code>
@@ -227,7 +235,7 @@
 
       <div class="card reveal delay-1">
         <div class="feature-icon" style="background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.3);color:var(--purple-light)">②</div>
-        <h4 class="feature-title">Add skills (optional)</h4>
+        <h4 class="feature-title" data-i18n="home.how.2.title">Add skills (optional)</h4>
         <p class="feature-desc">Ask the agent in chat to install a skill from a URL, or copy skill files into the data folder and type <code>/skills reload</code> in the chat.</p>
         <div style="margin-top:16px">
           <code>In chat: &quot;Install the calculator skill from …&quot;</code>
@@ -236,7 +244,7 @@
 
       <div class="card reveal delay-2">
         <div class="feature-icon" style="background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#34d399">③</div>
-        <h4 class="feature-title">Start chatting</h4>
+        <h4 class="feature-title" data-i18n="home.how.3.title">Start chatting</h4>
         <p class="feature-desc">Run <code>akasha tui</code> for the terminal interface, or launch the desktop app. Chat naturally; the agent uses tools and skills as needed.</p>
         <div style="margin-top:16px">
           <code>akasha tui</code>
@@ -251,8 +259,8 @@
 <section class="section" id="skills-preview">
   <div class="container">
     <div class="section-header reveal">
-      <span class="section-eyebrow">🧩 Skills Library</span>
-      <h2 class="section-title">Extend with <span class="gradient-text">powerful skills</span></h2>
+      <span class="section-eyebrow" data-i18n="home.skills.eyebrow">🧩 Skills Library</span>
+      <h2 class="section-title" data-i18n-html="home.skills.title">Extend with <span class="gradient-text">powerful skills</span></h2>
       <p class="section-desc">Choose from a growing library. Install via the chat (ask the agent to install from a URL) or copy files into your data folder and run <code>/skills reload</code>.</p>
     <div class="features-grid">
       <div class="card card-sm reveal">
@@ -287,7 +295,7 @@
       </div>
     </div>
     <div class="text-center mt-lg reveal">
-      <a href="skills.html" class="btn btn-outline">View all skills →</a>
+      <a href="skills.html" class="btn btn-outline" data-i18n="home.skills.cta">View all skills →</a>
     </div>
   </div>
 </section>
@@ -296,13 +304,13 @@
 <section class="section-sm">
   <div class="container">
     <div class="cta-strip reveal">
-      <h2>Ready to try <span class="gradient-text">Akasha</span>?</h2>
-      <p>Download for free, no account required. Your data stays yours.</p>
+      <h2 data-i18n-html="home.cta.title">Ready to try <span class="gradient-text">Akasha</span>?</h2>
+      <p data-i18n="home.cta.desc">Download for free, no account required. Your data stays yours.</p>
       <div class="btn-group">
-        <a href="releases.html#downloads" class="btn btn-primary btn-lg">
+        <a href="releases.html#downloads" class="btn btn-primary btn-lg" data-i18n="home.cta.download_latest">
           ⬇ Download Latest Release
         </a>
-        <a href="https://github.com/azerothl/Akasha" class="btn btn-outline btn-lg" target="_blank" rel="noopener">
+        <a href="https://github.com/azerothl/Akasha" class="btn btn-outline btn-lg" target="_blank" rel="noopener" data-i18n="home.cta.star">
           ★ Star on GitHub
         </a>
       </div>
@@ -319,56 +327,57 @@
           <div class="nav-logo-icon" aria-hidden="true">✦</div>
           Akasha
         </div>
-        <p>A privacy-first personal assistant with a powerful skill system. Prebuilt binaries; free to download.</p>
+        <p data-i18n="footer.tagline">A privacy-first personal assistant with a powerful skill system. Prebuilt binaries; free to download.</p>
       </div>
       <div class="footer-col">
-        <h4>Product</h4>
+        <h4 data-i18n="footer.product">Product</h4>
         <ul>
-          <li><a href="index.html#features">Features</a></li>
-          <li><a href="compare.html">Compare</a></li>
-          <li><a href="skills.html">Skills Library</a></li>
-          <li><a href="plugins.html">Plugins</a></li>
-          <li><a href="releases.html">Releases</a></li>
-          <li><a href="releases.html#downloads">Download</a></li>
+          <li><a href="index.html#features" data-i18n="footer.features">Features</a></li>
+          <li><a href="compare.html" data-i18n="footer.compare">Compare</a></li>
+          <li><a href="skills.html" data-i18n="footer.skills">Skills Library</a></li>
+          <li><a href="plugins.html" data-i18n="footer.plugins">Plugins</a></li>
+          <li><a href="releases.html" data-i18n="footer.releases">Releases</a></li>
+          <li><a href="releases.html#downloads" data-i18n="footer.download">Download</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Docs</h4>
+        <h4 data-i18n="footer.docs">Docs</h4>
         <ul>
-          <li><a href="docs.html#getting-started">Getting Started</a></li>
-          <li><a href="compare.html">Compare</a></li>
-          <li><a href="plugins.html">Plugins catalog</a></li>
-          <li><a href="docs.html#skills-api">Skills API</a></li>
-          <li><a href="docs.html#configuration">Configuration</a></li>
-          <li><a href="docs.html#contributing">Contributing</a></li>
+          <li><a href="docs.html#getting-started" data-i18n="footer.getting_started">Getting Started</a></li>
+          <li><a href="compare.html" data-i18n="footer.compare">Compare</a></li>
+          <li><a href="plugins.html" data-i18n="footer.plugins_catalog">Plugins catalog</a></li>
+          <li><a href="docs.html#skills-api" data-i18n="footer.skills_api">Skills API</a></li>
+          <li><a href="docs.html#configuration" data-i18n="footer.configuration">Configuration</a></li>
+          <li><a href="docs.html#contributing" data-i18n="footer.contributing">Contributing</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Community</h4>
+        <h4 data-i18n="footer.community">Community</h4>
         <ul>
-          <li><a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener">Report Issue</a></li>
-          <li><a href="https://github.com/azerothl/Akasha_app/discussions" target="_blank" rel="noopener">Discussions</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener" data-i18n="footer.github">GitHub</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/issues" target="_blank" rel="noopener" data-i18n="footer.issue">Report Issue</a></li>
+          <li><a href="https://github.com/azerothl/Akasha_app/discussions" target="_blank" rel="noopener" data-i18n="footer.discussions">Discussions</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Support development</h4>
-        <p class="footer-contribute">Contributions welcome via the <strong>AKAS</strong> token:</p>
+        <h4 data-i18n="footer.support">Support development</h4>
+        <p class="footer-contribute" data-i18n-html="footer.contribute">Contributions welcome via the <strong>AKAS</strong> token:</p>
         <code class="footer-token" id="akas-address" title="Copy address">0x8183afe4d4028e191cc151acf83138fa8eecaba3</code>
-        <button type="button" class="btn-copy-token" aria-label="Copy token address" data-address="0x8183afe4d4028e191cc151acf83138fa8eecaba3">Copy</button>
+        <button type="button" class="btn-copy-token" data-i18n-aria="footer.copy_aria" aria-label="Copy token address" data-address="0x8183afe4d4028e191cc151acf83138fa8eecaba3" data-i18n="footer.copy">Copy</button>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Akasha. Engine: Apache-2.0 on GitHub; official binaries on this site. Website content may use separate licences.</span>
+      <span data-i18n="footer.legal">© 2026 Akasha. Engine: Apache-2.0 on GitHub; official binaries on this site. Website content may use separate licences.</span>
       <div class="footer-bottom-links">
-        <a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener">GitHub</a>
-        <a href="docs.html">Documentation</a>
-        <a href="releases.html">Changelog</a>
+        <a href="https://github.com/azerothl/Akasha_app" target="_blank" rel="noopener" data-i18n="footer.github">GitHub</a>
+        <a href="docs.html" data-i18n="footer.documentation">Documentation</a>
+        <a href="releases.html" data-i18n="footer.changelog">Changelog</a>
       </div>
     </div>
   </div>
 </footer>
 
+<script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

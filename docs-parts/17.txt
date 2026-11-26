@@ -1,0 +1,65 @@
+3.2 }
+    fallback: [{ provider: akasha_embedded, model: default }]</code></pre>
+          <p><strong>OpenAI</strong> with a vault reference:</p>
+          <pre><code>providers:
+  openai:
+    api_key_ref: "vault://openai_api_key"
+task_types:
+  conversation:
+    primary: { provider: openai, model: gpt-4o, config: { temperature: 0.7, max_tokens: 4096 } }</code></pre>
+          <p><strong>Image generation</strong> (for the <code>generate_image</code> tool — distinct from chat):</p>
+          <pre><code>providers:
+  openai:
+    api_key_ref: "vault://openai_api_key"
+  ollama:
+    base_url: "http://localhost:11434"
+task_types:
+  image_generation:
+    primary: { provider: openai, model: dall-e-3, config: { default_size: "1024x1024" } }
+    # or: primary: { provider: ollama, model: flux, ... }</code></pre>
+          <p>Use <code>akasha config models set &lt;category&gt; &lt;provider&gt; &lt;model&gt;</code> to update text routes without hand-editing; image routes are often edited under <code>task_types.image_generation</code>.</p>
+        </article>
+
+        <!-- Vault CLI -->
+        <article class="docs-article" id="vault-cli">
+          <h2>Vault CLI</h2>
+          <p>Secrets live encrypted under the data directory. <strong>Never</strong> commit them. The chat can list key <em>names</em> with <code>/vault list</code> but cannot store secrets — use the CLI or HTTP API.</p>
+
+          <h3>Commands</h3>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col">Command</th><th scope="col">Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>akasha vault list</code></td><td>Print all stored key names (values are never shown).</td></tr>
+                <tr><td><code>akasha vault set KEY [value]</code></td><td>Store or update a secret. If <code>value</code> is omitted, it is read from <strong>stdin</strong> (safe for multiline tokens).</td></tr>
+                <tr><td><code>akasha vault get KEY</code></td><td>Print the value (sensitive — avoid logs and shoulder-surfing).</td></tr>
+                <tr><td><code>akasha vault delete KEY</code></td><td>Remove a key.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Examples</h3>
+          <pre><code># List keys
+akasha vault list
+
+# Set from argument (shell history may capture this — prefer stdin for production)
+akasha vault set brave_api_key YOUR_BRAVE_KEY
+
+# Set from stdin (PowerShell)
+"YOUR_SECRET" | akasha vault set openai_api_key
+
+# Set from stdin (bash — avoids shell history)
+printf '%s' "$SECRET" | akasha vault set openrouter_api_key
+
+# Read back (debug only)
+akasha vault get brave_api_key
+
+# Remove
+akasha vault delete old_key</code></pre>
+
+          <h3>Common key names</h3>
+          <p>These names match what <code>akasha init</code> / <code>akasha config provider add-openai</code> and <code>llm_router.yaml</code> expect when using <code>vault://…</code> references:</p>
+          <ul>
+            <li><strong>LLM:</strong> <code>openai_api_key</code>, <code>openrouter_api_key</code>, <code>azure_openai_api_key</code> (as referenced in your YAML).</li>
+            <li><strong>Web:</strong> <code>brave_api_key</code> (Brave Search; or set <code>BRAVE_API_KEY</code> in the environment).</li>
+            <li><strong>Channels:</strong> <code>telegram_bot_token</code>, <code>slack_signing_secret

@@ -1,0 +1,45 @@
+>Slash commands</a>
+        </div>
+        <div class="docs-nav-section">
+          <div class="docs-nav-title" data-i18n="docs.nav.operator">Operator parity</div>
+          <a href="#hermes-overview" class="docs-nav-link" data-target="hermes-overview" data-i18n="docs.nav.hermes_overview">Overview &amp; matrix</a>
+          <a href="#hermes-mcp" class="docs-nav-link" data-target="hermes-mcp" data-i18n="docs.nav.hermes_mcp">MCP (validate &amp; probe)</a>
+          <a href="#hermes-terminal" class="docs-nav-link" data-target="hermes-terminal" data-i18n="docs.nav.hermes_terminal">Terminal &amp; PTY</a>
+          <a href="#hermes-webhooks" class="docs-nav-link" data-target="hermes-webhooks" data-i18n="docs.nav.hermes_webhooks">Webhooks &amp; automation</a>
+          <a href="#hermes-toolsets" class="docs-nav-link" data-target="hermes-toolsets" data-i18n="docs.nav.hermes_toolsets">Toolsets &amp; tools policy</a>
+          <a href="#hermes-migration" class="docs-nav-link" data-target="hermes-migration" data-i18n="docs.nav.hermes_migration">Migration &amp; ecosystem</a>
+          <a href="#hermes-closeout" class="docs-nav-link" data-target="hermes-closeout" data-i18n="docs.nav.hermes_closeout">Phase close-out proofs</a>
+        </div>
+        <div class="docs-nav-section">
+          <div class="docs-nav-title" data-i18n="docs.nav.developers">Developers</div>
+          <a href="plugins.html" class="docs-nav-link" data-i18n="docs.nav.plugins_catalog">Plugins catalog (site)</a>
+          <a href="#update-api" class="docs-nav-link" data-target="update-api" data-i18n="docs.nav.update_api">Update API</a>
+          <a href="#contributing" class="docs-nav-link" data-target="contributing" data-i18n="docs.nav.contributing">Contributing</a>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <main class="docs-content">
+        <p id="docs-lang-note" class="docs-lang-note callout callout-tip" hidden data-i18n="docs.fr_note" style="margin-bottom: 1.25rem;">Site chrome is in French. Detailed technical articles below remain in English for now (aligned with the public docs policy).</p>
+
+        <!-- Introduction -->
+        <article class="docs-article" id="getting-started">
+          <h2>Introduction</h2>
+          <p>
+            <strong>Akasha</strong> is a privacy-first personal assistant built around a <strong>long-running daemon</strong>.
+            With the <strong>embedded model</strong>, you get answers without signing up or calling the cloud.
+            You can add <strong>Ollama</strong> or <strong>OpenAI / OpenRouter</strong> when you need larger models — keys stay in your local vault.
+          </p>
+          <p>
+            Skills extend what the agent can do (calculator, custom workflows, …). Optional channels (Telegram, Slack, Discord) let the same daemon serve multiple interfaces.
+          </p>
+          <div class="callout callout-tip">
+            <span class="callout-icon">💡</span>
+            <div class="callout-body">
+              <strong>Quick start:</strong> Jump straight to <a href="#installation" class="docs-nav-link" data-target="installation" style="display:inline;padding:0;border:none">Installation</a> if you just want to get running.
+            </div>
+          </div>
+          <h3>Key principles</h3>
+          <ul>
+            <li><strong>Local-first</strong> — data directory on your machine; no mandatory cloud account.</li>
+            <li><strong>Explicit trust</strong> — tool and path access is deny-by-default un

@@ -1,0 +1,42 @@
+"https://github.com/azerothl/Akasha/pull/123" target="_blank" rel="noopener">#123</a> (Ollama), <a href="https://github.com/azerothl/Akasha/pull/125" target="_blank" rel="noopener">#125</a> (v0.10.0 merge).</p>
+          <h3>First-use embedded</h3>
+          <ul>
+            <li><strong>Setup wizard</strong> — embedded status, GGUF download with progress, multi-model picker, first message test.</li>
+            <li><strong>Full CUDA zip</strong> — <code>akasha-full-windows-x86_64-cuda.zip</code> (CLI + UI + scripts); <code>install.ps1</code> copies CUDA runtime DLLs.</li>
+            <li><strong>Doctor</strong> — <code>akasha doctor --json</code> suggests <code>embedded-download</code> when GGUF is missing.</li>
+            <li><strong>API</strong> — <code>POST/GET /api/router/embedded/download</code>, calibration endpoint.</li>
+          </ul>
+          <h3>Discovery &amp; Home Assistant</h3>
+          <ul>
+            <li><strong>Service discovery</strong> — <code>akasha discover</code>, <code>GET /api/discovery</code> (Ollama, Home Assistant on LAN).</li>
+            <li><strong>Home Assistant</strong> — connector in Settings, plugin <code>homeassistant</code>, agent tools <code>ha_*</code>.</li>
+          </ul>
+          <h3>Plugins</h3>
+          <ul>
+            <li><strong>6 plugins</strong> in the public catalog (Matrix, CalDAV, Home Assistant, graph, maps, simulation).</li>
+          </ul>
+          <h3>Code Studio</h3>
+          <p>Install the operator cockpit via npm: <code>npx akasha-code-studio@0.10.0</code> (requires a running daemon on port <strong>3876</strong>). See <a href="#code-studio">Code Studio</a>.</p>
+          <h3>Previously in v0.9.0</h3>
+          <h4>Workspace UI</h4>
+          <ul>
+            <li><strong>Cookbook</strong> — pull local models and browse <strong>12 guided recipes</strong>.</li>
+            <li><strong>Compare</strong>, <strong>Deep research</strong>, <strong>Notes</strong> workspace panels.</li>
+            <li><strong>Multi-page user guide</strong> in the Doc tab; Matrix/CalDAV channel plugins.</li>
+          </ul>
+          <h3>Previously in v0.8.0</h3>
+          <ul>
+            <li><strong>Permission center</strong>, <strong>Second Brain controls</strong>, <strong>budget controls</strong>, and agent-callable scheduler tools.</li>
+            <li><strong>Autonomous mission</strong> — heartbeat tasks, Mission tab, REST API (<code>autonomous_mission.yaml</code>).</li>
+            <li><strong>Project knowledge graphs</strong> — multiple indexed roots, <code>workspace_graph_search</code>, HTML reports.</li>
+            <li><strong>Agent profile formality</strong>, tools-first routing, improved <code>akasha doctor</code> for zip installs.</li>
+          </ul>
+          <h3>Previously in v0.7.0</h3>
+          <ul>
+            <li><strong>Orchestrator route</strong> — <code>task_types.orchestrator</code> in <code>llm_router.yaml</code>; verified deliverables, path safety, targeted retry, <code>.akasha/plan_&lt;task_id&gt;.md</code>, meta-response retry.</li>
+            <li><strong>Security &amp; LLM</strong> — path prefix policy, RAG upload alignment, numeric config clamping, Azure <code>max_tokens</code> default, plugin UI + reputation API.</li>
+          </ul>
+          <p>Full history: <a href="releases.html">Releases</a>. Comparison: <a href="compare.html">Compare</a>. Plugin catalog: <a href="plugins.html">Plugins</a>.</p>
+        </article>
+
+        <article class="docs-article" id="api-i

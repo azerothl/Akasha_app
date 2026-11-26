@@ -1,0 +1,42 @@
+ has no entry, defaults / fallbacks apply.</p>
+
+          <h4>A. Automatic classification (chat — keyword router)</h4>
+          <p>When no explicit override is set, the router classifies the user message into one of these six types:</p>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col"><code>task_types</code> key</th><th scope="col">Typical triggers</th></tr></thead>
+              <tbody>
+                <tr><td><code>conversation</code></td><td>Default when nothing more specific matches.</td></tr>
+                <tr><td><code>code_generation</code></td><td>Code, implement, debug, script, functions, …</td></tr>
+                <tr><td><code>creative_writing</code></td><td>Stories, poems, articles, emails, …</td></tr>
+                <tr><td><code>scientific_analysis</code></td><td>Papers, research wording, …</td></tr>
+                <tr><td><code>data_analysis</code></td><td>Statistics, charts, “analyze data”, …</td></tr>
+                <tr><td><code>system_diagnostic</code></td><td>Diagnostics, health, status, runbooks, …</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>B. System, orchestration, and image</h4>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col"><code>task_types</code> key</th><th scope="col">Role</th></tr></thead>
+              <tbody>
+                <tr><td><code>system</code></td><td>Internal “system” LLM work (memory extraction, compaction, summaries, etc.).</td></tr>
+                <tr><td><code>orchestrator</code></td><td>Optional (v0.7+): decomposition / planning LLM. If absent, orchestrator falls back to <code>system</code>.</td></tr>
+                <tr><td><code>image_generation</code></td><td><strong>Required</strong> for the <code>generate_image</code> tool: <code>primary</code> selects the <em>image</em> backend (e.g. OpenAI Images API, Ollama image-capable model). This is separate from the chat text model.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>C. Specialist / delegation routes (orchestrator &amp; sub-agents)</h4>
+          <p>When the pipeline assigns a <strong>specialist agent</strong>, the router looks up a route under that agent’s primary task type (and may fall back to related types if no custom model is set). You can define any of these keys to pin a provider/model per role:</p>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col"><code>task_types</code> key</th><th scope="col">Notes</th></tr></thead>
+              <tbody>
+                <tr><td><code>financial</code></td><td>May fall back to <code>data_analysis</code> → <code>conversation</code> if unset.</td></tr>
+                <tr><td><code>documentalist</code></td><td></td></tr>
+                <tr><td><code>project_manager</code></td><td></td></tr>
+                <tr><td><code>technical_writer</code></td><td>May fall back to <code>creative_writing</code>.</td></tr>
+                <tr><td><code>research</code></td><td>May fall back to <code>scientific_analysis</code>.</td></tr>
+                <tr><td><code>sec

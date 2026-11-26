@@ -1,0 +1,57 @@
+ no CUDA Toolkit install needed. One-liner GPU: <code>get-akasha-cuda.ps1</code> or <code>get-akasha.ps1 -Cuda</code>.</p>
+          <pre><code>Expand-Archive .\akasha-windows-x86_64-cuda.zip -DestinationPath C:\Akasha -Force
+cd C:\Akasha
+.\scripts\setup.ps1 -InstallDir C:\Akasha
+.\akasha.exe config models embedded-download
+.\akasha.exe init
+.\akasha.exe start</code></pre>
+          <p>Optional desktop UI: also install <strong>akasha-ui-windows.zip</strong> from the same release page.</p>
+          <h3>First run (Linux / macOS)</h3>
+          <pre><code>chmod +x akasha akasha-daemon akasha-tui
+./akasha init
+./akasha start
+./akasha tui   # terminal interface</code></pre>
+          <h3>First run (Windows)</h3>
+          <pre><code>.\akasha.exe init
+.\akasha.exe start
+.\akasha.exe tui   # terminal interface</code></pre>
+          <p>Run <code>akasha up</code> for the one-command always-on flow (ensure running + health check), or <code>akasha start</code> for manual startup. Keep running from the extracted folder so the in-app <strong>Doc</strong> tab can show the user guide (served from local <code>docs</code>).</p>
+        </article>
+
+        <!-- First run -->
+        <article class="docs-article" id="first-run">
+          <h2>First Run</h2>
+          <p><code>akasha init</code> runs an interactive setup: LLM provider (embedded, Ollama, OpenRouter, OpenAI), vault, optional channels, and optional <strong>Docker services</strong> (Ollama, TTS/STT, BitNet) if the <strong>akasha-models</strong> compose directory is found — set <code>AKASHA_MODELS_DIR</code> or use <code>akasha services install --compose-dir …</code> later. Use <code>akasha init --defaults</code> for minimal setup without prompts.</p>
+          <p>Then start the daemon and open the interface:</p>
+          <pre><code>akasha up         # ensure daemon is running + verify status
+akasha start      # background daemon (auto-restart on crash)
+akasha tui        # terminal UI: Chat, Scheduled, Router, Doc, Tasks, Calendar, Memory</code></pre>
+          <p>If you have the desktop app (Akasha UI), launch it; it connects to the daemon on port 3876 (configurable via <code>AKASHA_PORT</code>).</p>
+        </article>
+
+        <!-- Commands -->
+        <article class="docs-article" id="commands">
+          <h2>Commands Reference</h2>
+          <h3>Daemon</h3>
+          <pre><code>akasha up                 # Start if needed + verify status
+akasha start              # Start daemon (auto-restart)
+akasha start --foreground # Run in foreground (logs in terminal)
+akasha stop               # Stop daemon</code></pre>
+          <h3>Task operations</h3>
+          <pre><code>akasha task watch &lt;task_id&gt; [--interval-ms 1500]
+akasha task events &lt;task_id&gt; [--limit 40] [--json]
+akasha task cancel &lt;task_id&gt;</code></pre>
+          <h3>Telegram access governance</h3>
+          <pre><code>akasha telegram list
+akasha telegram approve &lt;pairing_code|user_id&gt;
+akasha telegram reject &lt;user_id&gt;
+akasha telegram remove &lt;user_id&gt;
+akasha telegram promote &lt;user_id&gt;
+akasha telegram demote &lt;user_id&gt;
+akasha telegram reset</code></pre>
+          <h3>Setup &amp; diagnostic</h3>
+          <pre><code>akasha init              # Interactive setup
+akasha init --defaults   # Minimal setup, no prompts
+akasha doctor            # Check system and daemon
+akasha doctor --fix      # Create data_dir and minimal config if missing
+akasha doctor --advice   # Diagnostic advice (daemon must be ru

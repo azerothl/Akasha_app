@@ -1,0 +1,36 @@
+ts per channel or session). In Akasha, tool gating lives in <code>tools_policy.yaml</code> (<code>tool_profiles</code>) with operator helpers:</p>
+          <ul>
+            <li>CLI: <code>akasha toolset profiles</code> · <code>akasha toolset effective</code> (daemon must be up for <code>effective</code>).</li>
+            <li>API: <code>GET /api/tools/effective</code> — allowed / blocked / approval + rule source.</li>
+          </ul>
+        </article>
+
+        <article class="docs-article" id="hermes-migration">
+          <h2>Migration &amp; multi-repo ecosystem</h2>
+          <p>Akasha splits <strong>execution</strong> (Rust daemon) from <strong>catalogues and docs</strong>:</p>
+          <ul>
+            <li><strong>Skills</strong> — <a href="https://github.com/azerothl/Akasha_skills" target="_blank" rel="noopener">Akasha_skills</a> (gallery + <code>skills.json</code> synced to this site).</li>
+            <li><strong>Plugins</strong> — <a href="https://github.com/azerothl/Akasha_plugins" target="_blank" rel="noopener">Akasha_plugins</a> + WASM install under your data directory.</li>
+            <li><strong>Code Studio</strong> — <a href="https://github.com/azerothl/akasha-code-studio" target="_blank" rel="noopener">akasha-code-studio</a> web cockpit for project tasks (see <code>docs/OPERATOR_COCKPIT.md</code> in that repo).</li>
+            <li><strong>Local inference</strong> — <a href="https://github.com/azerothl/Rbitnet" target="_blank" rel="noopener">Rbitnet</a> (OpenAI-compatible; wire in <code>llm_router.yaml</code>).</li>
+          </ul>
+          <p>When importing settings from another assistant, prefer <code>akasha config validate</code> and the vault for secrets — never commit API keys to this static site.</p>
+        </article>
+
+        <article class="docs-article" id="hermes-closeout">
+          <h2>Phase close-out (proof pack)</h2>
+          <p>Cross-repo evidence used to close an operator-parity delivery batch:</p>
+          <ul>
+            <li><strong>Core status</strong>: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/reference-products-parity-matrix.md" target="_blank" rel="noopener">reference-products-parity-matrix.md</a> and <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/hermes-integration-remainder.md" target="_blank" rel="noopener">hermes-integration-remainder.md</a>.</li>
+            <li><strong>Remaining partials roadmap</strong>: <a href="https://github.com/azerothl/Akasha/blob/main/spec/dev/roadmap/hermes-partial-domains-roadmap.md" target="_blank" rel="noopener">hermes-partial-domains-roadmap.md</a>.</li>
+            <li><strong>Plugins trust</strong>: <a href="https://github.com/azerothl/Akasha_plugins/blob/main/TRUST_CATALOG.md" target="_blank" rel="noopener">Akasha_plugins/TRUST_CATALOG.md</a>.</li>
+            <li><strong>Skills evals</strong>: <a href="https://github.com/azerothl/Akasha_skills/blob/main/.github/workflows/skills-eval-smoke.yml" target="_blank" rel="noopener">skills-eval-smoke.yml</a>.</li>
+            <li><strong>Perf/SLO self-hosted</strong>: <a href="https://github.com/azerothl/Rbitnet/blob/main/docs/BENCHMARKS.md" target="_blank" rel="noopener">Rbitnet BENCHMARKS.md</a>.</li>
+          </ul>
+        </article>
+
+        <!-- Update API -->
+        <article class="docs-article" id="update-api">
+          <h2>Update API</h2>
+          <p>Akasha checks the following endpoint on startup (if auto-update is enabled):</p>
+          <pre><cod

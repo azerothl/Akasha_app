@@ -1,0 +1,32 @@
+urity_audit</code></td><td>May fall back to <code>code_generation</code>, <code>system_diagnostic</code>.</td></tr>
+                <tr><td><code>creative</code></td><td>May fall back to <code>creative_writing</code>.</td></tr>
+                <tr><td><code>analyst</code></td><td>May fall back to <code>creative_writing</code>.</td></tr>
+                <tr><td><code>architect</code></td><td>May fall back to <code>code_generation</code>, <code>system_diagnostic</code>.</td></tr>
+                <tr><td><code>frontend</code>, <code>backend</code>, <code>integration</code></td><td>Often aligned with <code>code_generation</code> fallbacks.</td></tr>
+                <tr><td><code>database</code></td><td>May fall back to <code>data_analysis</code> / <code>code_generation</code>.</td></tr>
+                <tr><td><code>qa</code></td><td>May fall back to <code>system_diagnostic</code> / <code>code_generation</code>.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>Delegation aliases:</strong> the agent id <code>code</code> resolves to the <code>code_generation</code> route; <code>search</code> resolves to <code>conversation</code>. There is no separate <code>task_types.search</code> key unless you add one yourself.</p>
+          <p><strong>Autonomous mission</strong> (<code>autonomous_mission.yaml</code>) accepts additional <strong>heartbeat</strong> symbols such as <code>search</code>, <code>code</code>, <code>schedule</code> for <code>heartbeat_preferred_task_type</code> — routing still uses the mappings above (e.g. <code>code</code> → <code>code_generation</code>).</p>
+
+          <h4>Structure of each <code>task_types.&lt;name&gt;</code></h4>
+          <ul>
+            <li><strong><code>primary</code></strong> — <code>provider</code>, <code>model</code>, optional <code>config</code> (see below).</li>
+            <li><strong><code>fallback</code></strong> — ordered list of <code>{ provider, model, config? }</code>.</li>
+            <li><strong><code>constraints</code></strong> — optional <code>max_cost_per_request</code> (USD), <code>max_latency_secs</code>.</li>
+          </ul>
+
+          <h3>Top-level keys (file layout)</h3>
+          <div class="docs-table-wrap" style="overflow-x:auto;margin:1rem 0">
+            <table class="compare-table" style="min-width:100%;font-size:0.88rem">
+              <thead><tr><th scope="col">Key</th><th scope="col">Type</th><th scope="col">Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>version</code></td><td>string</td><td>Optional, e.g. <code>"1.0"</code>.</td></tr>
+                <tr><td><code>global</code></td><td>object</td><td>Timeouts, metrics, retries (see below).</td></tr>
+                <tr><td><code>providers</code></td><td>object</td><td>Named providers: <code>ollama</code>, <code>openai</code>, <code>azure_openai</code>, <code>openrouter</code>, <code>bitnet</code>. Each value uses the provider fields below.</td></tr>
+                <tr><td><code>model_options</code></td><td>object</td><td>Per-model metadata (e.g. from <code>akasha config models fetch</code>): <code>context_length_max</code>, <code>num_ctx</code>, <code>family</code>, <code>parameter_size</code>, optional <code>capabilities</code>, <code>modified_at</code>, <code>extra</code>.</td></tr>
+                <tr><td><code>task_types</code></td><td>object</td><td><strong>Routes:</strong> see tables above.</td></tr>
+              </tbody>
+            </table>
