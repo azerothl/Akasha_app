@@ -469,7 +469,9 @@ akasha task queue clear &lt;task_id&gt;</code></pre>
             Text and image are secondary surfaces. Conversational STT/TTS stay on the daemon (<code>/api/voice/*</code>).
           </p>
           <ul>
-            <li>Daemon must listen on the LAN: <code>AKASHA_BIND=0.0.0.0</code>.</li>
+            <li>The daemon provides the Companion API. Build and flash the experimental ESP32 firmware separately using the Companion repository.</li>
+            <li>Use a trusted LAN. Bind the daemon to its private LAN address and use a firewall to restrict access to the Companion. Binding to <code>0.0.0.0</code> exposes the entire daemon HTTP API on every IPv4 interface. Keep the port off the public internet.</li>
+            <li>Set a strong <code>AKASHA_API_TOKEN</code> and a separate <code>AKASHA_COMPANION_PAIR_SECRET</code> before enabling LAN access.</li>
             <li>Configure STT/TTS in <code>voice_router.yaml</code>.</li>
             <li>Optional pairing / snapshot / hands-free VAD via <code>/api/companion/*</code>.</li>
           </ul>
